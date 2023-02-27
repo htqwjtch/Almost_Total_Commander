@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="Ui_AdditionalWindow" Collapsed="true">
+    <Position X="19" Y="11.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAAAAABEAAAAAAAAAAAQAIEAAAIAAAIAAAAA=</HashCode>
+      <FileName>ui_additionalwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_ConfirmDelete" Collapsed="true">
+    <Position X="17" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAAAAABEAAAAAAAAAAAQAIEAAAKAAAAAAAAA=</HashCode>
+      <FileName>ui_confirmdelete.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_CreateChoise">
+    <Position X="15.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAABAAAAABEQAAAAAAAAAAQAIAAAAKAAAAAAAAA=</HashCode>
+      <FileName>ui_createchoise.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_MainWindow" Collapsed="true">
+    <Position X="15.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wwAAAgAAAAAAgBAICAEAAAAgAAQAIAAAALAAAcAABEY=</HashCode>
+      <FileName>ui_mainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_RenameWindow">
+    <Position X="13.75" Y="7" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QIAAQAAAAAAAABEAAAAAAAAAAAQEIEAAAKAAAAAAAEA=</HashCode>
+      <FileName>ui_renamewindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_SearchWindow">
+    <Position X="18.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAIEAAAAAAAIAAAAA=</HashCode>
+      <FileName>ui_searchwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="List" Collapsed="true">
+    <Position X="19" Y="7.25" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="List::Iterator">
+        <TypeIdentifier>
+          <NewMemberFileName>.h\container.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AQBAAAAAgAAAAAAAgAAAAAAAAACAAAAAAAAAAAAACgo=</HashCode>
+      <FileName>.h\container.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Exception" Collapsed="true">
+    <Position X="5.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAEAAAAAAAAAAAAAAAAwAAAAAAAAABAAABAAAAAAAA=</HashCode>
+      <FileName>.h\exception.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RootDirectoryException" Collapsed="true">
+    <Position X="7.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAEAAAAAAAAAAAAAAAgAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>.h\exception.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ChoiseException" Collapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAQIAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>.h\exception.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PerformationException" Collapsed="true">
+    <Position X="0.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAgBAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>.h\exception.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BadAllocException" Collapsed="true">
+    <Position X="3" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAgQEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>.h\exception.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ExceptionEmpty" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAAAgAAAAAAIAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>.h\exception.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="System" Collapsed="true">
+    <Position X="2" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAAAAAAAAAAAAAAgECoEAAAAAAAAAAgAA=</HashCode>
+      <FileName>.h\systemfiles.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="File" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgEGKEAAAAAAAAAAgAA=</HashCode>
+      <FileName>.h\systemfiles.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Folder" Collapsed="true">
+    <Position X="3.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAgECIUAAAAAAAAAAhAA=</HashCode>
+      <FileName>.h\systemfiles.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AdditionalWindow" Collapsed="true">
+    <Position X="0.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAQCEQEAAAAAAAAAAAAAAABCAAAAIAAAAIAAA=</HashCode>
+      <FileName>.h\additionalwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ConfirmDelete" Collapsed="true">
+    <Position X="5.25" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQEAAAEAQAAAAAAAAABAAAAAAAAAAAABA=</HashCode>
+      <FileName>.h\confirmdelete.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CreateChoise" Collapsed="true">
+    <Position X="7.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAGIAAAAAAAEAAAAAAAAABAAAAABAAABEAEAAAAAAA=</HashCode>
+      <FileName>.h\createchoise.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MainWindow">
+    <Position X="6.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAgEAAAAQEBIAAAQABAAAAAAACEAchEAgAAAKAAA=</HashCode>
+      <FileName>.h\mainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RenameWindow" Collapsed="true">
+    <Position X="9.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAABAAAAAAAAgAEBAAAAAAAAAAABAA=</HashCode>
+      <FileName>.h\renamewindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SearchWindow" Collapsed="true">
+    <Position X="3" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAACAMAAAAgABAAAAAAAAAABAAAAAQAAgAAA=</HashCode>
+      <FileName>.h\searchwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::AdditionalWindow" Collapsed="true">
+    <Position X="19.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ui_additionalwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::ConfirmDelete" Collapsed="true">
+    <Position X="17" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ui_confirmdelete.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::CreateChoise" Collapsed="true">
+    <Position X="17" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ui_createchoise.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::MainWindow" Collapsed="true">
+    <Position X="15.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ui_mainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::RenameWindow" Collapsed="true">
+    <Position X="14" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ui_renamewindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::SearchWindow" Collapsed="true">
+    <Position X="19" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ui_searchwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QDialog" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="QDialog::DialogCode">
+        <TypeIdentifier>
+          <NewMemberFileName>D:\Qt\6.4.0\msvc2019_64\include\QtWidgets\qdialog.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BACIBAiiQBAAAAAQBABAIAAAAAAEIAAAgAAQgAIgAEA=</HashCode>
+      <FileName>D:\Qt\6.4.0\msvc2019_64\include\QtWidgets\qdialog.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QMainWindow" Collapsed="true">
+    <Position X="6.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoACQgKYCA0hRAgRkKBY4oAAABEAABuBggAgIAMgACA=</HashCode>
+      <FileName>D:\Qt\6.4.0\msvc2019_64\include\QtWidgets\qmainwindow.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QWidget" Collapsed="true">
+    <Position X="12.5" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="QWidget::RenderFlag" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>D:\Qt\6.4.0\msvc2019_64\include\QtWidgets\qwidget.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>hA6pAGgYqICSoYVAaL8yqpBimu1GwLWO4PBqCgXdwII=</HashCode>
+      <FileName>D:\Qt\6.4.0\msvc2019_64\include\QtWidgets\qwidget.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="`anonymous-namespace'::qt_meta_stringdata_AdditionalWindow_t" Collapsed="true">
+    <Position X="18.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAAAAAAEggAAIAAAQQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>debug\moc_additionalwindow.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::qt_meta_stringdata_ConfirmDelete_t" Collapsed="true">
+    <Position X="17" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAgAAIAAAQQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>debug\moc_confirmdelete.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::qt_meta_stringdata_CreateChoise_t" Collapsed="true">
+    <Position X="16.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAEAgAAIAAAQQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>debug\moc_createchoise.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::qt_meta_stringdata_MainWindow_t" Collapsed="true">
+    <Position X="18.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAAAAAAEgkAAIAAiQQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>debug\moc_mainwindow.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::qt_meta_stringdata_RenameWindow_t" Collapsed="true">
+    <Position X="18.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAEggAAIAAAQQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>debug\moc_renamewindow.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::qt_meta_stringdata_SearchWindow_t" Collapsed="true">
+    <Position X="16.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAIAAAQQAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>debug\moc_searchwindow.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::initializer" Collapsed="true">
+    <Position X="18.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAEA=</HashCode>
+      <FileName>debug\qrc_resources.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Node" Collapsed="true">
+    <Position X="18.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAIAAAA=</HashCode>
+      <FileName>.h\container.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

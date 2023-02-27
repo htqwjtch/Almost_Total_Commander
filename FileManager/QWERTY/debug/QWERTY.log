@@ -1,0 +1,33 @@
+﻿  QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly.
+  Generate moc_predefs.h
+  UIC .ui/additionalwindow.ui
+  UIC .ui/confirmdelete.ui
+  UIC .ui/createchoise.ui
+  UIC .ui/mainwindow.ui
+  UIC .ui/renamewindow.ui
+  UIC .ui/searchwindow.ui
+  RCC resources.qrc
+  MOC .h/additionalwindow.h
+  MOC .h/confirmdelete.h
+  MOC .h/createchoise.h
+  MOC .h/mainwindow.h
+  MOC .h/renamewindow.h
+  MOC .h/searchwindow.h
+  additionalwindow.cpp
+  confirmdelete.cpp
+  container.cpp
+  createchoise.cpp
+  main.cpp
+  mainwindow.cpp
+  renamewindow.cpp
+  searchwindow.cpp
+  systemfiles.cpp
+  moc_additionalwindow.cpp
+  moc_confirmdelete.cpp
+  moc_createchoise.cpp
+  moc_mainwindow.cpp
+  moc_renamewindow.cpp
+  moc_searchwindow.cpp
+  qrc_resources.cpp
+  Создание кода...
+  QWERTY.vcxproj -> D:\Qt\Projects\QWERTY\debug\QWERTY.exe
