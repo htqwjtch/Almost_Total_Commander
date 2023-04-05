@@ -45,7 +45,7 @@ void AdditionalWindow::on_btnOK_clicked()   // слот нажатия на "OK"
 {
     QDir dir=QDir(model->filePath(ui->listView->rootIndex()));  //получение текущей директории
     try {
-        if(dir.absolutePath()=="D:/Qt/Projects/build-QWERTY-Desktop_Qt_6_4_0_MinGW_64_bit-Debug")   //если это корневая директория
+        if(dir.absolutePath()=="/home/h4thqewjtch/qt/build-File-Desktop-Debug")   //если это корневая директория
             throw RootDirectoryException("", "You are in a root directory! Please choose an another directory");
         else
         {
@@ -58,7 +58,6 @@ void AdditionalWindow::on_btnOK_clicked()   // слот нажатия на "OK"
     {
         error.GetException(this);
     }
-
     catch (...)
     {
         QMessageBox::warning(this, "", "Unknown error! Please try again!");

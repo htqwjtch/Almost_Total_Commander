@@ -280,7 +280,6 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
 void MainWindow::on_btnCreate_clicked() //слот нажатия на кнопку "Сreate"
 {
     QDir qDir=QDir(model->filePath(ui->lvSource->rootIndex()));   //получение текущей директории
-
     try {
         if(qDir.absolutePath()=="/home/h4thqewjtch/qt/build-File-Desktop-Debug")   //если это корневая директория
             QMessageBox::warning(this,"Create", "You are in a root directory! Please choose an another directory");
@@ -305,21 +304,9 @@ void MainWindow::on_btnCreate_clicked() //слот нажатия на кноп�
                 }
                 if(!fileExists) //если файлов с таким именем нет
                 {
-                    if(isFile.GetName().contains(".txt"))   //если это текстовый файл
-                    {
-
                         file->SetPath(createPath);  //установка пути файла
                         if(!file->Create()) //если файл не создан
                             throw PerformationException("Create File", "The operation <<Create>> was not perfomed!");
-                    }
-                    else
-                    {
-                        //создание нетекстового файла
-                        QFile file(createPath);
-                        if(!file.open(QIODeviceBase::WriteOnly))    //если файл не открыт
-                            throw PerformationException("Create File", "The operation <<Create>> was not perfomed!");
-                        else file.close();
-                    }
                 }
                 else throw PerformationException("Create File", "A file with this name exists!");
 
@@ -343,9 +330,9 @@ void MainWindow::on_btnCreate_clicked() //слот нажатия на кноп�
                 {
                     dir->SetPath(createPath);    //установка пути директории
                     if(!dir->Create())   //если директория не создана
-                        throw  PerformationException( "Create dir", "The operation <<Create>> was not perfomed!");
+                        throw  PerformationException( "Create Directory", "The operation <<Create>> was not perfomed!");
                 }
-                else throw  PerformationException( "Create dir", "A directory with this name exist!");
+                else throw  PerformationException( "Create Directory", "A directory with this name exist!");
             }
             if(window.GetLink())
             {
@@ -406,21 +393,11 @@ bool RecursiveDelete(QDir &qDir, System* file, System* dir, System *link)   //ф
         }
         else if(info.isFile())  //если текущий объект - файл
         {
-            if(info.absoluteFilePath().contains(".txt"))    // если файл текстовый
-            {
-
                 file->SetPath(info.absoluteFilePath()); //установка пути файла
                 if(!file->Delete()) //если файл не удален
                     return false;
                 //очистка пути файла
                 file->SetPath("");
-            }
-            else
-            {
-                if(!(QFile::remove(info.absoluteFilePath())))   //если файл не удален
-                    return false;
-            }
-
         }
         else if(info.isSymLink())  //если текущий объект - файл
         {
@@ -452,21 +429,12 @@ void MainWindow::on_btnDelete_clicked() //слот нажатия на кноп�
                     throw PerformationException( "Delete FIle", "The operation was canceled!");
                 else
                 {
-                    if(fileName.contains(".txt"))   //если удалить текстовый файл
-                    {
                         file->SetPath(filePath);    //установка пути файла
                         if(!file->Delete()) //если удаление не выпонено
                             throw PerformationException( "Delete File", "The operation <<Delete>> was not perfomed!");
                         //очистка пути файла
                         filePath=fileName="";
                         file->SetPath(filePath);
-                    }
-                    else
-                    {
-                        if(!(QFile::remove(filePath)))  //если удаление не выпонено
-                            throw PerformationException( "Delete File", "The operation <<Delete>> was not perfomed!");
-                        filePath=fileName="";   //очистка пути файла
-                    }
                 }
             }
             else if(filePath=="" && dirPath!="" && linkPath=="")     //если выбрана директория
@@ -474,21 +442,21 @@ void MainWindow::on_btnDelete_clicked() //слот нажатия на кноп�
                 ConfirmDelete window;
                 window.exec();  //метод выполняет появление окна для подтверждения удаления
                 if(!window.Confirm())   //если операция отменена
-                    throw PerformationException( "Delete FIle", "The operation was canceled!");
+                    throw PerformationException( "Delete Directory", "The operation was canceled!");
                 else
                 {
                     QDir qDir=QDir(dirPath); //получение выбранной директории
                     if(!qDir.isEmpty())  //если директория не пуста
                     {
                         if(!RecursiveDelete(qDir, file, dir, link)) //если внутренние файлы не удалены
-                            throw PerformationException( "Delete dir", "The operation <<Delete>> was not perfomed!");
+                            throw PerformationException( "Delete Directory", "The operation <<Delete>> was not perfomed!");
                     }
                     if(qDir.isEmpty())   //если директория пуста
                     {
                         //установка пути директории
                         dir->SetPath(dirPath);
                         if(!dir->Delete())   //если удаление не выпонено
-                            throw PerformationException( "Delete dir", "The operation <<Delete>> was not perfomed!");
+                            throw PerformationException( "Delete Directory", "The operation <<Delete>> was not perfomed!");
                         //очистка пути директории
                         dirPath=dirName="";
                         dir->SetPath(dirPath);
@@ -507,11 +475,10 @@ void MainWindow::on_btnDelete_clicked() //слот нажатия на кноп�
                         if(!link->Delete()) //если удаление не выпонено
                             throw PerformationException( "Delete Symbol Link", "The operation <<Delete>> was not perfomed!");
                         //очистка пути файла
-                        filePath=fileName="";
-                        file->SetPath(filePath);
+                        linkPath=linkName="";
+                        link->SetPath(linkPath);
                 }
             }
-
         }
     }
 
@@ -534,7 +501,7 @@ void RecursiveCopyList(QDir &dir,QFileInfoList &copyList)   //функция р�
     //цикл прохода по текущей директории для создания контейнера с файлами и директориями внутри
     foreach(QFileInfo info, dir.entryInfoList(QDir::Files|QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name|QDir::DirsFirst))
     {
-        copyList.append(info);  //добавление элемента в контейнер
+        copyList.append(info);  //добавление элемента в контейнеp
         if(info.isDir()) // элемент - директория
         {
             dir.cd(info.fileName());//заходим в нее
@@ -571,21 +538,12 @@ void MainWindow::on_btnCopy_clicked()   //слот нажатия на кноп�
                 }
                 if(!fileExists) //если файлов с таким именем нет
                 {
-                    if(fileName.contains(".txt")) //если файл текстовый
-                    {
-
-                        file->SetPath(filePath);    //установка пути файла
+                    file->SetPath(filePath);    //установка пути файла
                         if(!file->Copy(copyPath))   //если копирование не произошло
                             throw PerformationException( "Copy File", "The operation <<Copy>> was not perfomed!");
                         //очистка пути файла
                         filePath=fileName="";
                         file->SetPath(filePath);
-                    }
-                    else
-                    {
-                        if(!(QFile::copy(filePath, copyPath))) //если копировагние не произошло
-                            throw PerformationException( "Copy File", "The operation <<Copy>> was not perfomed!");
-                    }
                 }
                 else throw PerformationException( "Copy File","A file with this name exists!");
             }
@@ -594,63 +552,61 @@ void MainWindow::on_btnCopy_clicked()   //слот нажатия на кноп�
         {
             QFileInfoList copyList=QFileInfoList(); //создание контейнера для хранения внутренних файлов выбранной директории
             RecursiveCopyList(qDir, copyList);   //рекурсивное наполнение контейнера внутренними файлами директории
-
             AdditionalWindow window;
             window.exec();  //метод выполняет появление дополнительного окна для копирования
             if(window.Cancel()) //если операция отменена
-                throw PerformationException( "Copy", "The operation was canceled!");
+                throw PerformationException( "Copy Directory", "The operation was canceled!");
             else
             {
-                window.GetQDir().mkdir(dirName);    //создание копии директории по выбранному пути
-                window.GetQDir().cd(dirName);   //переход в созданную директорию
-                //цикл копирования элементов контейнера в созданную директорию
-                foreach(QFileInfo info, copyList)
+                QDir qNewDir=window.GetQDir();
+                bool dirExists=false;    //флаг существования директорий с таким именем
+                //проход по выбранной директории для поиска директории с именем копируемой
+                foreach(QFileInfo dirs, qNewDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name))
                 {
-                    QString copyPath = info.filePath().replace(qDir.absolutePath(), window.GetQDir().absolutePath());    //создание пути для копирования
-                    //если файл - копируем в файл
-                    bool dirExists=false;    //флаг существования директорий с таким именем
-                    //проход по выбранной директории для поиска директории с именем копируемой
-                    foreach(QFileInfo dirs, window.GetQDir().entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name))
+                    if(dirs.fileName()==dirName)        //если диреткория существует
                     {
-                        if(dirs.fileName()==dirName)        //если диреткория существует
-                        {
-                            dirExists=true; //установка флага на истинное значение
-                            break;
-                        }
+                        dirExists=true; //установка флага на истинное значение
+                        break;
                     }
-                    if(!dirExists)  //если директорий с таким именем нет
+                }
+                if(!dirExists)  //если директорий с таким именем нет
+                {
+                    qNewDir.mkdir(dirName);    //создание копии директории по выбранному пути
+                    qNewDir.cd(dirName);
+                    //цикл копирования элементов контейнера в созданную директорию
+                    foreach(QFileInfo info, copyList)
                     {
+                        QString copyPath = info.filePath().replace(qDir.absolutePath(), qNewDir.absolutePath());    //создание пути для копирования
+                        //если файл - копируем в файл
                         if(info.isFile()) //если текущий элемент контейнера - файл
                         {
-                            if(info.fileName().contains(".txt")) //если файл текстовый
-                            {
-
-                                file->SetPath(info.absoluteFilePath()); //установки пути файла
-                                if(!file->Copy(copyPath))       //если копирование не выполнено
-                                    throw PerformationException( "Copy File", "The operation <<Copy>> was not perfomed!");
-                            }
-                            else
-                            {
-                                if(!(QFile::copy(info.absoluteFilePath(), copyPath)))   //если копирование не выполнено
-                                    throw PerformationException( "Copy File", "The operation <<Copy>> was not perfomed!");
-                            }
-
+                            file->SetPath(info.absoluteFilePath()); //установки пути файла
+                            if(!file->Copy(copyPath))       //если копирование не выполнено
+                                throw PerformationException( "Copy File", "The operation <<Copy>> was not perfomed!");
                         }
-
                         if(info.isDir())    //если текущий элемент - директория
                         {
                             if(!dir->Copy(copyPath)) //если копирование не выполнено
-                                throw PerformationException( "Copy dir", "The operation <<Copy>> was not perfomed!");
+                                throw PerformationException( "Copy Directory", "The operation <<Copy>> was not perfomed!");
+                        }
+                        if(info.isSymLink())
+                        {
+                            link->SetPath(info.absoluteFilePath()); //установки пути файла
+                            if(!link->Copy(copyPath))       //если копирование не выполнено
+                                throw PerformationException( "Copy Symbol Link", "The operation <<Copy>> was not perfomed!");
                         }
                     }
-                    else throw PerformationException( "Copy dir", "A directory with this name exists!");
+                    filePath=fileName="";
+                    file->SetPath(filePath);
+                        //очистка пути директории
+                    dirPath=dirName="";
+                    dir->SetPath(dirPath);
+
+                    linkPath=linkName="";
+                    link->SetPath(linkPath);
                 }
+                else throw PerformationException( "Copy Dir", "A directory with this name exists!");
                 //очистка пути файла
-                filePath=fileName="";
-                file->SetPath(filePath);
-                    //очистка пути директории
-                dirPath=dirName="";
-                dir->SetPath(dirPath);
             }
         }
         else if(fileName=="" && dirName=="" && linkName!="")    //если выбран файл
@@ -684,13 +640,11 @@ void MainWindow::on_btnCopy_clicked()   //слот нажатия на кноп�
                 else throw PerformationException( "Copy Symbol Link","A symbol link with this name exists!");
             }
         }
-
     }
     catch(ChoiseException error)
     {
         error.GetException(this);
     }
-
     catch(PerformationException error)
     {
         error.GetException(this);
@@ -703,6 +657,7 @@ void MainWindow::on_btnCopy_clicked()   //слот нажатия на кноп�
 
 void MainWindow::on_btnReplace_clicked()    //слот нажатия на кнопку "Replace"
 {
+    QDir qDir=QDir(dirPath);
     try {
         if(fileName=="" && dirName=="" && linkName=="") //если не выбран ни один объект
             throw ChoiseException( "Replace", "You was not choose a file or a directory! Please try again");
@@ -727,8 +682,6 @@ void MainWindow::on_btnReplace_clicked()    //слот нажатия на кн�
                 }
                 if(!fileExists) //если файлов с таким именем нет
                 {
-                    if(fileName.contains(".txt"))   //если файл текстовый
-                    {
                         file->SetPath(filePath);     //установка пути файла
                         if(!file->Copy(newPath))    //если копирование не произошло
                             throw PerformationException( "Replace File", "The operation <<Copy>> was not perfomed!");
@@ -737,49 +690,84 @@ void MainWindow::on_btnReplace_clicked()    //слот нажатия на кн�
                         //очистка пути файла
                         filePath=fileName="";
                         file->SetPath(filePath);
-                    }
-                    else
-                    {
-                        if(!(QFile::copy(filePath, newPath)))   //если копирование не произошло
-                            throw PerformationException( "Replace File", "The operation <<Copy>> was not perfomed!");
-                        if(!(QFile::remove(filePath)))  //если удаление не произошло
-                            throw PerformationException( "Replace File", "The operation <<Delete>> was not perfomed!");
-                    }
                 }
                 else throw PerformationException( "Replace File", "A file with this name exists!");
             }
         }
         else if(fileName=="" && dirName!="" && linkName=="")     //если выбрана директория
         {
+            QFileInfoList replaceList=QFileInfoList(); //создание контейнера для хранения внутренних файлов выбранной директории
+            RecursiveCopyList(qDir, replaceList);   //рекурсивное наполнение контейнера внутренними файлами директории
             AdditionalWindow window;
-            window.exec();  //метод выполняет появление дополнительного окна для перемещения
+            window.exec();  //метод выполняет появление дополнительного окна для копирования
             if(window.Cancel()) //если операция отменена
-                throw PerformationException( "Replace File", "The operation was canceled!");
+                throw PerformationException( "Replace Directory", "The operation was canceled!");
             else
             {
-                QString newPath = window.GetQDir().absolutePath().append("/").append(dirName);   //создание пути для перемещения
-                bool dirExists=false;   //флаг существования директории с таким именем
-                //цикл прохода по выбранной директории для поиска директории с таким именем
-                foreach(QFileInfo dirs, window.GetQDir().entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name))
+                QDir qNewDir=window.GetQDir();
+                bool dirExists=false;    //флаг существования директорий с таким именем
+                //проход по выбранной директории для поиска директории с именем копируемой
+                foreach(QFileInfo dirs, qNewDir.entryInfoList(QDir::Dirs|QDir::NoDotAndDotDot, QDir::Name))
                 {
-                    if(dirs.fileName()==dirName)    //если директория с таким именем есть
+                    if(dirs.fileName()==dirName)        //если диреткория существует
                     {
-                        dirExists=true; //установка флаг на истинное значение
+                        dirExists=true; //установка флага на истинное значение
                         break;
                     }
                 }
                 if(!dirExists)  //если директорий с таким именем нет
                 {
-                    dir->SetPath(dirPath);   //установка пути директории
-                    if(!dir->Copy(newPath))  //если копирование не произошло
-                        throw PerformationException( "Replace dir", "The operation <<Copy>> was not perfomed!");
-                    if(!dir->Delete())   //если удаление не произошло
-                        throw PerformationException("Replace dir", "The operation <<Delete>> was not perfomed!");
-                    //очистка пути директории
-                    dirPath=dirName="";
-                    dir->SetPath(dirPath);
+                    qNewDir.mkdir(dirName);    //создание копии директории по выбранному пути
+                    qNewDir.cd(dirName);
+                    //цикл копирования элементов контейнера в созданную директорию
+                    foreach(QFileInfo info, replaceList)
+                    {
+                        QString replacePath = info.filePath().replace(qDir.absolutePath(), qNewDir.absolutePath());    //создание пути для копирования
+                        //если файл - копируем в файл
+                        if(info.isFile()) //если текущий элемент контейнера - файл
+                        {
+                                file->SetPath(info.absoluteFilePath()); //установки пути файла
+                                if(!file->Copy(replacePath))       //если копирование не выполнено
+                                    throw PerformationException( "Replace File", "The operation <<Copy>> was not perfomed!");
+                                //очистка пути файла
+                                filePath=fileName="";
+                                file->SetPath(filePath);
+                        }
+                        if(info.isDir())    //если текущий элемент - директория
+                        {
+                            if(!dir->Copy(replacePath)) //если копирование не выполнено
+                                throw PerformationException( "Replace Directory", "The operation <<Copy>> was not perfomed!");
+                            //очистка пути файла
+                            dirPath=dirName="";
+                            dir->SetPath(dirPath);
+                        }
+                        if(info.isSymLink())
+                        {
+                            link->SetPath(info.absoluteFilePath()); //установки пути файла
+                            if(!link->Copy(replacePath))       //если копирование не выполнено
+                                throw PerformationException( "Replace Symbol Link", "The operation <<Copy>> was not perfomed!");
+                            linkPath=linkName="";
+                            link->SetPath(linkPath);
+                        }
+                    }
+                    if(!qDir.isEmpty())  //если директория не пуста
+                    {
+                        if(!RecursiveDelete(qDir, file, dir, link)) //если внутренние файлы не удалены
+                            throw PerformationException( "Replace Directory", "The operation <<Delete>> was not perfomed!");
+                    }
+                    if(qDir.isEmpty())   //если директория пуста
+                    {
+                        //установка пути директории
+                        dir->SetPath(dirPath);
+                        if(!dir->Delete())   //если удаление не выпонено
+                            throw PerformationException( "Replace Directory", "The operation <<Delete>> was not perfomed!");
+                        //очистка пути директории
+                        dirPath=dirName="";
+                        dir->SetPath(dirPath);
+                    }
                 }
-                else throw PerformationException( "Replace dir", "A directory with this name exists!");
+                else throw PerformationException( "Replace Directory", "A directory with this name exists!");
+                //очистка пути файла
             }
         }
         else if(fileName=="" && dirName=="" && linkName!="")    //если выбран файл
@@ -863,20 +851,12 @@ void MainWindow::on_btnRename_clicked()  //слот нажатия на кноп
                     }
                     if(!fileExists)//если файлов с таким именем нет
                     {
-                        if(fileName.contains(".txt"))   //если файл текстовый
-                        {
                             file->SetPath(filePath);     //установка пути файла
                             if(!file->Rename(newPath))  //если переименование не произошло
                                 throw PerformationException( "Rename File", "The operation <<Rename>> was not perfomed!");
                             //очистка пути файла
                             filePath=fileName="";
                             file->SetPath(filePath);
-                        }
-                        else
-                        {
-                            if(!(QFile::rename(filePath, newPath)))  //если переименование не произошло
-                                throw PerformationException( "Rename File", "The operation <<Rename>> was not perfomed!");
-                        }
                     }
                     else throw PerformationException( "Rename File", "A file with this name exists!");
                 }
@@ -886,7 +866,7 @@ void MainWindow::on_btnRename_clicked()  //слот нажатия на кноп
                 RenameWindow name;
                 name.exec();     //метод выполняет появление окна для переименования директории
                 if(name.GetName()=="")  //если имя не введено
-                    throw  ExceptionEmpty("Rename dir", "A new dir name is empty! Please try again");
+                    throw  ExceptionEmpty("Rename Directory", "A new directory name is empty! Please try again");
                 else
                 {
                     QString newPath=qDir.absolutePath().append("/").append(name.GetName());  //создание нового пути с учетом переименования
@@ -904,12 +884,12 @@ void MainWindow::on_btnRename_clicked()  //слот нажатия на кноп
                     {
                         dir->SetPath(dirPath);   //установка пути директории
                         if(!dir->Rename(newPath))    //если переименование не произошло
-                            throw PerformationException("Rename dir", "The operation <<Rename>> was not perfomed!");
+                            throw PerformationException("Rename Directory", "The operation <<Rename>> was not perfomed!");
                         //очистка пути директории
                         dirPath=dirName="";
                         dir->SetPath(dirPath);
                     }
-                    else throw PerformationException( "Rename dir", "A directory with this name exists!");
+                    else throw PerformationException( "Rename Directory", "A directory with this name exists!");
                 }
             }
             else if(filePath=="" && dirPath=="" && linkPath!="")    //если выбран файл
@@ -943,10 +923,8 @@ void MainWindow::on_btnRename_clicked()  //слот нажатия на кноп
                     else throw PerformationException( "Rename Symbol Link", "A symbol link with this name exists!");
                 }
             }
-
         }
     }
-
     catch(ChoiseException error)
     {
         error.GetException(this);

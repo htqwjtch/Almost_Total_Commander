@@ -3,18 +3,16 @@
 #include "systemfiles.h"
 #include <cstdio>
 #include <unistd.h>
+#include <string.h>
 
 #include<QMessageBox>
 using namespace std;
 
 bool File::Create() //метод создания текстового файла
 {
-    ofstream file;  //создание объекта класса ofstream
-    file.open(filePath);    //открытие файла с указанным именем
-    if(!file.is_open()) //если файл не открыт
-        return false;
-    file.close();   //если открыт
-    return true;
+    QString cmd="touch ";
+    cmd=cmd.append(filePath);
+    return !system(cmd.toLocal8Bit().constData());
 }
 
 bool File::Delete() //метод удаления текстового файла
@@ -24,37 +22,14 @@ bool File::Delete() //метод удаления текстового файл�
 
 bool File::Copy(QString newPath)    //метод копирования текстового файла
 {
-    const char* new_path=newPath.toLocal8Bit().constData(); //преобразование строки типа QString в строку типа string
-    ifstream file;  //создание объекта класса ifstream
-    file.open(filePath);    //открытие файла с указанным именем
-    ofstream newFile;   //создание объекта класса ofstream
-    newFile.open(new_path, ios::app);   //открытие файла с указанным именем и режимом записи в конец файла
-    if (file.is_open() && newFile.is_open()) //если оба файла открыты
-    {
-        string line="";
-        while (getline(file, line))  //пока можно производить чтение из файла
-            newFile << line << endl; //чтение информации из файла построчно
-    }
-    else    //если закрыт хотя бы один из файлов
-    {
-        if(file.is_open())
-            file.close();
-        if(newFile.is_open())
-            newFile.close();
-        return false;
-    }
-    //если открыт хотя бы один из файлов
-    if(file.is_open())
-        file.close();
-    if(newFile.is_open())
-        newFile.close();
-    return true;
+    QString cmd="cp ";
+    cmd=cmd.append(filePath).append(" ").append(newPath);
+    return !system(cmd.toLocal8Bit().constData());
 }
 
 bool File::Rename(QString newPath)  //метод переименования текстового файла
 {
-    const char* new_path=newPath.toLocal8Bit().constData(); //преобразование строки типа QString в строку типа string
-    return !rename(filePath, new_path);   //если выполнено
+    return !rename(filePath, newPath.toLocal8Bit().constData());   //если выполнено
 }
 
 void File::SetPath(QString path)    //метод установки пути текстового файла
@@ -80,14 +55,13 @@ bool Dir::Delete()   //метод удаления директории
 
 bool Dir::Rename(QString newPath)     //метод переименования директории
 {
-    const char* new_path=newPath.toLocal8Bit().constData(); //преобразование строки типа QString в строку типа string
+    const char* new_path=newPath.toLocal8Bit().constData();
     return !rename(dirPath, new_path);
 }
 
 bool Dir::Copy(QString newPath)  //метод копирования директории
 {
-    const char* new_path=newPath.toLocal8Bit().constData(); //преобразование строки типа QString в строку типа string
-    return !mkdir(new_path, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);//если выполнено
+    return !mkdir(newPath.toLocal8Bit().constData(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);//если выполнено
 }
 
 void Dir::SetPath(QString path)  //метод установки пути директории
@@ -122,8 +96,7 @@ bool Link::Copy(QString newPath)    //метод копирования текс
 
 bool Link::Rename(QString newPath)  //метод переименования текстового файла
 {
-    const char* new_path=newPath.toLocal8Bit().constData(); //преобразование строки типа QString в строку типа string
-    return !rename(linkPath, new_path);   //если выполнено
+    return !rename(linkPath, newPath.toLocal8Bit().constData());   //если выполнено
 }
 
 void Link::SetPath(QString path)    //метод установки пути текстового файла
