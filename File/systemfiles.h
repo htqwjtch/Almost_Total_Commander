@@ -20,56 +20,44 @@ public:
     virtual ~System()=default;
     //ниже представлены чисто виртуальные методы для работы с системными объектами
     //описаны они будут в производных классах
-    virtual bool Create()=0;
-    virtual bool Delete()=0;
-    virtual bool Rename(QString)=0;
-    virtual bool Copy(QString)=0;
-    virtual void SetPath(QString)=0;
-    virtual const char* GetPath()=0;
+    virtual bool Create(QString)=0;
+    virtual bool Delete(QString)=0;
+    virtual bool Rename(QString, QString)=0;
+    virtual bool Copy(QString, QString)=0;
 };
 
 
 class File: public System   //производный класс File для работы с текстовыми файлами
 {
-    const char* filePath="";
 public:
     File()=default;
     ~File()=default;
-    bool Create();  //метод создания текстового файла
-    bool Delete();  //метод удаления текстового файла
-    bool Rename(QString);   //метод переименования текстового файла
-    bool Copy(QString);     //метод копирования текстового файла
-    void SetPath(QString);  //метод установки пути текстового файла
-    const char* GetPath();  //метод передачи пути текстового файла
+    bool Create(QString);  //метод создания текстового файла
+    bool Delete(QString);  //метод удаления текстового файла
+    bool Rename(QString, QString);   //метод переименования текстового файла
+    bool Copy(QString, QString);     //метод копирования текстового файла
 };
 
 class Dir: public System //производный класс Dir для работы с директориями
 {
-    const char* dirPath="";
 public:
     Dir()=default;
     ~Dir()=default;
-    bool Create();  //метод создания директории
-    bool Delete();  //метод удаления директории
-    bool Rename(QString);   //метод переименования директории
-    bool Copy(QString);     //метод копирования директории
-    void SetPath(QString);  //метод установки пути директории
-    const char* GetPath();  //метод передачи пути директории
+    bool Create(QString);  //метод создания директории
+    bool Delete(QString);  //метод удаления директории
+    bool Rename(QString, QString);   //метод переименования директории
+    bool Copy(QString, QString);     //метод копирования директории
 };
 
 class Link: public System
 {
-    const char* linkPath="";
-    const char* linkedPath="";
 public:
     Link()=default;
     ~Link()=default;
-    bool Create();  //метод создания директории
-    bool Delete();  //метод удаления директории
-    bool Rename(QString);   //метод переименования директории
-    bool Copy(QString);     //метод копирования директории
-    void SetPath(QString);  //метод установки пути директории
-    const char* GetPath();  //метод передачи пути директории
+    bool Create(QString);  //метод создания директории
+    bool Delete(QString);  //метод удаления директории
+    bool Rename(QString, QString);   //метод переименования директории
+    bool Copy(QString, QString);     //метод копирования директории
 };
 
 

@@ -80,20 +80,20 @@ void MainWindow::on_lvSource_clicked(const QModelIndex &index)
         ui->lblType->setText(typeInfo); //отображениe типа файла
         fileName = model->fileName(index);  //переменная для хранения имени выбранного файла
         filePath = model->filePath(index);  //переменная для хранения пути выбранного файла
-        file->SetPath(filePath);    //установка пути выбранного файла
+            //установка пути выбранного файла
         if(dirPath!="") //если до этого была выбрана директория
         {
             //очистка пути директории
             dirPath=dirName="";
-            dir->SetPath(dirPath);
+
         }
         if(linkPath!="")
         {
             linkPath=linkName="";
-            link->SetPath(linkPath);
+
         }
     }
-    if(info.isDir()) //если выбранный объект - директория
+    else if(info.isDir()) //если выбранный объект - директория
     {
         ui->lblSize->setText("");  //отображение типа объекта
         ui->lblType->setText("Type: System directory");  //отображение типа объекта
@@ -103,15 +103,15 @@ void MainWindow::on_lvSource_clicked(const QModelIndex &index)
         {
             //очистка пути файла
             filePath=fileName="";
-            file->SetPath(filePath);
+
         }
         if(linkPath!="")
         {
             linkPath=linkName="";
-            link->SetPath(linkPath);
+
         }
     }
-    if(info.isSymLink())
+    else if(info.isSymLink())
     {
         QString sizelink=""; //переменная размера файла
         if(info.size()<1024)    //если размер файла меньше 1 килобайта
@@ -139,17 +139,17 @@ void MainWindow::on_lvSource_clicked(const QModelIndex &index)
         ui->lblType->setText(typeInfo); //отображениe типа файла
         linkName = model->fileName(index);  //переменная для хранения имени выбранного файла
         linkPath = model->filePath(index);  //переменная для хранения пути выбранного файла
-        link->SetPath(linkPath);    //установка пути выбранного файла
+            //установка пути выбранного файла
         if(filePath!="")
         {
             filePath=fileName="";
-            file->SetPath(filePath);
+
         }
         if(dirPath!="") //если до этого была выбрана директория
         {
             //очистка пути директории
             dirPath=dirName="";
-            dir->SetPath(dirPath);
+
         }
     }
 }
@@ -169,13 +169,13 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
         {
             //очистка пути файла
             filePath=fileName="";
-            file->SetPath(filePath);
+
         }
         if(linkPath!="") //если до этого был выбран файл
         {
             //очистка пути файла
             linkPath=linkName="";
-            link->SetPath(linkPath);
+
         }
         qDir.cd("..");//dir.cdUp();  навигация. в данном случае переход в родительскую папку
         listView->setRootIndex(model->index(qDir.absolutePath()));// получение индекса по пути
@@ -187,7 +187,7 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
         {
             //очистка пути директории
             dirPath=dirName="";
-            dir->SetPath(dirPath);
+
         }
     }
     else if(fileInfo.fileName()==".")    //если выбран выход в корневую папку
@@ -196,13 +196,13 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
         {
             //очистка пути файла
             filePath=fileName="";
-            file->SetPath(filePath);
+
         }
         if(linkPath!="") //если до этого был выбран файл
         {
             //очистка пути файла
             linkPath=linkName="";
-            link->SetPath(linkPath);
+
         }
         listView->setRootIndex(model->index(""));//переход в корневую папку
         //показать корневую папку
@@ -212,7 +212,7 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
         {
             //очистка пути директории
             dirPath=dirName="";
-            dir->SetPath(dirPath);
+
 
         }
     }
@@ -222,20 +222,20 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
         {
             //очистка пути файла
             filePath=fileName="";
-            file->SetPath(filePath);
+
         }
         if(linkPath!="") //если до этого был выбран файл
         {
             //очистка пути файла
             linkPath=linkName="";
-            link->SetPath(linkPath);
+
         }
         listView->setRootIndex(index);//элемент с этим индексом становится корневым
         ui->listWidget->clear(); //очистка панели "listWidget"
         ui->listWidget->addItem(fileInfo.absoluteFilePath());    //отображение нового пути в панели "listWidget"
             //очистка пути директории
         dirPath=dirName="";
-        dir->SetPath(dirPath);
+
     }
     else if(fileInfo.isFile())   // если выбранный элемент - файл
     {
@@ -243,18 +243,18 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
         {
             //очистка пути директории
             dirPath=dirName="";
-            dir->SetPath(dirPath);
+
         }
         if(linkPath!="") //если до этого был выбран файл
         {
             //очистка пути файла
             linkPath=linkName="";
-            link->SetPath(linkPath);
+
         }
         //QDesktopServices::openUrl(QUrl::fromUserInput(filePath)); //открывает файл в файловой системе Windows
         //очистка пути файла
         filePath=fileName="";
-        file->SetPath(filePath);
+
     }
     else if(fileInfo.isSymLink())   // если выбранный элемент - файл
     {
@@ -262,18 +262,18 @@ void MainWindow::on_lvSource_doubleClicked(const QModelIndex &index)
         {
             //очистка пути директории
             dirPath=dirName="";
-            dir->SetPath(dirPath);
+
         }
         if(filePath!="") //если до этого был выбран файл
         {
             //очистка пути файла
             filePath=fileName="";
-            file->SetPath(filePath);
+
         }
         //QDesktopServices::openUrl(QUrl::fromUserInput(filePath)); //открывает файл в файловой системе Windows
         //очистка пути файла
         linkPath=linkName="";
-        link->SetPath(linkPath);
+
     }
 }
 
@@ -304,8 +304,7 @@ void MainWindow::on_btnCreate_clicked() //слот нажатия на кноп�
                 }
                 if(!fileExists) //если файлов с таким именем нет
                 {
-                        file->SetPath(createPath);  //установка пути файла
-                        if(!file->Create()) //если файл не создан
+                        if(!file->Create(createPath)) //если файл не создан
                             throw PerformationException("Create File", "The operation <<Create>> was not perfomed!");
                 }
                 else throw PerformationException("Create File", "A file with this name exists!");
@@ -328,8 +327,7 @@ void MainWindow::on_btnCreate_clicked() //слот нажатия на кноп�
                 }
                 if(!dirExists)  //если директорий с таким именем нет
                 {
-                    dir->SetPath(createPath);    //установка пути директории
-                    if(!dir->Create())   //если директория не создана
+                    if(!dir->Create(createPath))   //если директория не создана
                         throw  PerformationException( "Create Directory", "The operation <<Create>> was not perfomed!");
                 }
                 else throw  PerformationException( "Create Directory", "A directory with this name exist!");
@@ -354,9 +352,8 @@ void MainWindow::on_btnCreate_clicked() //слот нажатия на кноп�
                 }
                 if(!linkExists) //если файлов с таким именем нет
                 {
-                    link->SetPath(createPath);  //установка пути файла
-                    link->SetPath(linkedPath);
-                    if(!link->Create()) //если файл не создан
+                    QString path="";
+                    if(!link->Create(path.append(linkedPath).append(" ").append(createPath))) //если файл не создан
                         throw PerformationException("Create Symbol Link", "The operation <<Create>> was not perfomed!");
                 }
                 else throw PerformationException("Create Symbol Link", "A symbol link with this name exists!");
@@ -384,28 +381,19 @@ bool RecursiveDelete(QDir &qDir, System* file, System* dir, System *link)   //ф
             qDir.cd(info.fileName());//заходим в нее
             RecursiveDelete(qDir, file, dir, link);// рекурсивно удаляем внутренности
             //теперь папка пуста и мы можем ее удалить
-            dir->SetPath(qDir.absolutePath());
-            if(!dir->Delete())
+            if(!dir->Delete(qDir.absolutePath()))
                 return false;
-
-            dir->SetPath("");
             qDir.cdUp();//возврат
         }
         else if(info.isFile())  //если текущий объект - файл
         {
-                file->SetPath(info.absoluteFilePath()); //установка пути файла
-                if(!file->Delete()) //если файл не удален
+                if(!file->Delete(info.absoluteFilePath())) //если файл не удален
                     return false;
-                //очистка пути файла
-                file->SetPath("");
         }
         else if(info.isSymLink())  //если текущий объект - файл
         {
-                link->SetPath(info.absoluteFilePath()); //установка пути файла
-                if(!link->Delete()) //если файл не удален
+                if(!link->Delete(info.absoluteFilePath())) //если файл не удален
                     return false;
-                //очистка пути файла
-                link->SetPath("");
         }
     }
     return true;
@@ -429,12 +417,12 @@ void MainWindow::on_btnDelete_clicked() //слот нажатия на кноп�
                     throw PerformationException( "Delete FIle", "The operation was canceled!");
                 else
                 {
-                        file->SetPath(filePath);    //установка пути файла
-                        if(!file->Delete()) //если удаление не выпонено
+                            //установка пути файла
+                        if(!file->Delete(filePath)) //если удаление не выпонено
                             throw PerformationException( "Delete File", "The operation <<Delete>> was not perfomed!");
                         //очистка пути файла
                         filePath=fileName="";
-                        file->SetPath(filePath);
+
                 }
             }
             else if(filePath=="" && dirPath!="" && linkPath=="")     //если выбрана директория
@@ -454,12 +442,12 @@ void MainWindow::on_btnDelete_clicked() //слот нажатия на кноп�
                     if(qDir.isEmpty())   //если директория пуста
                     {
                         //установка пути директории
-                        dir->SetPath(dirPath);
-                        if(!dir->Delete())   //если удаление не выпонено
+
+                            if(!dir->Delete(dirPath))   //если удаление не выпонено
                             throw PerformationException( "Delete Directory", "The operation <<Delete>> was not perfomed!");
                         //очистка пути директории
                         dirPath=dirName="";
-                        dir->SetPath(dirPath);
+
                     }
                 }
             }
@@ -471,12 +459,12 @@ void MainWindow::on_btnDelete_clicked() //слот нажатия на кноп�
                     throw PerformationException( "Delete Symbol Link", "The operation was canceled!");
                 else
                 {
-                        link->SetPath(linkPath);    //установка пути файла
-                        if(!link->Delete()) //если удаление не выпонено
+                            //установка пути файла
+                        if(!link->Delete(linkPath)) //если удаление не выпонено
                             throw PerformationException( "Delete Symbol Link", "The operation <<Delete>> was not perfomed!");
                         //очистка пути файла
                         linkPath=linkName="";
-                        link->SetPath(linkPath);
+
                 }
             }
         }
@@ -538,12 +526,12 @@ void MainWindow::on_btnCopy_clicked()   //слот нажатия на кноп�
                 }
                 if(!fileExists) //если файлов с таким именем нет
                 {
-                    file->SetPath(filePath);    //установка пути файла
-                        if(!file->Copy(copyPath))   //если копирование не произошло
+                        //установка пути файла
+                        if(!file->Copy(filePath, copyPath))   //если копирование не произошло
                             throw PerformationException( "Copy File", "The operation <<Copy>> was not perfomed!");
                         //очистка пути файла
                         filePath=fileName="";
-                        file->SetPath(filePath);
+
                 }
                 else throw PerformationException( "Copy File","A file with this name exists!");
             }
@@ -580,32 +568,30 @@ void MainWindow::on_btnCopy_clicked()   //слот нажатия на кноп�
                         //если файл - копируем в файл
                         if(info.isFile()) //если текущий элемент контейнера - файл
                         {
-                            file->SetPath(info.absoluteFilePath()); //установки пути файла
-                            if(!file->Copy(copyPath))       //если копирование не выполнено
+                            if(!file->Copy(info.absoluteFilePath(), copyPath))       //если копирование не выполнено
                                 throw PerformationException( "Copy File", "The operation <<Copy>> was not perfomed!");
                         }
                         if(info.isDir())    //если текущий элемент - директория
                         {
-                            if(!dir->Copy(copyPath)) //если копирование не выполнено
+                            if(!dir->Copy(info.dir().dirName(), copyPath)) //если копирование не выполнено
                                 throw PerformationException( "Copy Directory", "The operation <<Copy>> was not perfomed!");
                         }
                         if(info.isSymLink())
                         {
-                            link->SetPath(info.absoluteFilePath()); //установки пути файла
-                            if(!link->Copy(copyPath))       //если копирование не выполнено
+                            if(!link->Copy(info.absoluteFilePath(), copyPath))       //если копирование не выполнено
                                 throw PerformationException( "Copy Symbol Link", "The operation <<Copy>> was not perfomed!");
                         }
                     }
                     filePath=fileName="";
-                    file->SetPath(filePath);
+
                         //очистка пути директории
                     dirPath=dirName="";
-                    dir->SetPath(dirPath);
+
 
                     linkPath=linkName="";
-                    link->SetPath(linkPath);
+
                 }
-                else throw PerformationException( "Copy Dir", "A directory with this name exists!");
+                else throw PerformationException( "Copy Directory", "A directory with this name exists!");
                 //очистка пути файла
             }
         }
@@ -630,12 +616,12 @@ void MainWindow::on_btnCopy_clicked()   //слот нажатия на кноп�
                 }
                 if(!linkExists) //если файлов с таким именем нет
                 {
-                        link->SetPath(linkPath);    //установка пути файла
-                        if(!link->Copy(copyPath))   //если копирование не произошло
+                            //установка пути файла
+                        if(!link->Copy(linkPath, copyPath))   //если копирование не произошло
                             throw PerformationException( "Copy Symbol Link", "The operation <<Copy>> was not perfomed!");
                         //очистка пути файла
                         linkPath=linkName="";
-                        link->SetPath(linkPath);
+
                 }
                 else throw PerformationException( "Copy Symbol Link","A symbol link with this name exists!");
             }
@@ -682,14 +668,14 @@ void MainWindow::on_btnReplace_clicked()    //слот нажатия на кн�
                 }
                 if(!fileExists) //если файлов с таким именем нет
                 {
-                        file->SetPath(filePath);     //установка пути файла
-                        if(!file->Copy(newPath))    //если копирование не произошло
+                             //установка пути файла
+                        if(!file->Copy(filePath, newPath))    //если копирование не произошло
                             throw PerformationException( "Replace File", "The operation <<Copy>> was not perfomed!");
-                        if(!file->Delete()) //если удаление не произошло
+                        if(!file->Delete(filePath)) //если удаление не произошло
                             throw PerformationException( "Replace File", "The operation <<Delete>> was not perfomed!");
                         //очистка пути файла
                         filePath=fileName="";
-                        file->SetPath(filePath);
+
                 }
                 else throw PerformationException( "Replace File", "A file with this name exists!");
             }
@@ -726,30 +712,21 @@ void MainWindow::on_btnReplace_clicked()    //слот нажатия на кн�
                         //если файл - копируем в файл
                         if(info.isFile()) //если текущий элемент контейнера - файл
                         {
-                                file->SetPath(info.absoluteFilePath()); //установки пути файла
-                                if(!file->Copy(replacePath))       //если копирование не выполнено
+                                if(!file->Copy(info.absoluteFilePath(), replacePath))       //если копирование не выполнено
                                     throw PerformationException( "Replace File", "The operation <<Copy>> was not perfomed!");
-                                //очистка пути файла
-                                filePath=fileName="";
-                                file->SetPath(filePath);
                         }
                         if(info.isDir())    //если текущий элемент - директория
                         {
-                            if(!dir->Copy(replacePath)) //если копирование не выполнено
-                                throw PerformationException( "Replace Directory", "The operation <<Copy>> was not perfomed!");
-                            //очистка пути файла
-                            dirPath=dirName="";
-                            dir->SetPath(dirPath);
+                                if(!dir->Copy(info.dir().dirName(), replacePath)) //если копирование не выполнено
+                                    throw PerformationException( "Replace Directory", "The operation <<Copy>> was not perfomed!");
                         }
                         if(info.isSymLink())
                         {
-                            link->SetPath(info.absoluteFilePath()); //установки пути файла
-                            if(!link->Copy(replacePath))       //если копирование не выполнено
+                            if(!link->Copy(info.absoluteFilePath(), replacePath))       //если копирование не выполнено
                                 throw PerformationException( "Replace Symbol Link", "The operation <<Copy>> was not perfomed!");
-                            linkPath=linkName="";
-                            link->SetPath(linkPath);
                         }
                     }
+
                     if(!qDir.isEmpty())  //если директория не пуста
                     {
                         if(!RecursiveDelete(qDir, file, dir, link)) //если внутренние файлы не удалены
@@ -758,16 +735,16 @@ void MainWindow::on_btnReplace_clicked()    //слот нажатия на кн�
                     if(qDir.isEmpty())   //если директория пуста
                     {
                         //установка пути директории
-                        dir->SetPath(dirPath);
-                        if(!dir->Delete())   //если удаление не выпонено
+                        if(!dir->Delete(dirPath))   //если удаление не выпонено
                             throw PerformationException( "Replace Directory", "The operation <<Delete>> was not perfomed!");
                         //очистка пути директории
                         dirPath=dirName="";
-                        dir->SetPath(dirPath);
                     }
+                    filePath=fileName="";
+                    dirPath=dirName="";
+                    linkPath=linkName="";
                 }
                 else throw PerformationException( "Replace Directory", "A directory with this name exists!");
-                //очистка пути файла
             }
         }
         else if(fileName=="" && dirName=="" && linkName!="")    //если выбран файл
@@ -791,14 +768,14 @@ void MainWindow::on_btnReplace_clicked()    //слот нажатия на кн�
                 }
                 if(!linkExists) //если файлов с таким именем нет
                 {
-                        link->SetPath(linkPath);     //установка пути файла
-                        if(!link->Copy(newPath))    //если копирование не произошло
+                             //установка пути файла
+                        if(!link->Copy(linkPath, newPath))    //если копирование не произошло
                             throw PerformationException( "Replace Symbol Link", "The operation <<Copy>> was not perfomed!");
-                        if(!link->Delete()) //если удаление не произошло
+                        if(!link->Delete(linkPath)) //если удаление не произошло
                             throw PerformationException( "Replace Symbol Link", "The operation <<Delete>> was not perfomed!");
                         //очистка пути файла
                         linkPath=linkName="";
-                        link->SetPath(linkPath);
+
                 }
                 else throw PerformationException( "Replace Symbol Link", "A symbol link with this name exists!");
             }
@@ -851,12 +828,12 @@ void MainWindow::on_btnRename_clicked()  //слот нажатия на кноп
                     }
                     if(!fileExists)//если файлов с таким именем нет
                     {
-                            file->SetPath(filePath);     //установка пути файла
-                            if(!file->Rename(newPath))  //если переименование не произошло
+                                 //установка пути файла
+                            if(!file->Rename(filePath, newPath))  //если переименование не произошло
                                 throw PerformationException( "Rename File", "The operation <<Rename>> was not perfomed!");
                             //очистка пути файла
                             filePath=fileName="";
-                            file->SetPath(filePath);
+
                     }
                     else throw PerformationException( "Rename File", "A file with this name exists!");
                 }
@@ -882,12 +859,12 @@ void MainWindow::on_btnRename_clicked()  //слот нажатия на кноп
                     }
                     if(!dirExists)  //если директорий с таким именем нет
                     {
-                        dir->SetPath(dirPath);   //установка пути директории
-                        if(!dir->Rename(newPath))    //если переименование не произошло
+                           //установка пути директории
+                        if(!dir->Rename(dirPath, newPath))    //если переименование не произошло
                             throw PerformationException("Rename Directory", "The operation <<Rename>> was not perfomed!");
                         //очистка пути директории
                         dirPath=dirName="";
-                        dir->SetPath(dirPath);
+
                     }
                     else throw PerformationException( "Rename Directory", "A directory with this name exists!");
                 }
@@ -913,12 +890,12 @@ void MainWindow::on_btnRename_clicked()  //слот нажатия на кноп
                     }
                     if(!linkExists)//если файлов с таким именем нет
                     {
-                            link->SetPath(linkPath);     //установка пути файла
-                            if(!link->Rename(newPath))  //если переименование не произошло
+                                 //установка пути файла
+                            if(!link->Rename(linkPath, newPath))  //если переименование не произошло
                                 throw PerformationException( "Rename Symbol Link", "The operation <<Rename>> was not perfomed!");
                             //очистка пути файла
                             linkPath=linkName="";
-                            link->SetPath(linkPath);
+
                     }
                     else throw PerformationException( "Rename Symbol Link", "A symbol link with this name exists!");
                 }

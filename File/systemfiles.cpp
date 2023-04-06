@@ -8,105 +8,73 @@
 #include<QMessageBox>
 using namespace std;
 
-bool File::Create() //метод создания текстового файла
+bool File::Create(QString filePath) //метод создания текстового файла
 {
     QString cmd="touch ";
     cmd=cmd.append(filePath);
     return !system(cmd.toLocal8Bit().constData());
 }
 
-bool File::Delete() //метод удаления текстового файла
+bool File::Delete(QString filePath) //метод удаления текстового файла
 {
-    return !remove(filePath); //если выполнено
+    return !remove(filePath.toLocal8Bit().constData()); //если выполнено
 }
 
-bool File::Copy(QString newPath)    //метод копирования текстового файла
+bool File::Copy(QString filePath, QString newPath)    //метод копирования текстового файла
 {
     QString cmd="cp ";
     cmd=cmd.append(filePath).append(" ").append(newPath);
     return !system(cmd.toLocal8Bit().constData());
 }
 
-bool File::Rename(QString newPath)  //метод переименования текстового файла
+bool File::Rename(QString filePath, QString newPath)  //метод переименования текстового файла
 {
-    return !rename(filePath, newPath.toLocal8Bit().constData());   //если выполнено
-}
-
-void File::SetPath(QString path)    //метод установки пути текстового файла
-{
-    filePath=path.toLocal8Bit().constData();// преобразует тип данных QString в тип string
-}
-
-const char* File::GetPath() //метод передачи пути текстового файла
-{
-    return filePath;
+    return !rename(filePath.toLocal8Bit().constData(), newPath.toLocal8Bit().constData());   //если выполнено
 }
 
 
-bool Dir::Create()   //метод создания директории
+bool Dir::Create(QString dirPath)   //метод создания директории
 {
-    return !mkdir(dirPath, S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    return !mkdir(dirPath.toLocal8Bit().constData(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 }
 
-bool Dir::Delete()   //метод удаления директории
+bool Dir::Delete(QString dirPath)   //метод удаления директории
 {
-    return !remove(dirPath);//если выполнено
+    return !remove(dirPath.toLocal8Bit().constData());
 }
 
-bool Dir::Rename(QString newPath)     //метод переименования директории
+bool Dir::Rename(QString dirPath, QString newPath)     //метод переименования директории
 {
-    const char* new_path=newPath.toLocal8Bit().constData();
-    return !rename(dirPath, new_path);
+    return !rename(dirPath.toLocal8Bit().constData(), newPath.toLocal8Bit().constData());
 }
 
-bool Dir::Copy(QString newPath)  //метод копирования директории
+bool Dir::Copy(QString dirName, QString newPath)  //метод копирования директории
 {
+    newPath=newPath.append(dirName);
     return !mkdir(newPath.toLocal8Bit().constData(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);//если выполнено
 }
 
-void Dir::SetPath(QString path)  //метод установки пути директории
-{
-    dirPath=path.toLocal8Bit().constData();// преобразует тип данных QString в тип string
-}
 
-const char* Dir::GetPath()   //метод передачи пути директории
-{
-    return dirPath;
-}
-
-
-bool Link::Create() //метод создания текстового файла
+bool Link::Create(QString linkedPath_linkPath) //метод создания текстового файла
 {
     QString cmd="ln -s ";
-    cmd=cmd.append(linkedPath).append(" ").append(linkPath);
+    cmd=cmd.append(linkedPath_linkPath);
     return !system(cmd.toLocal8Bit().constData());
 }
 
-bool Link::Delete() //метод удаления текстового файла
+bool Link::Delete(QString linkPath) //метод удаления текстового файла
 {
-    return !remove(linkPath);
+    return !remove(linkPath.toLocal8Bit().constData());
 }
 
-bool Link::Copy(QString newPath)    //метод копирования текстового файла
+bool Link::Copy(QString linkPath, QString newPath)    //метод копирования текстового файла
 {
     QString cmd="cp ";
     cmd=cmd.append(linkPath).append(" ").append(newPath);
     return !system(cmd.toLocal8Bit().constData());
 }
 
-bool Link::Rename(QString newPath)  //метод переименования текстового файла
+bool Link::Rename(QString linkPath, QString newPath)  //метод переименования текстового файла
 {
-    return !rename(linkPath, newPath.toLocal8Bit().constData());   //если выполнено
-}
-
-void Link::SetPath(QString path)    //метод установки пути текстового файла
-{
-    if(strstr(linkPath, "/home")==NULL)
-        linkPath=path.toLocal8Bit().constData();// преобразует тип данных QString в тип string
-    else linkedPath=path.toLocal8Bit().constData();// преобразует тип данных QString в тип string
-}
-
-const char* Link::GetPath() //метод передачи пути текстового файла
-{
-    return linkPath;
+    return !rename(linkPath.toLocal8Bit().constData(), newPath.toLocal8Bit().constData());   //если выполнено
 }
