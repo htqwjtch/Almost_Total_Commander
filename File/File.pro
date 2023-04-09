@@ -9,7 +9,6 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    additionalwindow.cpp \
     confirmdelete.cpp \
     container.cpp \
     createchoice.cpp \
@@ -21,7 +20,6 @@ SOURCES += \
     systemfiles.cpp
 
 HEADERS += \
-    additionalwindow.h \
     confirmdelete.h \
     container.h \
     createchoice.h \
@@ -33,7 +31,6 @@ HEADERS += \
     systemfiles.h
 
 FORMS += \
-    additionalwindow.ui \
     confirmdelete.ui \
     createchoice.ui \
     linkedpathwindow.ui \

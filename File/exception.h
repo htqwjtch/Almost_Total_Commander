@@ -1,93 +1,99 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-#include<QMessageBox>   //предоставляет модальный диалог для информирования пользователя
+#include <QMessageBox> //предоставляет модальный диалог для информирования пользователя
 
-#include<iostream>
+#include <iostream>
+
 using namespace std;
 
-
-class Exception //базовый класс исключений
+class Exception // базовый класс исключений
 {
-    QString nameOperation="";   //название операции, при которой обработано исключение
-    QString problem=""; //суть проблемы
+    QString nameOperation = ""; // название операции, при которой обработано исключение
+    QString problem = "";       // суть проблемы
+
 public:
-    Exception()=default;
-    ~Exception()=default;
-    void SetException(QString str1, QString str2)   //создание информации, предоставленной пользователю
+    Exception() = default;
+    ~Exception() = default;
+    void setException(QString str1, QString str2) // создание информации, предоставленной пользователю
     {
-        nameOperation=str1;
-        problem=str2;
+        nameOperation = str1;
+        problem = str2;
     }
-    void GetException(QWidget* parent)
+    void getException(QWidget* parent)
     {
-        QMessageBox::warning(parent, nameOperation, problem);   //предоставление пользователю информации об исключении
+        QMessageBox::warning(parent, nameOperation, problem); // предоставление пользователю информации об исключении
     }
 };
 
-class RootDirectoryException: public Exception  //производный класс, обрабатывающий исключение выполнения операций в корневой папке
+class RootDirectoryException : public Exception // производный класс, обрабатывающий исключение выполнения операций в корневой папке
 {
-    QString nameOperation="";
-    QString problem="";
+    QString nameOperation = "";
+    QString problem = "";
+
 public:
-    RootDirectoryException()=default;
+    RootDirectoryException() = default;
     RootDirectoryException(QString str1, QString str2) : nameOperation(str1), problem(str2)
     {
-        Exception::SetException(nameOperation, problem);   //вызов метода базового класса
+        Exception::setException(nameOperation, problem); // вызов метода базового класса
     }
-    ~RootDirectoryException()=default;
+    ~RootDirectoryException() = default;
 };
 
-class ChoiseException: public Exception //производный класс, обрабатывающий исключение выполнения операции без выбранного объекта
+class ChoiseException : public Exception // производный класс, обрабатывающий исключение выполнения операции без выбранного объекта
 {
-    QString nameOperation="";
-    QString problem="";
+    QString nameOperation = "";
+    QString problem = "";
+
 public:
-    ChoiseException()=default;
-    ChoiseException(QString str1, QString str2):  nameOperation(str1), problem(str2)
+    ChoiseException() = default;
+    ChoiseException(QString str1, QString str2) : nameOperation(str1), problem(str2)
     {
-        Exception::SetException(nameOperation, problem);    //вызов метода базового класса
+        Exception::setException(nameOperation, problem); // вызов метода базового класса
     }
-    ~ChoiseException()=default;
+    ~ChoiseException() = default;
 };
 
-class PerformationException: public Exception   //производный класс, обрабатывающий исключение невыполненной операции
+class PerformationException : public Exception // производный класс, обрабатывающий исключение невыполненной операции
 {
-    QString nameOperation="";
-    QString problem="";
+    QString nameOperation = "";
+    QString problem = "";
+
 public:
-    PerformationException()=default;
-    PerformationException(QString str1, QString str2):  nameOperation(str1), problem(str2)
+    PerformationException() = default;
+    PerformationException(QString str1, QString str2) : nameOperation(str1), problem(str2)
     {
-        Exception::SetException(nameOperation, problem);   //вызов метода базового класса
+        Exception::setException(nameOperation, problem); // вызов метода базового класса
     }
-    ~PerformationException()=default;
+    ~PerformationException() = default;
 };
 
-class BadAllocException:public Exception    //производный класс, обрабатывающий исключение выделения памяти
+class BadAllocException : public Exception // производный класс, обрабатывающий исключение выделения памяти
 {
-    QString nameOperation="";
-    QString problem="";
+    QString nameOperation = "";
+    QString problem = "";
+
 public:
-    BadAllocException()=default;
-    BadAllocException(QString str1, QString str2):  nameOperation(str1), problem(str2)
+    BadAllocException() = default;
+    BadAllocException(QString str1, QString str2) : nameOperation(str1), problem(str2)
     {
-        Exception::SetException(nameOperation, problem);   //вызов метода базового класса
+        Exception::setException(nameOperation, problem); // вызов метода базового класса
     }
-    ~BadAllocException()=default;
+    ~BadAllocException() = default;
 };
 
-class ExceptionEmpty: public Exception  //производный класс, обрабатывающий исключение пустой строки для ввода
+class ExceptionEmpty : public Exception // производный класс, обрабатывающий исключение пустой строки для ввода
 {
-    QString nameOperation="";
-    QString problem="";
+    QString nameOperation = "";
+    QString problem = "";
+
 public:
-    ExceptionEmpty()=default;
-    ExceptionEmpty(QString str1, QString str2):  nameOperation(str1), problem(str2)
+    ExceptionEmpty() = default;
+    ExceptionEmpty(QString str1, QString str2) : nameOperation(str1), problem(str2)
     {
-        Exception::SetException(nameOperation, problem);   //вызов метода базового класса
+        Exception::setException(nameOperation, problem); // вызов метода базового класса
     }
-    ~ExceptionEmpty()=default;
+    ~ExceptionEmpty() = default;
 };
 
 #endif // EXCEPTION_H

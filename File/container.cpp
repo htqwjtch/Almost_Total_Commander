@@ -1,74 +1,71 @@
 #include "container.h"
 #include "exception.h"
 
-void List::Push(QString bolt)   //метод добавления элемента
+void List::push(QString bolt) // метод добавления элемента
 {
-    try {
-        if(!(node=new Node))   //если память не выделилась
+    try
+    {
+        if (!(node = new Node)) // если память не выделилась
             throw BadAllocException("", "");
     }
-    catch(BadAllocException error)
+    catch (BadAllocException error)
     {
-        qDebug()<<"Node of List was not create!\n";
+        qDebug() << "Node of List was not create!\n";
     }
-
     catch (...)
     {
-        qDebug()<<"Unknown Error!\n";
+        qDebug() << "Unknown Error!\n";
     }
-    node->info=bolt;    //наполнение информацией атрибут структуры
-    if (!head||!tail)   //если контейнер пуст
+    node->info = bolt;  // наполнение информацией атрибут структуры
+    if (!head || !tail) // создание первого элемента
     {
-        //создание первого элемента
         tail = node;
         head = node;
     }
-    else
+    else // добавление нового элемента
     {
-        //добавление нового элемента
-        tail->next=node;
-        tail=node;
+        tail->next = node;
+        tail = node;
     }
 }
 
-Node* List::PeekHead(bool flag) //метод передачи первого либо текущего элемента
+Node* List::peekHead() // метод передачи первого либо текущего элемента
 {
-    return flag?head:node;
+    return head;
 }
 
-void List::Pop()    //метод очистки контейнера
+void List::clear() // метод очистки контейнера
 {
-    while(head) //пока первый элемент есть
+    while (head) // пока первый элемент есть
     {
-        node = head->next;  //установка текущего на следующий элемент за первым
-        delete head;    //удаление первого элемента
-        head = node;    //следующий за первым становится первым
+        node = head->next; // установка текущего на следующий элемент за первым
+        delete head;       // удаление первого элемента
+        head = node;       // следующий за первым становится первым
     }
-    tail = node;    //установка последнего элемента на пустой указатель
+    tail = node; // установка последнего элемента на пустой указатель
 }
 
-bool List::IsEmpty()    //метод проверки, пуст ли контейнер
+bool List::isEmpty() // метод проверки, пуст ли контейнер
 {
-    return tail==nullptr;
+    return tail == nullptr;
 }
 
-
-void List::Iterator::SetIter(Node* node)     //метод установки итератора на элемент, связанный с указателем *node
+void List::Iterator::setIter(Node* node) // метод установки итератора на элемент, связанный с указателем *node
 {
-    current=node;
+    current = node;
 }
 
-bool List::Iterator::operator ++()  //перегруженный оператор для перехода к следующему элементу
+bool List::Iterator::operator++() // перегруженный оператор для перехода к ледующему элементу
 {
-    if(this->current->next) //если указатель следующего элемента не пустой
+    if (this->current->next) // если указатель следующего элемента не пустой
     {
-        this->current=this->current->next; //переход к следующему элемненту
+        this->current = this->current->next; // переход к следующему элемненту
         return true;
     }
     return false;
 }
 
-Node* List::Iterator::operator *()  //перегруженный оператор для получения информации текущего элемента
+Node* List::Iterator::operator*() // перегруженный оператор для получения информации текущего элемента
 {
     return this->current;
 }
