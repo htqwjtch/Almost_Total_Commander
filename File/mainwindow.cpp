@@ -128,8 +128,7 @@ void MainWindow::on_lvLeft_clicked(const QModelIndex& index)
         QString typeInfo = type.append("link").append(" ").append(info.suffix()); // строка для отображения типа файла
         ui->lblType->setText(typeInfo);                                           // отображениe типа файла
         linkName = model->fileName(index);                                        // переменная для хранения имени выбранного файла
-        linkPath = model->filePath(index);                                        // переменная для хранения пути выбранного
-                                                                                  // файла установка пути выбранного файла
+        linkPath = model->filePath(index);                                        // установка пути выбранного файла
         if (filePath != "")
             filePath = fileName = "";
         if (dirPath != "")          // если до этого была выбрана директория
@@ -355,9 +354,8 @@ void MainWindow::on_btnDelete_clicked() // слот нажатия на кноп
                 throw ChoiseException("Delete", "You was not choose a file or a directory! Please try again");
             else if (filePath != "" && dirPath == "" && linkPath == "") // если выбран файл
             {
-                ConfirmDelete window;
-                window.exec();            // метод выполняет появление окна для подтверждения удаления
-                if (!window.getConfirm()) // если операция отменена
+                QMessageBox::StandardButton btn = QMessageBox::question(this, "Delete", "Do you want to perform <<Delete>> operation?", QMessageBox::Ok | QMessageBox::Cancel);
+                if (btn == QMessageBox::Cancel)
                     throw PerformationException("Delete FIle", "The operation was canceled!");
                 else
                 {
@@ -484,7 +482,7 @@ void MainWindow::on_btnCopy_clicked() // слот нажатия на кнопк
                 foreach (QFileInfo info, copyList)
                 {
                     QString copyPath = info.filePath().replace(lDir.absolutePath(), rDir.absolutePath()); // создание пути для копирования
-                    if (info.isFile())                                                                    // если текущий элемент контейнера - файл
+                    if (info.isFile())                                                                    // текущий элемент контейнера - файл
                     {
                         if (!file->copy(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
                             throw PerformationException("Copy File", "The operation <<Copy>> was not perfomed!");
@@ -598,7 +596,7 @@ void MainWindow::on_btnReplace_clicked() // слот нажатия на кно�
                 foreach (QFileInfo info, replaceList)
                 {
                     QString replacePath = info.filePath().replace(lDir.absolutePath(), rDir.absolutePath()); // создание пути для копирования
-                    if (info.isFile())                                                                       // если текущий элемент контейнера - файл
+                    if (info.isFile())                                                                       // текущий элемент контейнера - файл
                     {
                         if (!file->copy(info.absoluteFilePath(), replacePath)) // если копирование не выполнено
                             throw PerformationException("Replace File", "The operation <<Copy>> was not perfomed!");

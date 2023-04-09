@@ -5,7 +5,7 @@
 
 namespace Ui
 {
-class CreateChoice;
+    class CreateChoice;
 }
 
 class CreateChoice : public QDialog
@@ -21,6 +21,7 @@ public:
     bool getFile(); // метод, сообщающий о выборе создании файла
     bool getDir();  // метод, сообщающий о выборе создания директории
     bool getLink();
+
 private slots:
     void on_btnFile_clicked();
 

@@ -1,9 +1,9 @@
 #ifndef EXCEPTION_H
 #define EXCEPTION_H
 
-#include <QMessageBox> //предоставляет модальный диалог для информирования пользователя
-
 #include <iostream>
+
+#include <QMessageBox> //предоставляет модальный диалог для информирования пользователя
 
 using namespace std;
 

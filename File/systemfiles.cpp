@@ -1,11 +1,6 @@
 #include "systemfiles.h"
-
-#include "systemfiles.h"
 #include <cstdio>
-#include <string.h>
-#include <unistd.h>
 
-#include <QMessageBox>
 using namespace std;
 
 bool File::create(QString filePath) // метод создания текстового файла

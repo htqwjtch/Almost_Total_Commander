@@ -5,7 +5,7 @@
 
 namespace Ui
 {
-class ConfirmDelete;
+    class ConfirmDelete;
 }
 
 class ConfirmDelete : public QDialog

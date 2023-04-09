@@ -5,12 +5,12 @@
 
 namespace Ui
 {
-class LinkedPathWindow;
+    class LinkedPathWindow;
 }
 
 class LinkedPathWindow : public QDialog
 {
-    Q_OBJECT
+    Q_OBJECT;
 
 public:
     explicit LinkedPathWindow(QWidget* parent = nullptr);

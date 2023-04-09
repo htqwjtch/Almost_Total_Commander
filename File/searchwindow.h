@@ -2,13 +2,14 @@
 #define SEARCHWINDOW_H
 
 #include "container.h"
+
 #include <QDialog>
 #include <QDir>
 #include <QListWidget> //предоставляет виджет списка на основе элементов
 
 namespace Ui
 {
-class SearchWindow;
+    class SearchWindow;
 }
 
 class SearchWindow : public QDialog

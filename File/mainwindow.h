@@ -1,16 +1,16 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow> //предоставляет главное окно приложения
-#include <QThread>
-
 #include "searchwindow.h"
 #include "systemfiles.h"
+
+#include <QMainWindow> //предоставляет главное окно приложения
+#include <QThread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class MainWindow;
+    class MainWindow;
 }
 QT_END_NAMESPACE
 

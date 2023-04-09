@@ -5,7 +5,7 @@
 
 namespace Ui
 {
-class RenameWindow;
+    class RenameWindow;
 }
 
 class RenameWindow : public QDialog // класс переименования объекта

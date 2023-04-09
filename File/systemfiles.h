@@ -1,14 +1,14 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include <QDir>
-#include <QFileSystemModel>
-#include <QString>
-
 #include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <sys/stat.h>
+
+#include <QDir>
+#include <QFileSystemModel>
+#include <QString>
 
 using namespace std;
 
