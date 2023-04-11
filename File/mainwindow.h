@@ -21,8 +21,6 @@ class MainWindow : public QMainWindow //класс главного окна п�
 
 private slots:
 
-    void on_toolButton_clicked();
-
     void on_tabWidget_tabCloseRequested(int index);
 
     void on_CtrlX_triggered();
@@ -46,6 +44,13 @@ private slots:
     void on_CtrlD_triggered();
 
     void on_CtrlF_triggered();
+
+    //void on_tabWidget_tabBarClicked(int index);
+
+    //void on_tabWidget_tabBarClicked(int index);
+
+public slots:
+    void addTab();
 
 public:
     MainWindow(QWidget* parent = nullptr);
