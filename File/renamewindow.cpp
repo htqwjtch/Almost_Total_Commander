@@ -10,12 +10,12 @@ RenameWindow::RenameWindow(QWidget* parent) : QDialog(parent), ui(new Ui::Rename
 
 RenameWindow::~RenameWindow()
 {
-        delete ui;
+    delete ui;
 }
 
 QString RenameWindow::getName() // метод передачи имени
 {
-        return name;
+    return name;
 }
 
 void RenameWindow::on_btnOK_clicked() // слот нажатия на "OK"

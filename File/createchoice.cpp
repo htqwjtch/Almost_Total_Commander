@@ -59,3 +59,8 @@ void CreateChoice::on_btnLink_clicked()
     chooseLink(true);
     hide();
 }
+
+void CreateChoice::on_btnCancel_clicked()
+{
+    hide();
+}

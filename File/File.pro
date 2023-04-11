@@ -9,30 +9,36 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    confirmdelete.cpp \
     container.cpp \
     createchoice.cpp \
+    form.cpp \
     linkedpathwindow.cpp \
     main.cpp \
     mainwindow.cpp \
     renamewindow.cpp \
     searchwindow.cpp \
-    systemfiles.cpp
+    systemfiles.cpp \
+    threadtocopy.cpp \
+    threadtoremove.cpp \
+    threadtosearch.cpp
 
 HEADERS += \
-    confirmdelete.h \
     container.h \
     createchoice.h \
     exception.h \
+    form.h \
     linkedpathwindow.h \
     mainwindow.h \
     renamewindow.h \
     searchwindow.h \
-    systemfiles.h
+    systemfiles.h \
+    threadtocopy.h \
+    threadtoremove.h \
+    threadtosearch.h
 
 FORMS += \
-    confirmdelete.ui \
     createchoice.ui \
+    form.ui \
     linkedpathwindow.ui \
     mainwindow.ui \
     renamewindow.ui \

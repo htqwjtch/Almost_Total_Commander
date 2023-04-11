@@ -15,7 +15,7 @@ bool File::r_move(QString filePath) // метод удаления тексто�
     return !remove(filePath.toLocal8Bit().constData()); // если выполнено
 }
 
-bool File::copy(QString filePath, QString newPath) // метод копирования текстового файла
+bool File::c_py(QString filePath, QString newPath) // метод копирования текстового файла
 {
     QString cmd = "cp ";
     cmd = cmd.append(filePath).append(" ").append(newPath);
@@ -42,7 +42,7 @@ bool Dir::r_name(QString dirPath, QString newPath) // метод переиме�
     return !rename(dirPath.toLocal8Bit().constData(), newPath.toLocal8Bit().constData());
 }
 
-bool Dir::copy(QString dirName, QString newPath) // метод копирования директории
+bool Dir::c_py(QString dirName, QString newPath) // метод копирования директории
 {
     newPath = newPath.append(dirName);
     return !mkdir(newPath.toLocal8Bit().constData(), S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH); // если выполнено
@@ -60,7 +60,7 @@ bool Link::r_move(QString linkPath) // метод удаления тексто�
     return !remove(linkPath.toLocal8Bit().constData());
 }
 
-bool Link::copy(QString linkPath, QString newPath) // метод копирования текстового файла
+bool Link::c_py(QString linkPath, QString newPath) // метод копирования текстового файла
 {
     QString cmd = "cp ";
     cmd = cmd.append(linkPath).append(" ").append(newPath);

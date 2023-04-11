@@ -29,6 +29,8 @@ private slots:
 
     void on_btnLink_clicked();
 
+    void on_btnCancel_clicked();
+
 private:
     Ui::CreateChoice* ui;
     QString fileName = ""; // переменная для хранения имени созданного файла
