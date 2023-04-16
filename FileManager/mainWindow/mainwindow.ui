@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../resources/resources.qrc">
+    <normaloff>:/png-clipart-computer-icons-file-explorer-internet-explorer-internet-explorer-blue-angle__2_-removebg-preview (1).png</normaloff>:/png-clipart-computer-icons-file-explorer-internet-explorer-internet-explorer-blue-angle__2_-removebg-preview (1).png</iconset>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string/>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string/>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>900</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuInfo">
+    <property name="title">
+     <string>Info</string>
+    </property>
+    <addaction name="CtrlN"/>
+    <addaction name="CtrlD"/>
+    <addaction name="CtrlC"/>
+    <addaction name="CtrlX"/>
+    <addaction name="CtrlR"/>
+    <addaction name="CtrlF"/>
+    <addaction name="CtrlT"/>
+    <addaction name="CtrlDel"/>
+    <addaction name="CtrlLeft"/>
+    <addaction name="CtrlRight"/>
+    <addaction name="CtrlEsc"/>
+   </widget>
+   <addaction name="menuInfo"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="CtrlN">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/2044254-200.png</normaloff>:/2044254-200.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create</string>
+   </property>
+   <property name="toolTip">
+    <string>Create</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="CtrlD">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pngegg.png</normaloff>:/pngegg.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove</string>
+   </property>
+   <property name="toolTip">
+    <string>Remove</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+D</string>
+   </property>
+  </action>
+  <action name="CtrlC">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/png-transparent-paper-computer-icons-cut-copy-and-paste-symbol-user-interface-symbol-miscellaneous-angle-text-thumbnail-removebg-preview.png</normaloff>:/png-transparent-paper-computer-icons-cut-copy-and-paste-symbol-user-interface-symbol-miscellaneous-angle-text-thumbnail-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="CtrlX">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/1827319.png</normaloff>:/1827319.png</iconset>
+   </property>
+   <property name="text">
+    <string>Replace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="CtrlR">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/5261910.png</normaloff>:/5261910.png</iconset>
+   </property>
+   <property name="text">
+    <string>Rename</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
+  </action>
+  <action name="CtrlT">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png</normaloff>:/png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="CtrlDel">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
+  </action>
+  <action name="CtrlLeft">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/77-773183_left-arrow-comments-instagram-plus-icon-png-transparent-removebg-preview.png</normaloff>:/77-773183_left-arrow-comments-instagram-plus-icon-png-transparent-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Tab before</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Left</string>
+   </property>
+  </action>
+  <action name="CtrlRight">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/image.png</normaloff>:/image.png</iconset>
+   </property>
+   <property name="text">
+    <string>Tab after</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Right</string>
+   </property>
+  </action>
+  <action name="CtrlEsc">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/pngimg.com - exit_PNG42.png</normaloff>:/pngimg.com - exit_PNG42.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Esc</string>
+   </property>
+  </action>
+  <action name="CtrlF">
+   <property name="icon">
+    <iconset resource="../resources/resources.qrc">
+     <normaloff>:/kisspng-computer-icons-search-icon-5b30c8ad36d571.3385379615299237572246-removebg-preview.png</normaloff>:/kisspng-computer-icons-search-icon-5b30c8ad36d571.3385379615299237572246-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../resources/resources.qrc"/>
+  <include location="../resources/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
