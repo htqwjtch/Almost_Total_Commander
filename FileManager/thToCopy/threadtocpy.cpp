@@ -1,52 +1,38 @@
 #include "threadtocpy.h"
 
-void ThreadToCopy::runCopy(QDir lDir, QDir rDir, SysElem* file, SysElem* dir, QString dirName)
-{
-    c_py(lDir, rDir, file, dir, dirName);
-}
-
 ThreadToCopy::ThreadToCopy(QObject* parent) : QObject{parent} {}
 
-void ThreadToCopy::recursiveCopyList(QDir& dir, QFileInfoList& copyList) // функция рекурсивного наполнения содержимым списка для копирования
+void ThreadToCopy::runCopy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath)
 {
-    // цикл прохода по текущей директории для создания контейнера с файлами и директориями внутри
-    foreach (QFileInfo info, dir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
+    if (!filePath.isEmpty())
     {
-        copyList.append(info); // добавление элемента в контейнеp
-        if (info.isDir())      // элемент - директория
-        {
-            dir.cd(info.fileName());          // заходим в нее
-            recursiveCopyList(dir, copyList); // рекурсивно копируем содержимое
-            dir.cdUp();                       // возврат
-        }
+        if (!file->c_py(filePath, rDir.absolutePath())) // если копирование не произошло
+            qDebug() << "The operation <<Copy>> was not perfomed!";
     }
+    else
+        c_py(rDir, file, dir, dirPath);
 }
 
-void ThreadToCopy::c_py(QDir lDir, QDir rDir, SysElem* file, SysElem* dir, QString dirName)
+void ThreadToCopy::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)
 {
     QFileInfoList copyList = QFileInfoList(); // создание контейнера для хранения внутренних файлов выбранной директории
-    recursiveCopyList(lDir, copyList); // рекурсивное наполнение контейнера внутренними файлами директор
-    // проход по выбранной директории для поиска директории с именем копируемой
-    rDir.mkdir(dirName); // создание копии директории по выбранному пути
-    rDir.cd(dirName);
-    // цикл копирования элементов контейнера в созданную директорию
-    //        foreach (QFileInfo info, copyList)
-    //        {
-    //            QString copyPath = info.filePath().replace(lDir.absolutePath(), rDir.absolutePath()); // создание пути для копирования
-    //            if (info.isFile()) // текущий элемент контейнера - файл
-    //            {
-    //                if (!file->c_py(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
-    //                    qDebug()<<"The operation <<Copy>> was not perfomed!";
-    //            }
-    //            if (info.isDir()) // если текущий элемент - директория
-    //            {
-    //                if (!dir->c_py(info.dir().dirName(), copyPath)) // если копирование не выполнено
-    //                    qDebug()<<"The operation <<Copy>> was not perfomed!";
-    //            }
-    //            if (info.isSymLink())
-    //            {
-    //                if (!link->c_py(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
-    //                    qDebug()<<"The operation <<Copy>> was not perfomed!";
-    //            }
-    //        }
+    QDir lDir = QDir(dirPath);
+    foreach (QFileInfo info, lDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
+        copyList.append(info);                           // добавление элемента в контейнеp
+    if (!dir->c_py(lDir.dirName(), rDir.absolutePath())) // если копирование не выполнено
+        qDebug() << "The operation <<Copy>> was not perfomed!";
+    rDir.cd(lDir.dirName());
+    QString copyPath = rDir.absolutePath();
+    //цикл копирования элементов контейнера в созданную директорию
+    foreach (QFileInfo info, copyList)
+    {
+        if (info.isFile()) // текущий элемент контейнера - файл
+        {
+            if (!file->c_py(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
+                qDebug() << "The operation <<Copy>> was not perfomed!";
+        }
+        else if (info.isDir()) // если текущий элемент - директория
+            c_py(rDir, file, dir, info.absoluteFilePath());
+    }
+    rDir.cdUp();
 }

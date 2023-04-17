@@ -20,7 +20,7 @@ QString LinkedPath::getPath() // метод передачи имени
 
 void LinkedPath::on_btnCancel_clicked()
 {
-    path = "";
+    path.clear();
     hide(); // закрытие текущего окна
 }
 
@@ -29,4 +29,7 @@ void LinkedPath::on_btnOK_clicked()
     hide(); // закрытие текущего окна
 }
 
-void LinkedPath::on_path_textEdited(const QString& arg1) { path = arg1; }
+void LinkedPath::on_path_textEdited(const QString& arg1)
+{
+    path = arg1;
+}

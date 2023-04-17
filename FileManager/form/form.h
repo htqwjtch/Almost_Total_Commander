@@ -5,6 +5,7 @@
 #include "../sysElem/syselem.h"
 #include "../thToCopy/threadtocpy.h"
 #include "../thToRemove/threadtoremove.h"
+#include "../thToReplace/threadtoreplace.h"
 #include "../thToSearch/threadtosearch.h"
 
 #include <QDir>
@@ -28,6 +29,7 @@ class Form : public QWidget
 
     QThread* threadCopy;
     QThread* threadRemove;
+    QThread* threadReplace;
     QThread* threadSearch;
 
     QListView* view;
@@ -35,6 +37,7 @@ class Form : public QWidget
 
     ThreadToCopy* thCopy;
     ThreadToRemove* thRemove;
+    ThreadToReplace* thReplace;
     ThreadToSearch* thSearch;
 
     File f; //объект класса File для выполнения операций с текстовыми файлами
@@ -44,10 +47,8 @@ class Form : public QWidget
     SysElem* dir = &d; //указатель на объект класса System для получения адреса объекта класса dir
 
     QString filePath = ""; //переменная для хранения пути выбранного файла
-    QString fileName = ""; //переменная для хранения имени выбранного файла
 
     QString dirPath = ""; //переменная для хранения пути выбранной директории
-    QString dirName = ""; //переменная для хранения имени выбранной директории
 
     QString searchName = "";
 
@@ -84,8 +85,9 @@ public:
     void onBtnSearchClicked();
 
 signals:
-    void startCopy(QDir lDir, QDir rDir, SysElem* file, SysElem* dir, QString dirName);
-    void startRemove(SysElem* file, SysElem* dir, QString dirPath);
+    void startCopy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
+    void startRemove(SysElem* file, SysElem* dir, QString filePath, QString dirPath);
+    void startReplace(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
     void startSearch(QString, QString, QString);
 };
 

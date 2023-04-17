@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Projects/FileManager/thToRemove/threadtoremove.h"
+#include "../FileManager/thToRemove/threadtoremove.h"
 #include <QtCore/qmetatype.h>
 
 #if __has_include(<QtCore/qtmochelpers.h>)
@@ -44,18 +44,20 @@ static constexpr auto qt_meta_stringdata_CLASSThreadToRemoveENDCLASS = QtMocHelp
     "SysElem*",
     "file",
     "dir",
+    "filePath",
     "dirPath"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t {
-    uint offsetsAndSizes[14];
+    uint offsetsAndSizes[16];
     char stringdata0[15];
     char stringdata1[10];
     char stringdata2[1];
     char stringdata3[9];
     char stringdata4[5];
     char stringdata5[4];
-    char stringdata6[8];
+    char stringdata6[9];
+    char stringdata7[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -67,7 +69,8 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t qt_met
         QT_MOC_LITERAL(26, 8),  // "SysElem*"
         QT_MOC_LITERAL(35, 4),  // "file"
         QT_MOC_LITERAL(40, 3),  // "dir"
-        QT_MOC_LITERAL(44, 7)   // "dirPath"
+        QT_MOC_LITERAL(44, 8),  // "filePath"
+        QT_MOC_LITERAL(53, 7)   // "dirPath"
     },
     "ThreadToRemove",
     "runRemove",
@@ -75,6 +78,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t qt_met
     "SysElem*",
     "file",
     "dir",
+    "filePath",
     "dirPath"
 };
 #undef QT_MOC_LITERAL
@@ -95,10 +99,10 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSThreadToRemoveENDCLASS[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    3,   20,    2, 0x0a,    1 /* Public */,
+       1,    4,   20,    2, 0x0a,    1 /* Public */,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, QMetaType::QString,    4,    5,    6,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, QMetaType::QString, QMetaType::QString,    4,    5,    6,    7,
 
        0        // eod
 };
@@ -116,6 +120,7 @@ Q_CONSTINIT const QMetaObject ThreadToRemove::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
     nullptr
@@ -127,7 +132,7 @@ void ThreadToRemove::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         auto *_t = static_cast<ThreadToRemove *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->runRemove((*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 0: _t->runRemove((*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
         default: ;
         }
     }

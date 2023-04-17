@@ -20,6 +20,7 @@ SOURCES += \
     sysElem/syselem.cpp \
     thToCopy/threadtocpy.cpp \
     thToRemove/threadtoremove.cpp \
+    thToReplace/threadtoreplace.cpp \
     thToSearch/threadtosearch.cpp
 
 HEADERS += \
@@ -33,6 +34,7 @@ HEADERS += \
     sysElem/syselem.h \
     thToCopy/threadtocpy.h \
     thToRemove/threadtoremove.h \
+    thToReplace/threadtoreplace.h \
     thToSearch/threadtosearch.h
 
 FORMS += \

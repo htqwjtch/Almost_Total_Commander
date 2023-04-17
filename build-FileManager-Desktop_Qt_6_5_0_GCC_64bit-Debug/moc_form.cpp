@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Projects/FileManager/form/form.h"
+#include "../FileManager/form/form.h"
 #include <QtCore/qmetatype.h>
 
 #if __has_include(<QtCore/qtmochelpers.h>)
@@ -42,14 +42,14 @@ static constexpr auto qt_meta_stringdata_CLASSFormENDCLASS = QtMocHelpers::strin
     "startCopy",
     "",
     "QDir",
-    "lDir",
     "rDir",
     "SysElem*",
     "file",
     "dir",
-    "dirName",
-    "startRemove",
+    "filePath",
     "dirPath",
+    "startRemove",
+    "startReplace",
     "startSearch",
     "on_lvLeft_clicked",
     "QModelIndex",
@@ -73,13 +73,13 @@ struct qt_meta_stringdata_CLASSFormENDCLASS_t {
     char stringdata2[1];
     char stringdata3[5];
     char stringdata4[5];
-    char stringdata5[5];
-    char stringdata6[9];
-    char stringdata7[5];
-    char stringdata8[4];
+    char stringdata5[9];
+    char stringdata6[5];
+    char stringdata7[4];
+    char stringdata8[9];
     char stringdata9[8];
     char stringdata10[12];
-    char stringdata11[8];
+    char stringdata11[13];
     char stringdata12[12];
     char stringdata13[18];
     char stringdata14[12];
@@ -103,41 +103,41 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSFormENDCLASS_t qt_meta_stringda
         QT_MOC_LITERAL(5, 9),  // "startCopy"
         QT_MOC_LITERAL(15, 0),  // ""
         QT_MOC_LITERAL(16, 4),  // "QDir"
-        QT_MOC_LITERAL(21, 4),  // "lDir"
-        QT_MOC_LITERAL(26, 4),  // "rDir"
-        QT_MOC_LITERAL(31, 8),  // "SysElem*"
-        QT_MOC_LITERAL(40, 4),  // "file"
-        QT_MOC_LITERAL(45, 3),  // "dir"
-        QT_MOC_LITERAL(49, 7),  // "dirName"
-        QT_MOC_LITERAL(57, 11),  // "startRemove"
-        QT_MOC_LITERAL(69, 7),  // "dirPath"
-        QT_MOC_LITERAL(77, 11),  // "startSearch"
-        QT_MOC_LITERAL(89, 17),  // "on_lvLeft_clicked"
-        QT_MOC_LITERAL(107, 11),  // "QModelIndex"
-        QT_MOC_LITERAL(119, 5),  // "index"
-        QT_MOC_LITERAL(125, 23),  // "on_lvLeft_doubleClicked"
-        QT_MOC_LITERAL(149, 20),  // "on_btnCreate_clicked"
-        QT_MOC_LITERAL(170, 20),  // "on_btnRemove_clicked"
-        QT_MOC_LITERAL(191, 18),  // "on_btnCopy_clicked"
-        QT_MOC_LITERAL(210, 21),  // "on_btnReplace_clicked"
-        QT_MOC_LITERAL(232, 20),  // "on_btnRename_clicked"
-        QT_MOC_LITERAL(253, 24),  // "on_lineSearch_textEdited"
-        QT_MOC_LITERAL(278, 4),  // "arg1"
-        QT_MOC_LITERAL(283, 20),  // "on_btnSearch_clicked"
-        QT_MOC_LITERAL(304, 22)   // "on_leftPath_textEdited"
+        QT_MOC_LITERAL(21, 4),  // "rDir"
+        QT_MOC_LITERAL(26, 8),  // "SysElem*"
+        QT_MOC_LITERAL(35, 4),  // "file"
+        QT_MOC_LITERAL(40, 3),  // "dir"
+        QT_MOC_LITERAL(44, 8),  // "filePath"
+        QT_MOC_LITERAL(53, 7),  // "dirPath"
+        QT_MOC_LITERAL(61, 11),  // "startRemove"
+        QT_MOC_LITERAL(73, 12),  // "startReplace"
+        QT_MOC_LITERAL(86, 11),  // "startSearch"
+        QT_MOC_LITERAL(98, 17),  // "on_lvLeft_clicked"
+        QT_MOC_LITERAL(116, 11),  // "QModelIndex"
+        QT_MOC_LITERAL(128, 5),  // "index"
+        QT_MOC_LITERAL(134, 23),  // "on_lvLeft_doubleClicked"
+        QT_MOC_LITERAL(158, 20),  // "on_btnCreate_clicked"
+        QT_MOC_LITERAL(179, 20),  // "on_btnRemove_clicked"
+        QT_MOC_LITERAL(200, 18),  // "on_btnCopy_clicked"
+        QT_MOC_LITERAL(219, 21),  // "on_btnReplace_clicked"
+        QT_MOC_LITERAL(241, 20),  // "on_btnRename_clicked"
+        QT_MOC_LITERAL(262, 24),  // "on_lineSearch_textEdited"
+        QT_MOC_LITERAL(287, 4),  // "arg1"
+        QT_MOC_LITERAL(292, 20),  // "on_btnSearch_clicked"
+        QT_MOC_LITERAL(313, 22)   // "on_leftPath_textEdited"
     },
     "Form",
     "startCopy",
     "",
     "QDir",
-    "lDir",
     "rDir",
     "SysElem*",
     "file",
     "dir",
-    "dirName",
-    "startRemove",
+    "filePath",
     "dirPath",
+    "startRemove",
+    "startReplace",
     "startSearch",
     "on_lvLeft_clicked",
     "QModelIndex",
@@ -163,33 +163,35 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSFormENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      13,   14, // methods
+      14,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       3,       // signalCount
+       4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    5,   92,    2, 0x06,    1 /* Public */,
-      10,    3,  103,    2, 0x06,    7 /* Public */,
-      12,    3,  110,    2, 0x06,   11 /* Public */,
+       1,    5,   98,    2, 0x06,    1 /* Public */,
+      10,    4,  109,    2, 0x06,    7 /* Public */,
+      11,    5,  118,    2, 0x06,   12 /* Public */,
+      12,    3,  129,    2, 0x06,   18 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      13,    1,  117,    2, 0x08,   15 /* Private */,
-      16,    1,  120,    2, 0x08,   17 /* Private */,
-      17,    0,  123,    2, 0x08,   19 /* Private */,
-      18,    0,  124,    2, 0x08,   20 /* Private */,
-      19,    0,  125,    2, 0x08,   21 /* Private */,
-      20,    0,  126,    2, 0x08,   22 /* Private */,
-      21,    0,  127,    2, 0x08,   23 /* Private */,
-      22,    1,  128,    2, 0x08,   24 /* Private */,
-      24,    0,  131,    2, 0x08,   26 /* Private */,
-      25,    1,  132,    2, 0x08,   27 /* Private */,
+      13,    1,  136,    2, 0x08,   22 /* Private */,
+      16,    1,  139,    2, 0x08,   24 /* Private */,
+      17,    0,  142,    2, 0x08,   26 /* Private */,
+      18,    0,  143,    2, 0x08,   27 /* Private */,
+      19,    0,  144,    2, 0x08,   28 /* Private */,
+      20,    0,  145,    2, 0x08,   29 /* Private */,
+      21,    0,  146,    2, 0x08,   30 /* Private */,
+      22,    1,  147,    2, 0x08,   31 /* Private */,
+      24,    0,  150,    2, 0x08,   33 /* Private */,
+      25,    1,  151,    2, 0x08,   34 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 6, 0x80000000 | 6, QMetaType::QString,    4,    5,    7,    8,    9,
-    QMetaType::Void, 0x80000000 | 6, 0x80000000 | 6, QMetaType::QString,    7,    8,   11,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 5, QMetaType::QString, QMetaType::QString,    4,    6,    7,    8,    9,
+    QMetaType::Void, 0x80000000 | 5, 0x80000000 | 5, QMetaType::QString, QMetaType::QString,    6,    7,    8,    9,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 5, QMetaType::QString, QMetaType::QString,    4,    6,    7,    8,    9,
     QMetaType::Void, QMetaType::QString, QMetaType::QString, QMetaType::QString,    2,    2,    2,
 
  // slots: parameters
@@ -219,14 +221,22 @@ Q_CONSTINIT const QMetaObject Form::staticMetaObject = { {
         // method 'startCopy'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'startRemove'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        // method 'startReplace'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
+        QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         // method 'startSearch'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -267,41 +277,49 @@ void Form::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         auto *_t = static_cast<Form *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->startCopy((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QDir>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
-        case 1: _t->startRemove((*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
-        case 2: _t->startSearch((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
-        case 3: _t->on_lvLeft_clicked((*reinterpret_cast< std::add_pointer_t<QModelIndex>>(_a[1]))); break;
-        case 4: _t->on_lvLeft_doubleClicked((*reinterpret_cast< std::add_pointer_t<QModelIndex>>(_a[1]))); break;
-        case 5: _t->on_btnCreate_clicked(); break;
-        case 6: _t->on_btnRemove_clicked(); break;
-        case 7: _t->on_btnCopy_clicked(); break;
-        case 8: _t->on_btnReplace_clicked(); break;
-        case 9: _t->on_btnRename_clicked(); break;
-        case 10: _t->on_lineSearch_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 11: _t->on_btnSearch_clicked(); break;
-        case 12: _t->on_leftPath_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 0: _t->startCopy((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
+        case 1: _t->startRemove((*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
+        case 2: _t->startReplace((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
+        case 3: _t->startSearch((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 4: _t->on_lvLeft_clicked((*reinterpret_cast< std::add_pointer_t<QModelIndex>>(_a[1]))); break;
+        case 5: _t->on_lvLeft_doubleClicked((*reinterpret_cast< std::add_pointer_t<QModelIndex>>(_a[1]))); break;
+        case 6: _t->on_btnCreate_clicked(); break;
+        case 7: _t->on_btnRemove_clicked(); break;
+        case 8: _t->on_btnCopy_clicked(); break;
+        case 9: _t->on_btnReplace_clicked(); break;
+        case 10: _t->on_btnRename_clicked(); break;
+        case 11: _t->on_lineSearch_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 12: _t->on_btnSearch_clicked(); break;
+        case 13: _t->on_leftPath_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Form::*)(QDir , QDir , SysElem * , SysElem * , QString );
+            using _t = void (Form::*)(QDir , SysElem * , SysElem * , QString , QString );
             if (_t _q_method = &Form::startCopy; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
-            using _t = void (Form::*)(SysElem * , SysElem * , QString );
+            using _t = void (Form::*)(SysElem * , SysElem * , QString , QString );
             if (_t _q_method = &Form::startRemove; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
             }
         }
         {
+            using _t = void (Form::*)(QDir , SysElem * , SysElem * , QString , QString );
+            if (_t _q_method = &Form::startReplace; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+                *result = 2;
+                return;
+            }
+        }
+        {
             using _t = void (Form::*)(QString , QString , QString );
             if (_t _q_method = &Form::startSearch; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
-                *result = 2;
+                *result = 3;
                 return;
             }
         }
@@ -327,35 +345,42 @@ int Form::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 13)
+        if (_id < 14)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 13;
+        _id -= 14;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 13)
+        if (_id < 14)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 13;
+        _id -= 14;
     }
     return _id;
 }
 
 // SIGNAL 0
-void Form::startCopy(QDir _t1, QDir _t2, SysElem * _t3, SysElem * _t4, QString _t5)
+void Form::startCopy(QDir _t1, SysElem * _t2, SysElem * _t3, QString _t4, QString _t5)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t5))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1
-void Form::startRemove(SysElem * _t1, SysElem * _t2, QString _t3)
+void Form::startRemove(SysElem * _t1, SysElem * _t2, QString _t3, QString _t4)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 
 // SIGNAL 2
+void Form::startReplace(QDir _t1, SysElem * _t2, SysElem * _t3, QString _t4, QString _t5)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t4))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t5))) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+
+// SIGNAL 3
 void Form::startSearch(QString _t1, QString _t2, QString _t3)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t3))) };
-    QMetaObject::activate(this, &staticMetaObject, 2, _a);
+    QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 QT_WARNING_POP

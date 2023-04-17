@@ -6,7 +6,7 @@
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../../Projects/FileManager/thToCopy/threadtocpy.h"
+#include "../FileManager/thToCopy/threadtocpy.h"
 #include <QtCore/qmetatype.h>
 
 #if __has_include(<QtCore/qtmochelpers.h>)
@@ -42,12 +42,12 @@ static constexpr auto qt_meta_stringdata_CLASSThreadToCopyENDCLASS = QtMocHelper
     "runCopy",
     "",
     "QDir",
-    "lDir",
     "rDir",
     "SysElem*",
     "file",
     "dir",
-    "dirName"
+    "filePath",
+    "dirPath"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t {
@@ -57,10 +57,10 @@ struct qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t {
     char stringdata2[1];
     char stringdata3[5];
     char stringdata4[5];
-    char stringdata5[5];
-    char stringdata6[9];
-    char stringdata7[5];
-    char stringdata8[4];
+    char stringdata5[9];
+    char stringdata6[5];
+    char stringdata7[4];
+    char stringdata8[9];
     char stringdata9[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
@@ -71,23 +71,23 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t qt_meta_
         QT_MOC_LITERAL(13, 7),  // "runCopy"
         QT_MOC_LITERAL(21, 0),  // ""
         QT_MOC_LITERAL(22, 4),  // "QDir"
-        QT_MOC_LITERAL(27, 4),  // "lDir"
-        QT_MOC_LITERAL(32, 4),  // "rDir"
-        QT_MOC_LITERAL(37, 8),  // "SysElem*"
-        QT_MOC_LITERAL(46, 4),  // "file"
-        QT_MOC_LITERAL(51, 3),  // "dir"
-        QT_MOC_LITERAL(55, 7)   // "dirName"
+        QT_MOC_LITERAL(27, 4),  // "rDir"
+        QT_MOC_LITERAL(32, 8),  // "SysElem*"
+        QT_MOC_LITERAL(41, 4),  // "file"
+        QT_MOC_LITERAL(46, 3),  // "dir"
+        QT_MOC_LITERAL(50, 8),  // "filePath"
+        QT_MOC_LITERAL(59, 7)   // "dirPath"
     },
     "ThreadToCopy",
     "runCopy",
     "",
     "QDir",
-    "lDir",
     "rDir",
     "SysElem*",
     "file",
     "dir",
-    "dirName"
+    "filePath",
+    "dirPath"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -110,7 +110,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSThreadToCopyENDCLASS[] = {
        1,    5,   20,    2, 0x0a,    1 /* Public */,
 
  // slots: parameters
-    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 3, 0x80000000 | 6, 0x80000000 | 6, QMetaType::QString,    4,    5,    7,    8,    9,
+    QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 5, QMetaType::QString, QMetaType::QString,    4,    6,    7,    8,    9,
 
        0        // eod
 };
@@ -127,9 +127,9 @@ Q_CONSTINIT const QMetaObject ThreadToCopy::staticMetaObject = { {
         // method 'runCopy'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
     nullptr
@@ -141,7 +141,7 @@ void ThreadToCopy::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         auto *_t = static_cast<ThreadToCopy *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->runCopy((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QDir>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
+        case 0: _t->runCopy((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
         default: ;
         }
     }

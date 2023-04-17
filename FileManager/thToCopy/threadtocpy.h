@@ -12,12 +12,11 @@ class ThreadToCopy : public QObject
     Q_OBJECT
 
 public slots:
-    void runCopy(QDir lDir, QDir rDir, SysElem* file, SysElem* dir, QString dirName);
+    void runCopy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
 
 public:
     explicit ThreadToCopy(QObject* parent = nullptr);
-    void c_py(QDir lDir, QDir rDir, SysElem* file, SysElem* dir, QString dirName);
-    void recursiveCopyList(QDir&, QFileInfoList&); //функция рекурсивного наполнения содержимым списка для копирования
+    void c_py(QDir, SysElem*, SysElem*, QString);
 
 signals:
 };
