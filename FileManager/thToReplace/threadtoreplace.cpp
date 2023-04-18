@@ -16,6 +16,7 @@ void ThreadToReplace::runReplace(QDir rDir, SysElem* file, SysElem* dir, QString
         c_py(rDir, file, dir, dirPath);
         r_move(file, dir, dirPath);
     }
+    emit replaceFinished();
 }
 
 void ThreadToReplace::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)

@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this); // настраивает пользовательский интерфейс для указанного виджета
     setWindowTitle("FileManager"); // установка имени главного окна
 
+    if (!(window = new SearchResult(this)))
+        QMessageBox::warning(this, "Memory allocation", "Object of SearchResult was not created!");
+
     ui->tabWidget->clear();
 
     QToolButton* tb = new QToolButton();

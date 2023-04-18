@@ -2,13 +2,14 @@
 #define MAINWINDOW_H
 
 #include "../form/form.h"
+#include "../searchResult/searchresult.h"
 
 #include <QMainWindow> //предоставляет главное окно приложения
 
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-class MainWindow;
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
@@ -18,6 +19,10 @@ class MainWindow : public QMainWindow //класс главного окна п�
     //теперь можем использовать сигналы-слоты в классе
     Ui::MainWindow* ui; //указатель на объект соотв типа в классе основной формы
     Form* form;         //указатель для связи с моделью данных для файловой системы
+
+    ThreadToSearch* thSearch;
+
+    SearchResult* window;
 
 private slots:
 

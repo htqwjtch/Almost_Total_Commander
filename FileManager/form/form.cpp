@@ -42,9 +42,8 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     if (!(threadSearch = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
     connect(this, SIGNAL(destroyed()), threadSearch, SLOT(quit()));
-
-    //	if (!(window = new SearchWindow(this)))
-    //	    throw BadAllocException("Memory allocation", "Object of SearchWindow was not created!");
+    if (!(window = new SearchResult(this)))
+        QMessageBox::warning(this, "Memory allocation", "Object of SearchResult was not created!");
 
     if (!(thCopy = new ThreadToCopy()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToCopy was not created!");
@@ -71,13 +70,18 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     thSearch->moveToThread(threadSearch);
     threadSearch->start();
 
+    connect(thRemove, SIGNAL(removeFinished()), this, SLOT(ready_to_remove()));
+    connect(thCopy, SIGNAL(copyFinished()), this, SLOT(ready_to_copy()));
+    connect(thReplace, SIGNAL(replaceFinished()), this, SLOT(ready_to_replace()));
+    connect(thSearch, SIGNAL(searchFinished(QFileInfoList)), this, SLOT(ready_to_search(QFileInfoList)));
+
     // устанока информации для подсказок
-    ui->btnCreate->setToolTip("Create");
-    ui->btnRemove->setToolTip("Remove");
-    ui->btnCopy->setToolTip("Copy");
-    ui->btnReplace->setToolTip("Replace");
-    ui->btnRename->setToolTip("Rename");
-    ui->lineSearch->setToolTip("Please don't forget about the extension, if you want to enter a file name");
+    //    ui->btnCreate->setToolTip("Create");
+    //    ui->btnRemove->setToolTip("Remove");
+    //    ui->btnCopy->setToolTip("Copy");
+    //    ui->btnReplace->setToolTip("Replace");
+    //    ui->btnRename->setToolTip("Rename");
+    //    ui->lineSearch->setToolTip("Please don't forget about the extension, if you want to enter a file name");
 
     QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); //получение текущей директории
     QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
@@ -326,6 +330,7 @@ void Form::on_btnRemove_clicked()
         dirPath.clear();  // очистка пути директории
         return;
     }
+    ui->btnRemove->setEnabled(false);
     emit startRemove(file, dir, filePath, dirPath);
     filePath.clear(); // очистка пути файла
     dirPath.clear();  // очистка пути директории
@@ -357,6 +362,7 @@ void Form::on_btnCopy_clicked()
                 filePath.clear(); // очистка пути файла
                 return;
             }
+        ui->btnCopy->setEnabled(false);
         emit startCopy(rDir, file, 0, filePath, "");
         filePath.clear(); // очистка пути файла
     }
@@ -371,6 +377,7 @@ void Form::on_btnCopy_clicked()
                 dirPath.clear();
                 return;
             }
+        ui->btnCopy->setEnabled(false);
         emit startCopy(rDir, file, dir, "", dirPath);
         dirPath.clear();
     }
@@ -402,6 +409,7 @@ void Form::on_btnReplace_clicked()
                 filePath.clear(); // очистка пути файла
                 return;
             }
+        ui->btnReplace->setEnabled(false);
         emit startReplace(rDir, file, 0, filePath, "");
         filePath.clear(); // очистка пути файла
     }
@@ -416,6 +424,7 @@ void Form::on_btnReplace_clicked()
                 dirPath.clear();
                 return;
             }
+        ui->btnReplace->setEnabled(false);
         emit startReplace(rDir, file, dir, "", dirPath);
         dirPath.clear();
     }
@@ -494,7 +503,10 @@ void Form::on_btnSearch_clicked()
     if (lDirPath.contains(lDir.homePath()) && rDirPath.contains(rDir.homePath())
         && !lDirPath.contains(lDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
         && !rDirPath.contains(rDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug")))
+    {
+        ui->btnSearch->setEnabled(false);
         emit startSearch(lDirPath, rDirPath, searchName);
+    }
     else
         QMessageBox::warning(this, "", "There is no access to perform a search in this directory!");
 }
@@ -511,4 +523,27 @@ void Form::on_leftPath_textEdited(const QString& arg1)
         view->setRootIndex(model->index(fileInfo.absolutePath()));
     else if (fileInfo.isDir())
         view->setRootIndex(model->index(arg1)); // элемент с этим индексом становится корневым
+}
+
+void Form::ready_to_remove()
+{
+    ui->btnRemove->setEnabled(true);
+}
+
+void Form::ready_to_copy()
+{
+    ui->btnCopy->setEnabled(true);
+}
+
+void Form::ready_to_replace()
+{
+    ui->btnReplace->setEnabled(true);
+}
+
+void Form::ready_to_search(QFileInfoList list)
+{
+    ui->btnSearch->setEnabled(true);
+    window->setUi(list);
+    window->exec();
+    window->resetUi();
 }

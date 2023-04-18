@@ -196,6 +196,9 @@ public:
     {
         Form->setWindowTitle(QCoreApplication::translate("Form", "Form", nullptr));
         btnCopy->setText(QString());
+#if QT_CONFIG(tooltip)
+        btnCreate->setToolTip(QString());
+#endif // QT_CONFIG(tooltip)
         btnCreate->setText(QString());
         btnRemove->setText(QString());
         btnReplace->setText(QString());

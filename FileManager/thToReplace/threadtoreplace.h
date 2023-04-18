@@ -20,6 +20,7 @@ public:
     void r_move(SysElem*, SysElem*, QString);
 
 signals:
+    void replaceFinished();
 };
 
 #endif // THREADTOREPLACE_H

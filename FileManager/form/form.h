@@ -73,6 +73,14 @@ private slots:
 
     void on_leftPath_textEdited(const QString& arg1);
 
+    void ready_to_remove();
+
+    void ready_to_copy();
+
+    void ready_to_replace();
+
+    void ready_to_search(QFileInfoList list);
+
 public:
     explicit Form(QWidget* parent = nullptr);
     ~Form();

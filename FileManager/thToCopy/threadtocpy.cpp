@@ -11,6 +11,7 @@ void ThreadToCopy::runCopy(QDir rDir, SysElem* file, SysElem* dir, QString fileP
     }
     else
         c_py(rDir, file, dir, dirPath);
+    emit copyFinished();
 }
 
 void ThreadToCopy::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)

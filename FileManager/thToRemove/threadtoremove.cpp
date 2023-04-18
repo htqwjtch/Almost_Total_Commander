@@ -11,6 +11,7 @@ void ThreadToRemove::runRemove(SysElem* file, SysElem* dir, QString filePath, QS
     }
     else
         r_move(file, dir, dirPath);
+    emit removeFinished();
 }
 
 bool ThreadToRemove::recRemove(QDir& qDir, SysElem* file, SysElem* dir) // функция рекурсивного удаления содержимого выбранной папки

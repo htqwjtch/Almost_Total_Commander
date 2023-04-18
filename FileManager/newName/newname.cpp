@@ -4,8 +4,8 @@
 NewName::NewName(QWidget* parent) : QDialog(parent), ui(new Ui::NewName)
 {
     ui->setupUi(this);
-    setWindowTitle("Rename");                                                                          // установка имени окна
-    ui->name->setToolTip("Please don't forget about the extension, if you want to enter a file name"); // устанока информации для подсказок
+    setWindowTitle("Rename"); // установка имени окна
+    //ui->name->setToolTip("Please don't forget about the extension, if you want to enter a file name"); // устанока информации для подсказок
 }
 
 NewName::~NewName()

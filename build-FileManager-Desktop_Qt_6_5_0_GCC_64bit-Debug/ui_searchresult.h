@@ -14,7 +14,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QLabel>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QListWidget>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QVBoxLayout>
@@ -26,16 +26,15 @@ class Ui_SearchResult
 public:
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout;
-    QLabel *label;
-    QLabel *label_2;
-    QPushButton *btnOK;
+    QHBoxLayout *horizontalLayout;
     QListWidget *listWidget;
+    QPushButton *btnOK;
 
     void setupUi(QDialog *SearchResult)
     {
         if (SearchResult->objectName().isEmpty())
             SearchResult->setObjectName("SearchResult");
-        SearchResult->resize(400, 300);
+        SearchResult->resize(450, 300);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/kisspng-computer-icons-search-icon-5b30c8ad36d571.3385379615299237572246-removebg-preview.png"), QSize(), QIcon::Normal, QIcon::Off);
         SearchResult->setWindowIcon(icon);
@@ -43,25 +42,20 @@ public:
         verticalLayout->setObjectName("verticalLayout");
         gridLayout = new QGridLayout();
         gridLayout->setObjectName("gridLayout");
-        label = new QLabel(SearchResult);
-        label->setObjectName("label");
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setObjectName("horizontalLayout");
+        listWidget = new QListWidget(SearchResult);
+        listWidget->setObjectName("listWidget");
 
-        gridLayout->addWidget(label, 1, 0, 1, 1);
+        horizontalLayout->addWidget(listWidget);
 
-        label_2 = new QLabel(SearchResult);
-        label_2->setObjectName("label_2");
 
-        gridLayout->addWidget(label_2, 1, 1, 1, 1);
+        gridLayout->addLayout(horizontalLayout, 0, 0, 1, 3);
 
         btnOK = new QPushButton(SearchResult);
         btnOK->setObjectName("btnOK");
 
-        gridLayout->addWidget(btnOK, 1, 2, 1, 1);
-
-        listWidget = new QListWidget(SearchResult);
-        listWidget->setObjectName("listWidget");
-
-        gridLayout->addWidget(listWidget, 0, 0, 1, 3);
+        gridLayout->addWidget(btnOK, 2, 2, 1, 1);
 
 
         verticalLayout->addLayout(gridLayout);
@@ -75,8 +69,6 @@ public:
     void retranslateUi(QDialog *SearchResult)
     {
         SearchResult->setWindowTitle(QCoreApplication::translate("SearchResult", "Dialog", nullptr));
-        label->setText(QString());
-        label_2->setText(QString());
         btnOK->setText(QCoreApplication::translate("SearchResult", "OK", nullptr));
     } // retranslateUi
 
