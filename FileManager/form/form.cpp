@@ -70,6 +70,10 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     thSearch->moveToThread(threadSearch);
     threadSearch->start();
 
+    connect(thRemove, SIGNAL(notPerformed()), this, SLOT(remove_is_not_performed()));
+    connect(thCopy, SIGNAL(notPerformed()), this, SLOT(copy_is_not_performed()));
+    connect(thReplace, SIGNAL(notPerformed()), this, SLOT(replace_is_not_performed()));
+
     connect(thRemove, SIGNAL(removeFinished()), this, SLOT(ready_to_remove()));
     connect(thCopy, SIGNAL(copyFinished()), this, SLOT(ready_to_copy()));
     connect(thReplace, SIGNAL(replaceFinished()), this, SLOT(ready_to_replace()));
@@ -244,61 +248,44 @@ void Form::on_btnCreate_clicked()
         qDir = rDir;
     if (qDir.absolutePath().contains(qDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
         || !qDir.absolutePath().contains(qDir.homePath())) // если это корневая директория
-        QMessageBox::warning(this, "", "There is no access to perform any operation in this directory!");
-    else
     {
-        CreateChoice window;
-        window.exec(); // метод выполняет появление окна для выбора типа создаваемого объекта
-        if (window.getFile()) // если был выбран файл
+        QMessageBox::warning(this, "Create", "There is no access to perform any operation in this directory!");
+        return;
+    }
+    CreateChoice window;
+    window.exec(); // метод выполняет появление окна для выбора типа создаваемого объекта
+    NewName name;
+    name.exec(); // выполняет появление окна для создания имени
+    foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+        if (info.fileName() == name.getName()) // если файл с таким именем найден
         {
-            NewName isFile;
-            isFile.exec(); // выполняет появление окна для создания имени
-            QString createPath = qDir.absolutePath().append("/").append(isFile.getName()); // получение пути соозданного файла
-            // цикл прохода по текущей директории для поиска файлов с таким именем
-            foreach (QFileInfo files, qDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
-                if (files.fileName() == isFile.getName()) // если файл с таким именем найден
-                {
-                    QMessageBox::warning(this, "", "A file with this name exists!");
-                    return;
-                }
-            if (!file->create(createPath)) // если файл не создан
-                QMessageBox::warning(this, "", "The operation <b>\"Create\"</b> was not perfomed!");
+            QMessageBox::warning(this, "Create", "A file or a directory with this name exists!");
+            return;
         }
-        if (window.getDir()) // если выбранный объект - директория
-        {
-            NewName isDir;
-            isDir.exec(); // выполняет появление окна для создания имени
-            QString createPath = qDir.absolutePath().append("/").append(isDir.getName()); // получение пути сооздаваемой директории
-            // цикл прохода по текущей директории для поиска директории с таким именем
-            foreach (QFileInfo dirs, qDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-                if (dirs.fileName() == isDir.getName()) // если директория с таким именем найдена
-                {
-                    QMessageBox::warning(this, "", "A directory with this name exist!");
-                    return;
-                }
-            if (!dir->create(createPath)) // если директория не создана
-                QMessageBox::warning(this, "", "The operation <b>\"Create\"</b> was not perfomed!");
-        }
+    QString createPath = qDir.absolutePath().append("/").append(name.getName()); // получение пути соозданного файла
+    if (window.getFile() || window.getLink())                                    // если был выбран файл
+    {
         if (window.getLink())
         {
-            NewName isLink;
-            isLink.exec(); // выполняет появление окна для создания имени
-            QString createPath = qDir.absolutePath().append("/").append(isLink.getName()); // получение пути соозданной ссылки
             LinkedPath window;
             window.exec();                         // выполняет появление окна для создания имени
             QString linkedPath = window.getPath(); // получение пути соозданной ссылкb
-            // цикл прохода по текущей директории для поиска файлов с таким именем
-            foreach (QFileInfo links, qDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
-                if (links.fileName() == isLink.getName()) // если файл с таким именем найден
-                {
-                    QMessageBox::warning(this, "", "A symbol link with this name exists!");
-                    return;
-                }
-            QString cmd = "ln -s ";
-            cmd = cmd.append(linkedPath).append(" ").append(createPath);
-            if (system(cmd.toLocal8Bit().constData()) != 0)
-                QMessageBox::warning(this, "", "The operation <b>\"Create\"</b> was not perfomed!");
-        }
+
+	    QString cmd = "ln -s ";
+	    cmd = cmd.append(linkedPath).append(" ").append(createPath);
+	    if (system(cmd.toLocal8Bit().constData()) != 0)
+		QMessageBox::warning(this, "Create", "The operation was not perfomed!");
+	}
+	else if (window.getFile())
+	{
+	    if (!file->create(createPath)) // если файл не создан
+		QMessageBox::warning(this, "", "The operation was not perfomed!");
+	}
+    }
+    else if (window.getDir()) // если выбранный объект - директория
+    {
+        if (!dir->create(createPath)) // если директория не создана
+            QMessageBox::warning(this, "", "The operation was not perfomed!");
     }
 }
 
@@ -314,16 +301,16 @@ void Form::on_btnRemove_clicked()
     if (qDir.absolutePath().contains(qDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
         || !qDir.absolutePath().contains(qDir.homePath())) // если это корневая директория
     {
-        QMessageBox::warning(this, "", "There is no access to perform any operation in this directory!");
+        QMessageBox::warning(this, "Remove", "There is no access to perform any operation in this directory!");
         return;
     }
     if (filePath.isEmpty() && dirPath.isEmpty()) // если не выбран ни один объект
     {
-        QMessageBox::warning(this, "", "You was not choose a file or a directory! Please try again");
+        QMessageBox::warning(this, "Remove", "You was not choose a file or a directory! Please try again");
         return;
     }
     QMessageBox::StandardButton btn
-        = QMessageBox::question(this, "", "Do you want to perform <b>\"Remove\"</b> operation?", QMessageBox::Cancel | QMessageBox::Ok);
+        = QMessageBox::question(this, "Remove", "Do you want to perform operation?", QMessageBox::Cancel | QMessageBox::Ok);
     if (btn == QMessageBox::Cancel)
     {
         filePath.clear(); // очистка пути файла
@@ -344,90 +331,123 @@ void Form::on_btnCopy_clicked()
         || rDir.absolutePath().contains(rDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
         || !lDir.absolutePath().contains(lDir.homePath()) || !rDir.absolutePath().contains(rDir.homePath()))
     {
-        QMessageBox::warning(this, "", "There is no access to perform any operation in this directory!");
+        QMessageBox::warning(this, "Copy", "There is no access to perform any operation in this directory!");
         filePath.clear(); // очистка пути файла
         dirPath.clear();
         return;
     }
     if (filePath.isEmpty() && dirPath.isEmpty()) // если не выбран ни один объект
-        QMessageBox::warning(this, "", "You was not choose a file or a directory! Please try again");
-    else if (!filePath.isEmpty()) // если выбран файл
     {
-        QFileInfo f = QFileInfo(filePath);
-        // цикл прохода по текущей директории для поиска файлов с таким именем
-        foreach (QFileInfo info, rDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
-            if (info.fileName() == f.fileName()) // если файл с таким именем есть
-            {
-                QMessageBox::warning(this, "", "A file with this name exists!");
-                filePath.clear(); // очистка пути файла
-                return;
-            }
-        ui->btnCopy->setEnabled(false);
-        emit startCopy(rDir, file, 0, filePath, "");
-        filePath.clear(); // очистка пути файла
+        QMessageBox::warning(this, "Copy", "You was not choose a file or a directory! Please try again");
+        return;
+    }
+    QFileInfo data;
+    if (!filePath.isEmpty()) // если выбран файл
+    {
+        data = QFileInfo(filePath);
     }
     else if (!dirPath.isEmpty()) // если выбрана директория
     {
-        QDir d = QDir(dirPath);
-        // проход по выбранной директории для поиска директории с именем копируемой
-        foreach (QFileInfo dirs, rDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-            if (dirs.fileName() == d.dirName()) // если диреткория существует
-            {
-                QMessageBox::warning(this, "", "A directory with this name exists!");
-                dirPath.clear();
-                return;
-            }
-        ui->btnCopy->setEnabled(false);
-        emit startCopy(rDir, file, dir, "", dirPath);
-        dirPath.clear();
+        data = QFileInfo(dirPath);
     }
+    foreach (QFileInfo info, rDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    {
+        if (info.fileName() == data.fileName()) // если файл с таким именем есть
+        {
+            QMessageBox::warning(this, "Copy", "A file or a directory with this name exists!");
+            filePath.clear(); // очистка пути файла
+            return;
+        }
+    }
+    ui->btnCopy->setEnabled(false);
+    emit startCopy(rDir, file, dir, filePath, dirPath);
+    filePath.clear(); // очистка пути файла
+    dirPath.clear();
 }
 
 void Form::on_btnReplace_clicked()
 {
+    //    QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); // получение текущей директории
+    //    QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
+    //    if (lDir.absolutePath().contains(lDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
+    //        || rDir.absolutePath().contains(rDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
+    //        || !lDir.absolutePath().contains(lDir.homePath()) || !rDir.absolutePath().contains(rDir.homePath()))
+    //    {
+    //        QMessageBox::warning(this, "", "There is no access to perform any operation in this directory!");
+    //        filePath.clear();
+    //        dirPath.clear();
+    //        return;
+    //    }
+    //    if (filePath.isEmpty() && dirPath.isEmpty()) // если не выбран ни один объект
+    //        QMessageBox::warning(this, "", "You was not choose a file or a directory! Please try again");
+    //    else if (!filePath.isEmpty()) // если выбран файл
+    //    {
+    //        QFileInfo f = QFileInfo(filePath);
+    //        // цикл прохода по текущей директории для поиска файлов с таким именем
+    //        foreach (QFileInfo info, rDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
+    //            if (info.fileName() == f.fileName()) // если файл с таким именем есть
+    //            {
+    //                QMessageBox::warning(this, "", "A file with this name exists!");
+    //                filePath.clear(); // очистка пути файла
+    //                return;
+    //            }
+    //        ui->btnReplace->setEnabled(false);
+    //        emit startReplace(rDir, file, 0, filePath, "");
+    //        filePath.clear(); // очистка пути файла
+    //    }
+    //    else if (!dirPath.isEmpty()) // если выбрана директория
+    //    {
+    //        QDir d = QDir(dirPath);
+    //        // проход по выбранной директории для поиска директории с именем копируемой
+    //        foreach (QFileInfo dirs, rDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    //            if (dirs.fileName() == d.dirName()) // если диреткория существует
+    //            {
+    //                QMessageBox::warning(this, "", "A directory with this name exists!");
+    //                dirPath.clear();
+    //                return;
+    //            }
+    //        ui->btnReplace->setEnabled(false);
+    //        emit startReplace(rDir, file, dir, "", dirPath);
+    //        dirPath.clear();
+    //    }
     QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); // получение текущей директории
     QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
     if (lDir.absolutePath().contains(lDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
         || rDir.absolutePath().contains(rDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
         || !lDir.absolutePath().contains(lDir.homePath()) || !rDir.absolutePath().contains(rDir.homePath()))
     {
-        QMessageBox::warning(this, "", "There is no access to perform any operation in this directory!");
-        filePath.clear();
+        QMessageBox::warning(this, "Replace", "There is no access to perform any operation in this directory!");
+        filePath.clear(); // очистка пути файла
         dirPath.clear();
         return;
     }
     if (filePath.isEmpty() && dirPath.isEmpty()) // если не выбран ни один объект
-        QMessageBox::warning(this, "", "You was not choose a file or a directory! Please try again");
-    else if (!filePath.isEmpty()) // если выбран файл
     {
-        QFileInfo f = QFileInfo(filePath);
-        // цикл прохода по текущей директории для поиска файлов с таким именем
-        foreach (QFileInfo info, rDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
-            if (info.fileName() == f.fileName()) // если файл с таким именем есть
-            {
-                QMessageBox::warning(this, "", "A file with this name exists!");
-                filePath.clear(); // очистка пути файла
-                return;
-            }
-        ui->btnReplace->setEnabled(false);
-        emit startReplace(rDir, file, 0, filePath, "");
-        filePath.clear(); // очистка пути файла
+        QMessageBox::warning(this, "Replace", "You was not choose a file or a directory! Please try again");
+        return;
+    }
+    QFileInfo data;
+    if (!filePath.isEmpty()) // если выбран файл
+    {
+        data = QFileInfo(filePath);
     }
     else if (!dirPath.isEmpty()) // если выбрана директория
     {
-        QDir d = QDir(dirPath);
-        // проход по выбранной директории для поиска директории с именем копируемой
-        foreach (QFileInfo dirs, rDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-            if (dirs.fileName() == d.dirName()) // если диреткория существует
-            {
-                QMessageBox::warning(this, "", "A directory with this name exists!");
-                dirPath.clear();
-                return;
-            }
-        ui->btnReplace->setEnabled(false);
-        emit startReplace(rDir, file, dir, "", dirPath);
-        dirPath.clear();
+        data = QFileInfo(dirPath);
     }
+    foreach (QFileInfo info, rDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    {
+        if (info.fileName() == data.fileName()) // если файл с таким именем есть
+        {
+            QMessageBox::warning(this, "Replace", "A file or a directory with this name exists!");
+            filePath.clear(); // очистка пути файла
+            return;
+        }
+    }
+    ui->btnReplace->setEnabled(false);
+    emit startReplace(rDir, file, dir, filePath, dirPath);
+    filePath.clear(); // очистка пути файла
+    dirPath.clear();
 }
 
 void Form::on_btnRename_clicked()
@@ -442,12 +462,12 @@ void Form::on_btnRename_clicked()
     if (qDir.absolutePath().contains(qDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
         || !qDir.absolutePath().contains(qDir.homePath())) // если это корневая директория
     {
-        QMessageBox::warning(this, "", "There is no access to perform any operation in this directory!");
+        QMessageBox::warning(this, "Rename", "There is no access to perform any operation in this directory!");
         return;
     }
     if (filePath.isEmpty() && dirPath.isEmpty()) // если не выбран ни один объект
     {
-        QMessageBox::warning(this, "", "You was not choose a file or a directory! Please try again");
+        QMessageBox::warning(this, "Rename", "You was not choose a file or a directory! Please try again");
         return;
     }
     NewName name;
@@ -458,33 +478,25 @@ void Form::on_btnRename_clicked()
         dirPath.clear();
         return;
     }
+    foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+        if (info.fileName() == name.getName()) // если файл с таким именем есть
+        {
+            QMessageBox::warning(this, "Rename", "A file or a directory with this name exists!");
+            filePath.clear();
+            dirPath.clear();
+            return;
+        }
     QString newPath = qDir.absolutePath().append("/").append(name.getName()); // создание нового пути с учетом переименования
     if (!filePath.isEmpty())                                                  // если выбран файл
     {
-        // цикл прохода по текущей директории для поиска файлов с таким именем
-        foreach (QFileInfo files, qDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
-            if (files.fileName() == name.getName()) // если файл с таким именем есть
-            {
-                QMessageBox::warning(this, "", "A file with this name exists!");
-                filePath.clear();
-                return;
-            }
         if (!file->r_name(filePath, newPath)) // если переименование не произошло
-            QMessageBox::warning(this, "", "The operation <b>\"Rename\"</b> was not perfomed!");
+            QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
         filePath.clear(); // очистка пути файла
     }
     else if (!dirPath.isEmpty()) // если выбрана директория
     {
-        // цикл прохода по выбранной директории для поиска директории с таким именем
-        foreach (QFileInfo dirs, qDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-            if (dirs.fileName() == name.getName()) // если директория с таким именем есть
-            {
-                QMessageBox::warning(this, "", "A directory with this name exists!");
-                dirPath.clear();
-                return;
-            }
         if (!dir->r_name(dirPath, newPath)) // если переименование не произошло
-            QMessageBox::warning(this, "", "The operation <b>\"Rename\"</b> was not perfomed!");
+            QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
         dirPath.clear(); // очистка пути директории
     }
 }
@@ -523,6 +535,24 @@ void Form::on_leftPath_textEdited(const QString& arg1)
         view->setRootIndex(model->index(fileInfo.absolutePath()));
     else if (fileInfo.isDir())
         view->setRootIndex(model->index(arg1)); // элемент с этим индексом становится корневым
+}
+
+void Form::remove_is_not_performed()
+{
+    ui->btnRemove->setEnabled(true);
+    QMessageBox::warning(this, "Remove", "The operation is not performed!");
+}
+
+void Form::copy_is_not_performed()
+{
+    ui->btnCopy->setEnabled(true);
+    QMessageBox::warning(this, "Copy", "The operation is not performed!");
+}
+
+void Form::replace_is_not_performed()
+{
+    ui->btnReplace->setEnabled(true);
+    QMessageBox::warning(this, "Replace", "The operation is not performed!");
 }
 
 void Form::ready_to_remove()

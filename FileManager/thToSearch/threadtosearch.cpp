@@ -5,9 +5,6 @@
 #include <iostream>
 
 #include <QDesktopServices>
-#include <QList>
-#include <QMessageBox>
-#include <QUrl>
 
 using namespace std;
 

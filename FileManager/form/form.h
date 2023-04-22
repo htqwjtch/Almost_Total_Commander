@@ -73,6 +73,12 @@ private slots:
 
     void on_leftPath_textEdited(const QString& arg1);
 
+    void remove_is_not_performed();
+
+    void copy_is_not_performed();
+
+    void replace_is_not_performed();
+
     void ready_to_remove();
 
     void ready_to_copy();

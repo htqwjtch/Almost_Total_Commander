@@ -64,6 +64,9 @@ static constexpr auto qt_meta_stringdata_CLASSFormENDCLASS = QtMocHelpers::strin
     "arg1",
     "on_btnSearch_clicked",
     "on_leftPath_textEdited",
+    "remove_is_not_performed",
+    "copy_is_not_performed",
+    "replace_is_not_performed",
     "ready_to_remove",
     "ready_to_copy",
     "ready_to_replace",
@@ -73,7 +76,7 @@ static constexpr auto qt_meta_stringdata_CLASSFormENDCLASS = QtMocHelpers::strin
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSFormENDCLASS_t {
-    uint offsetsAndSizes[64];
+    uint offsetsAndSizes[70];
     char stringdata0[5];
     char stringdata1[10];
     char stringdata2[1];
@@ -100,12 +103,15 @@ struct qt_meta_stringdata_CLASSFormENDCLASS_t {
     char stringdata23[5];
     char stringdata24[21];
     char stringdata25[23];
-    char stringdata26[16];
-    char stringdata27[14];
-    char stringdata28[17];
+    char stringdata26[24];
+    char stringdata27[22];
+    char stringdata28[25];
     char stringdata29[16];
     char stringdata30[14];
-    char stringdata31[5];
+    char stringdata31[17];
+    char stringdata32[16];
+    char stringdata33[14];
+    char stringdata34[5];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSFormENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -137,12 +143,15 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSFormENDCLASS_t qt_meta_stringda
         QT_MOC_LITERAL(287, 4),  // "arg1"
         QT_MOC_LITERAL(292, 20),  // "on_btnSearch_clicked"
         QT_MOC_LITERAL(313, 22),  // "on_leftPath_textEdited"
-        QT_MOC_LITERAL(336, 15),  // "ready_to_remove"
-        QT_MOC_LITERAL(352, 13),  // "ready_to_copy"
-        QT_MOC_LITERAL(366, 16),  // "ready_to_replace"
-        QT_MOC_LITERAL(383, 15),  // "ready_to_search"
-        QT_MOC_LITERAL(399, 13),  // "QFileInfoList"
-        QT_MOC_LITERAL(413, 4)   // "list"
+        QT_MOC_LITERAL(336, 23),  // "remove_is_not_performed"
+        QT_MOC_LITERAL(360, 21),  // "copy_is_not_performed"
+        QT_MOC_LITERAL(382, 24),  // "replace_is_not_performed"
+        QT_MOC_LITERAL(407, 15),  // "ready_to_remove"
+        QT_MOC_LITERAL(423, 13),  // "ready_to_copy"
+        QT_MOC_LITERAL(437, 16),  // "ready_to_replace"
+        QT_MOC_LITERAL(454, 15),  // "ready_to_search"
+        QT_MOC_LITERAL(470, 13),  // "QFileInfoList"
+        QT_MOC_LITERAL(484, 4)   // "list"
     },
     "Form",
     "startCopy",
@@ -170,6 +179,9 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSFormENDCLASS_t qt_meta_stringda
     "arg1",
     "on_btnSearch_clicked",
     "on_leftPath_textEdited",
+    "remove_is_not_performed",
+    "copy_is_not_performed",
+    "replace_is_not_performed",
     "ready_to_remove",
     "ready_to_copy",
     "ready_to_replace",
@@ -187,7 +199,7 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSFormENDCLASS[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      21,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -195,26 +207,29 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSFormENDCLASS[] = {
        4,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    5,  122,    2, 0x06,    1 /* Public */,
-      10,    4,  133,    2, 0x06,    7 /* Public */,
-      11,    5,  142,    2, 0x06,   12 /* Public */,
-      12,    3,  153,    2, 0x06,   18 /* Public */,
+       1,    5,  140,    2, 0x06,    1 /* Public */,
+      10,    4,  151,    2, 0x06,    7 /* Public */,
+      11,    5,  160,    2, 0x06,   12 /* Public */,
+      12,    3,  171,    2, 0x06,   18 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-      13,    1,  160,    2, 0x08,   22 /* Private */,
-      16,    1,  163,    2, 0x08,   24 /* Private */,
-      17,    0,  166,    2, 0x08,   26 /* Private */,
-      18,    0,  167,    2, 0x08,   27 /* Private */,
-      19,    0,  168,    2, 0x08,   28 /* Private */,
-      20,    0,  169,    2, 0x08,   29 /* Private */,
-      21,    0,  170,    2, 0x08,   30 /* Private */,
-      22,    1,  171,    2, 0x08,   31 /* Private */,
-      24,    0,  174,    2, 0x08,   33 /* Private */,
-      25,    1,  175,    2, 0x08,   34 /* Private */,
-      26,    0,  178,    2, 0x08,   36 /* Private */,
-      27,    0,  179,    2, 0x08,   37 /* Private */,
-      28,    0,  180,    2, 0x08,   38 /* Private */,
-      29,    1,  181,    2, 0x08,   39 /* Private */,
+      13,    1,  178,    2, 0x08,   22 /* Private */,
+      16,    1,  181,    2, 0x08,   24 /* Private */,
+      17,    0,  184,    2, 0x08,   26 /* Private */,
+      18,    0,  185,    2, 0x08,   27 /* Private */,
+      19,    0,  186,    2, 0x08,   28 /* Private */,
+      20,    0,  187,    2, 0x08,   29 /* Private */,
+      21,    0,  188,    2, 0x08,   30 /* Private */,
+      22,    1,  189,    2, 0x08,   31 /* Private */,
+      24,    0,  192,    2, 0x08,   33 /* Private */,
+      25,    1,  193,    2, 0x08,   34 /* Private */,
+      26,    0,  196,    2, 0x08,   36 /* Private */,
+      27,    0,  197,    2, 0x08,   37 /* Private */,
+      28,    0,  198,    2, 0x08,   38 /* Private */,
+      29,    0,  199,    2, 0x08,   39 /* Private */,
+      30,    0,  200,    2, 0x08,   40 /* Private */,
+      31,    0,  201,    2, 0x08,   41 /* Private */,
+      32,    1,  202,    2, 0x08,   42 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, 0x80000000 | 5, 0x80000000 | 5, QMetaType::QString, QMetaType::QString,    4,    6,    7,    8,    9,
@@ -236,7 +251,10 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSFormENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 30,   31,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 33,   34,
 
        0        // eod
 };
@@ -299,6 +317,12 @@ Q_CONSTINIT const QMetaObject Form::staticMetaObject = { {
         // method 'on_leftPath_textEdited'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<const QString &, std::false_type>,
+        // method 'remove_is_not_performed'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'copy_is_not_performed'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
+        // method 'replace_is_not_performed'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'ready_to_remove'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'ready_to_copy'
@@ -332,10 +356,13 @@ void Form::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void *
         case 11: _t->on_lineSearch_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
         case 12: _t->on_btnSearch_clicked(); break;
         case 13: _t->on_leftPath_textEdited((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 14: _t->ready_to_remove(); break;
-        case 15: _t->ready_to_copy(); break;
-        case 16: _t->ready_to_replace(); break;
-        case 17: _t->ready_to_search((*reinterpret_cast< std::add_pointer_t<QFileInfoList>>(_a[1]))); break;
+        case 14: _t->remove_is_not_performed(); break;
+        case 15: _t->copy_is_not_performed(); break;
+        case 16: _t->replace_is_not_performed(); break;
+        case 17: _t->ready_to_remove(); break;
+        case 18: _t->ready_to_copy(); break;
+        case 19: _t->ready_to_replace(); break;
+        case 20: _t->ready_to_search((*reinterpret_cast< std::add_pointer_t<QFileInfoList>>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -390,13 +417,13 @@ int Form::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 18)
+        if (_id < 21)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
+        _id -= 21;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 18)
+        if (_id < 21)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 18;
+        _id -= 21;
     }
     return _id;
 }

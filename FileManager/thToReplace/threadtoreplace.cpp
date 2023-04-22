@@ -7,9 +7,15 @@ void ThreadToReplace::runReplace(QDir rDir, SysElem* file, SysElem* dir, QString
     if (!filePath.isEmpty())
     {
         if (!file->c_py(filePath, rDir.absolutePath())) // если копирование не произошло
-            qDebug() << "The operation <<Copy>> was not perfomed!";
+        {
+            emit notPerformed();
+            return;
+        }
         if (!file->r_move(filePath))
-            qDebug() << "The operation <<Remove>> was not perfomed!";
+        {
+            emit notPerformed();
+            return;
+        }
     }
     else
     {
@@ -26,7 +32,10 @@ void ThreadToReplace::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPa
     foreach (QFileInfo info, lDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
         copyList.append(info);                           // добавление элемента в контейнеp
     if (!dir->c_py(lDir.dirName(), rDir.absolutePath())) // если копирование не выполнено
-        qDebug() << "The operation <<Copy>> was not perfomed!";
+    {
+        emit notPerformed();
+        return;
+    }
     rDir.cd(lDir.dirName());
     QString copyPath = rDir.absolutePath();
     //цикл копирования элементов контейнера в созданную директорию
@@ -35,7 +44,7 @@ void ThreadToReplace::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPa
         if (info.isFile()) // текущий элемент контейнера - файл
         {
             if (!file->c_py(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
-                qDebug() << "The operation <<Copy>> was not perfomed!";
+                emit notPerformed();
         }
         else if (info.isDir()) // если текущий элемент - директория
             c_py(rDir, file, dir, info.absoluteFilePath());
@@ -69,11 +78,14 @@ void ThreadToReplace::r_move(SysElem* file, SysElem* dir, QString dirPath)
     if (!qDir.isEmpty())       // если директория не пуста
     {
         if (!recRemove(qDir, file, dir)) // если внутренние файлы не удалены
-            qDebug() << "The operation <<Remove>> was not perfomed!";
+        {
+            emit notPerformed();
+            return;
+        }
     }
     if (qDir.isEmpty()) // если директория пуста
     {
         if (!dir->r_move(dirPath)) // если удаление не выпонено
-            qDebug() << "The operation <<Remove>> was not perfomed!";
+            emit notPerformed();
     }
 }

@@ -19,6 +19,7 @@ public:
     void r_move(SysElem*, SysElem*, QString);
 
 signals:
+    void notPerformed();
     void removeFinished();
 };
 #endif // THREADTOREMOVE_H

@@ -19,6 +19,7 @@ public:
     void c_py(QDir, SysElem*, SysElem*, QString);
 
 signals:
+    void notPerformed();
     void copyFinished();
 };
 

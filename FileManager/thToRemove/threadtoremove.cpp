@@ -7,7 +7,10 @@ void ThreadToRemove::runRemove(SysElem* file, SysElem* dir, QString filePath, QS
     if (!filePath.isEmpty()) // если выбран файл
     {
         if (!file->r_move(filePath)) // удаление файла
-            qDebug() << "The operation <<Remove>> was not perfomed!";
+        {
+            emit notPerformed();
+            return;
+        }
     }
     else
         r_move(file, dir, dirPath);
@@ -40,11 +43,14 @@ void ThreadToRemove::r_move(SysElem* file, SysElem* dir, QString dirPath)
     if (!qDir.isEmpty())       // если директория не пуста
     {
         if (!recRemove(qDir, file, dir)) // если внутренние файлы не удалены
-            qDebug() << "The operation <<Remove>> was not perfomed!";
+        {
+            emit notPerformed();
+            return;
+        }
     }
     if (qDir.isEmpty()) // если директория пуста
     {
         if (!dir->r_move(dirPath)) // если удаление не выпонено
-            qDebug() << "The operation <<Remove>> was not perfomed!";
+            emit notPerformed();
     }
 }
