@@ -26,7 +26,7 @@ class Form : public QWidget
 
     Ui::Form* ui;
     QFileSystemModel* model; //указатель для связи с моделью данных для файловой системы
-
+    //объекты для копирования, удаления, перемещения, поиска в отдельном потоке
     QThread* threadCopy;
     QThread* threadRemove;
     QThread* threadReplace;
@@ -34,21 +34,21 @@ class Form : public QWidget
 
     QListView* view;
     SearchResult* window;
-
+    // объекты потоков копирования, удаления, перемещения, поиска
     ThreadToCopy* thCopy;
     ThreadToRemove* thRemove;
     ThreadToReplace* thReplace;
     ThreadToSearch* thSearch;
 
     File f; //объект класса File для выполнения операций с текстовыми файлами
-    Dir d;  //объект класса dir для выполнения операций с директориями
+    Dir d;  //объект класса Dir для выполнения операций с директориями
 
-    SysElem* file = &f; //указатель на объект класса System для получения адреса объекта класса File
-    SysElem* dir = &d; //указатель на объект класса System для получения адреса объекта класса dir
+    SysElem* file = &f;
+    SysElem* dir = &d;
 
-    QString filePath = ""; //переменная для хранения пути выбранного файла
+    QString filePath = "";
 
-    QString dirPath = ""; //переменная для хранения пути выбранной директории
+    QString dirPath = "";
 
     QString searchName = "";
 
@@ -91,18 +91,19 @@ public:
     explicit Form(QWidget* parent = nullptr);
     ~Form();
 
-    void onBtnCreateClicked();
-    void onBtnRemoveClicked();
-    void onBtnCopyClicked();
-    void onBtnReplaceClicked();
-    void onBtnRenameClicked();
-    void onBtnSearchClicked();
+    //методы-обертки для слотов
+    void btn_create();
+    void btn_remove();
+    void btn_copy();
+    void btn_replace();
+    void btn_rename();
+    void btn_search();
 
 signals:
-    void startCopy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
-    void startRemove(SysElem* file, SysElem* dir, QString filePath, QString dirPath);
-    void startReplace(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
-    void startSearch(QString, QString, QString);
+    void start_copy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
+    void start_remove(SysElem* file, SysElem* dir, QString filePath, QString dirPath);
+    void start_replace(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
+    void start_search(QString, QString, QString);
 };
 
 #endif // FORM_H

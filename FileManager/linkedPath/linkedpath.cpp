@@ -5,7 +5,6 @@ LinkedPath::LinkedPath(QWidget* parent) : QDialog(parent), ui(new Ui::LinkedPath
 {
     ui->setupUi(this);
     setWindowTitle("Link"); // установка имени окна
-    //ui->path->setToolTip("Please don't forget about the extension, if you want to enter a file name"); // устанока информации для подсказок
 }
 
 LinkedPath::~LinkedPath()
@@ -13,7 +12,7 @@ LinkedPath::~LinkedPath()
     delete ui;
 }
 
-QString LinkedPath::getPath() // метод передачи имени
+QString LinkedPath::get_path() // метод передачи имени
 {
     return path;
 }

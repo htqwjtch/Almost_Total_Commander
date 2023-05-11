@@ -51,7 +51,7 @@ private slots:
     void on_CtrlF_triggered();
 
 public slots:
-    void addTab();
+    void add_tab();
 
 public:
     MainWindow(QWidget* parent = nullptr);

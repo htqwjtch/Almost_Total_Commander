@@ -394,6 +394,7 @@ DIST          = ../../Qt/6.5.0/gcc_64/mkspecs/features/spec_pre.prf \
 		../../Qt/6.5.0/gcc_64/mkspecs/features/lex.prf \
 		../FileManager/FileManager.pro ../FileManager/createChoice/createchoice.h \
 		../FileManager/form/form.h \
+		../FileManager/form/other_functions.h \
 		../FileManager/linkedPath/linkedpath.h \
 		../FileManager/mainWindow/mainwindow.h \
 		../FileManager/newName/newname.h \
@@ -1042,7 +1043,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../FileManager/resources/resources.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents ../../Qt/6.5.0/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../FileManager/createChoice/createchoice.h ../FileManager/form/form.h ../FileManager/linkedPath/linkedpath.h ../FileManager/mainWindow/mainwindow.h ../FileManager/newName/newname.h ../FileManager/searchResult/searchresult.h ../FileManager/sysElem/syselem.h ../FileManager/thToCopy/threadtocpy.h ../FileManager/thToRemove/threadtoremove.h ../FileManager/thToReplace/threadtoreplace.h ../FileManager/thToSearch/threadtosearch.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../FileManager/createChoice/createchoice.h ../FileManager/form/form.h ../FileManager/form/other_functions.h ../FileManager/linkedPath/linkedpath.h ../FileManager/mainWindow/mainwindow.h ../FileManager/newName/newname.h ../FileManager/searchResult/searchresult.h ../FileManager/sysElem/syselem.h ../FileManager/thToCopy/threadtocpy.h ../FileManager/thToRemove/threadtoremove.h ../FileManager/thToReplace/threadtoreplace.h ../FileManager/thToSearch/threadtosearch.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../FileManager/createChoice/createchoice.cpp ../FileManager/form/form.cpp ../FileManager/linkedPath/linkedpath.cpp ../FileManager/main.cpp ../FileManager/mainWindow/mainwindow.cpp ../FileManager/newName/newname.cpp ../FileManager/searchResult/searchresult.cpp ../FileManager/sysElem/syselem.cpp ../FileManager/thToCopy/threadtocpy.cpp ../FileManager/thToRemove/threadtoremove.cpp ../FileManager/thToReplace/threadtoreplace.cpp ../FileManager/thToSearch/threadtosearch.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../FileManager/createChoice/createchoice.ui ../FileManager/form/form.ui ../FileManager/linkedPath/linkedpath.ui ../FileManager/mainWindow/mainwindow.ui ../FileManager/newName/newname.ui ../FileManager/searchResult/searchresult.ui $(DISTDIR)/
 
@@ -1263,9 +1264,8 @@ moc_createchoice.cpp: ../FileManager/createChoice/createchoice.h \
 
 moc_form.cpp: ../FileManager/form/form.h \
 		../FileManager/searchResult/searchresult.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qclipboard.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
@@ -1311,15 +1311,11 @@ moc_form.cpp: ../FileManager/form/form.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
@@ -1363,6 +1359,13 @@ moc_form.cpp: ../FileManager/form/form.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
@@ -1632,9 +1635,8 @@ moc_linkedpath.cpp: ../FileManager/linkedPath/linkedpath.h \
 moc_mainwindow.cpp: ../FileManager/mainWindow/mainwindow.h \
 		../FileManager/form/form.h \
 		../FileManager/searchResult/searchresult.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qclipboard.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
@@ -1680,15 +1682,11 @@ moc_mainwindow.cpp: ../FileManager/mainWindow/mainwindow.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
@@ -1732,6 +1730,13 @@ moc_mainwindow.cpp: ../FileManager/mainWindow/mainwindow.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
@@ -2001,9 +2006,8 @@ moc_newname.cpp: ../FileManager/newName/newname.h \
 	/home/h4thqewjtch/Qt/6.5.0/gcc_64/libexec/moc $(DEFINES) --include /home/h4thqewjtch/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug/moc_predefs.h -I/home/h4thqewjtch/Qt/6.5.0/gcc_64/mkspecs/linux-g++ -I/home/h4thqewjtch/kypck/FileManager -I/home/h4thqewjtch/Qt/6.5.0/gcc_64/include -I/home/h4thqewjtch/Qt/6.5.0/gcc_64/include/QtWidgets -I/home/h4thqewjtch/Qt/6.5.0/gcc_64/include/QtGui -I/home/h4thqewjtch/Qt/6.5.0/gcc_64/include/QtCore -I. -I/usr/include/c++/11 -I/usr/include/x86_64-linux-gnu/c++/11 -I/usr/include/c++/11/backward -I/usr/lib/gcc/x86_64-linux-gnu/11/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../FileManager/newName/newname.h -o moc_newname.cpp
 
 moc_searchresult.cpp: ../FileManager/searchResult/searchresult.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qclipboard.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
@@ -2049,15 +2053,11 @@ moc_searchresult.cpp: ../FileManager/searchResult/searchresult.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
@@ -2101,6 +2101,13 @@ moc_searchresult.cpp: ../FileManager/searchResult/searchresult.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
@@ -2993,9 +3000,8 @@ createchoice.o: ../FileManager/createChoice/createchoice.cpp ../FileManager/crea
 
 form.o: ../FileManager/form/form.cpp ../FileManager/form/form.h \
 		../FileManager/searchResult/searchresult.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qclipboard.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
@@ -3041,15 +3047,11 @@ form.o: ../FileManager/form/form.cpp ../FileManager/form/form.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
@@ -3093,6 +3095,13 @@ form.o: ../FileManager/form/form.cpp ../FileManager/form/form.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
@@ -3194,6 +3203,11 @@ form.o: ../FileManager/form/form.cpp ../FileManager/form/form.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/QListView \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/QWidget \
 		../FileManager/createChoice/createchoice.h \
+		../FileManager/form/other_functions.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QLabel \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qlabel.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qpicture.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qtextdocument.h \
 		../FileManager/linkedPath/linkedpath.h \
 		../FileManager/newName/newname.h \
 		ui_form.h \
@@ -3223,10 +3237,6 @@ form.o: ../FileManager/form/form.cpp ../FileManager/form/form.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/qlayoutitem.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/qboxlayout.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/QHBoxLayout \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QLabel \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qlabel.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qpicture.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qtextdocument.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/QLineEdit \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/qlineedit.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtextcursor.h \
@@ -3452,9 +3462,8 @@ linkedpath.o: ../FileManager/linkedPath/linkedpath.cpp ../FileManager/linkedPath
 main.o: ../FileManager/main.cpp ../FileManager/mainWindow/mainwindow.h \
 		../FileManager/form/form.h \
 		../FileManager/searchResult/searchresult.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qclipboard.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
@@ -3500,15 +3509,11 @@ main.o: ../FileManager/main.cpp ../FileManager/mainWindow/mainwindow.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
@@ -3552,6 +3557,13 @@ main.o: ../FileManager/main.cpp ../FileManager/mainWindow/mainwindow.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
@@ -3677,9 +3689,8 @@ main.o: ../FileManager/main.cpp ../FileManager/mainWindow/mainwindow.h \
 mainwindow.o: ../FileManager/mainWindow/mainwindow.cpp ../FileManager/mainWindow/mainwindow.h \
 		../FileManager/form/form.h \
 		../FileManager/searchResult/searchresult.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qclipboard.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
@@ -3725,15 +3736,11 @@ mainwindow.o: ../FileManager/mainWindow/mainwindow.cpp ../FileManager/mainWindow
 		../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
@@ -3777,6 +3784,13 @@ mainwindow.o: ../FileManager/mainWindow/mainwindow.cpp ../FileManager/mainWindow
 		../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
@@ -4134,9 +4148,8 @@ newname.o: ../FileManager/newName/newname.cpp ../FileManager/newName/newname.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o newname.o ../FileManager/newName/newname.cpp
 
 searchresult.o: ../FileManager/searchResult/searchresult.cpp ../FileManager/searchResult/searchresult.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QClipboard \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qclipboard.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtversionchecks.h \
@@ -4182,15 +4195,11 @@ searchresult.o: ../FileManager/searchResult/searchresult.cpp ../FileManager/sear
 		../../Qt/6.5.0/gcc_64/include/QtCore/qversiontagging.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qnamespace.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qtmetamacros.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qobject.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstring.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qchar.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qstringview.h \
@@ -4234,6 +4243,13 @@ searchresult.o: ../FileManager/searchResult/searchresult.cpp ../FileManager/sear
 		../../Qt/6.5.0/gcc_64/include/QtCore/qscopeguard.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qobject_impl.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qbindingstorage.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QDialog \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
 		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
@@ -4352,10 +4368,19 @@ searchresult.o: ../FileManager/searchResult/searchresult.cpp ../FileManager/sear
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/qpushbutton.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/qabstractbutton.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/QVBoxLayout \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QFileSystemModel \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qfilesystemmodel.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qdiriterator.h \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/QLabel \
 		../../Qt/6.5.0/gcc_64/include/QtWidgets/qlabel.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qpicture.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qtextdocument.h
+		../../Qt/6.5.0/gcc_64/include/QtGui/qtextdocument.h \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/QMessageBox \
+		../../Qt/6.5.0/gcc_64/include/QtWidgets/qmessagebox.h \
+		../../Qt/6.5.0/gcc_64/include/QtGui/QStandardItemModel \
+		../../Qt/6.5.0/gcc_64/include/QtGui/qstandarditemmodel.h \
+		../../Qt/6.5.0/gcc_64/include/QtCore/QStringListModel \
+		../../Qt/6.5.0/gcc_64/include/QtCore/qstringlistmodel.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o searchresult.o ../FileManager/searchResult/searchresult.cpp
 
 syselem.o: ../FileManager/sysElem/syselem.cpp ../FileManager/sysElem/syselem.h \
@@ -5055,56 +5080,7 @@ threadtosearch.o: ../FileManager/thToSearch/threadtosearch.cpp ../FileManager/th
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiglobal.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtgui-config.h \
 		../../Qt/6.5.0/gcc_64/include/QtGui/qtguiexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/QMessageBox \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qmessagebox.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgets-config.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qtwidgetsexports.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qdialog.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qwidget.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qwindowdefs.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qmargins.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qaction.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qkeysequence.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qicon.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qsize.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qpixmap.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qpaintdevice.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qrect.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qpoint.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qcolor.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qrgb.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qrgba64.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qimage.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qpixelformat.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qtransform.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qpolygon.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qregion.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qline.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qpalette.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qbrush.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qfont.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qfontmetrics.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qfontinfo.h \
-		../../Qt/6.5.0/gcc_64/include/QtWidgets/qsizepolicy.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qcursor.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qbitmap.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qevent.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qpointer.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qurl.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qeventpoint.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qvector2d.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qvectornd.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qpointingdevice.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qinputdevice.h \
-		../../Qt/6.5.0/gcc_64/include/QtGui/qscreen.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/QList \
-		../../Qt/6.5.0/gcc_64/include/QtCore/QRect \
-		../../Qt/6.5.0/gcc_64/include/QtCore/QSize \
-		../../Qt/6.5.0/gcc_64/include/QtCore/QSizeF \
-		../../Qt/6.5.0/gcc_64/include/QtGui/QTransform \
-		../../Qt/6.5.0/gcc_64/include/QtCore/qnativeinterface.h \
-		../../Qt/6.5.0/gcc_64/include/QtCore/QUrl
+		../../Qt/6.5.0/gcc_64/include/QtCore/QList
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o threadtosearch.o ../FileManager/thToSearch/threadtosearch.cpp
 
 qrc_resources.o: qrc_resources.cpp 

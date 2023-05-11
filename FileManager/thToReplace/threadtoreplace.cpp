@@ -2,18 +2,18 @@
 
 ThreadToReplace::ThreadToReplace(QObject* parent) : QObject{parent} {}
 
-void ThreadToReplace::runReplace(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath)
+void ThreadToReplace::run_replace(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath)
 {
     if (!filePath.isEmpty())
     {
         if (!file->c_py(filePath, rDir.absolutePath())) // если копирование не произошло
         {
-            emit notPerformed();
+            emit not_performed();
             return;
         }
         if (!file->r_move(filePath))
         {
-            emit notPerformed();
+            emit not_performed();
             return;
         }
     }
@@ -22,7 +22,7 @@ void ThreadToReplace::runReplace(QDir rDir, SysElem* file, SysElem* dir, QString
         c_py(rDir, file, dir, dirPath);
         r_move(file, dir, dirPath);
     }
-    emit replaceFinished();
+    emit replace_finished();
 }
 
 void ThreadToReplace::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)
@@ -33,7 +33,7 @@ void ThreadToReplace::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPa
         copyList.append(info);                           // добавление элемента в контейнеp
     if (!dir->c_py(lDir.dirName(), rDir.absolutePath())) // если копирование не выполнено
     {
-        emit notPerformed();
+        emit not_performed();
         return;
     }
     rDir.cd(lDir.dirName());
@@ -44,7 +44,7 @@ void ThreadToReplace::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPa
         if (info.isFile()) // текущий элемент контейнера - файл
         {
             if (!file->c_py(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
-                emit notPerformed();
+                emit not_performed();
         }
         else if (info.isDir()) // если текущий элемент - директория
             c_py(rDir, file, dir, info.absoluteFilePath());
@@ -52,7 +52,7 @@ void ThreadToReplace::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPa
     rDir.cdUp();
 }
 
-bool ThreadToReplace::recRemove(QDir& qDir, SysElem* file, SysElem* dir) // функция рекурсивного удаления содержимого выбранной папки
+bool ThreadToReplace::rec_remove(QDir& qDir, SysElem* file, SysElem* dir) // функция рекурсивного удаления содержимого выбранной папки
 {
     // цикл прохода по текущей директории для удаления файлов и директорий внутри
     foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
@@ -60,7 +60,7 @@ bool ThreadToReplace::recRemove(QDir& qDir, SysElem* file, SysElem* dir) // фу
         if (info.isDir()) // если директория
         {
             qDir.cd(info.fileName());                  // заходим в нее
-            recRemove(qDir, file, dir);                // рекурсивно удаляем внутренности
+            rec_remove(qDir, file, dir);               // рекурсивно удаляем внутренности
             qDir.cdUp();                               // возврат
             if (!dir->r_move(info.absoluteFilePath())) // теперь папка пуста и мы можем ее удалить
                 return false;
@@ -77,15 +77,15 @@ void ThreadToReplace::r_move(SysElem* file, SysElem* dir, QString dirPath)
     QDir qDir = QDir(dirPath); // получение выбранной директории
     if (!qDir.isEmpty())       // если директория не пуста
     {
-        if (!recRemove(qDir, file, dir)) // если внутренние файлы не удалены
+        if (!rec_remove(qDir, file, dir)) // если внутренние файлы не удалены
         {
-            emit notPerformed();
+            emit not_performed();
             return;
         }
     }
     if (qDir.isEmpty()) // если директория пуста
     {
         if (!dir->r_move(dirPath)) // если удаление не выпонено
-            emit notPerformed();
+            emit not_performed();
     }
 }

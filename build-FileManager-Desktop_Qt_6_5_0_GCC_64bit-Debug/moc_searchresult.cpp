@@ -41,7 +41,7 @@ static constexpr auto qt_meta_stringdata_CLASSSearchResultENDCLASS = QtMocHelper
     "SearchResult",
     "on_btnOK_clicked",
     "",
-    "on_listWidget_itemClicked",
+    "on_leftList_itemClicked",
     "QListWidgetItem*",
     "item"
 );
@@ -51,7 +51,7 @@ struct qt_meta_stringdata_CLASSSearchResultENDCLASS_t {
     char stringdata0[13];
     char stringdata1[17];
     char stringdata2[1];
-    char stringdata3[26];
+    char stringdata3[24];
     char stringdata4[17];
     char stringdata5[5];
 };
@@ -62,14 +62,14 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSSearchResultENDCLASS_t qt_meta_
         QT_MOC_LITERAL(0, 12),  // "SearchResult"
         QT_MOC_LITERAL(13, 16),  // "on_btnOK_clicked"
         QT_MOC_LITERAL(30, 0),  // ""
-        QT_MOC_LITERAL(31, 25),  // "on_listWidget_itemClicked"
-        QT_MOC_LITERAL(57, 16),  // "QListWidgetItem*"
-        QT_MOC_LITERAL(74, 4)   // "item"
+        QT_MOC_LITERAL(31, 23),  // "on_leftList_itemClicked"
+        QT_MOC_LITERAL(55, 16),  // "QListWidgetItem*"
+        QT_MOC_LITERAL(72, 4)   // "item"
     },
     "SearchResult",
     "on_btnOK_clicked",
     "",
-    "on_listWidget_itemClicked",
+    "on_leftList_itemClicked",
     "QListWidgetItem*",
     "item"
 };
@@ -112,7 +112,7 @@ Q_CONSTINIT const QMetaObject SearchResult::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<SearchResult, std::true_type>,
         // method 'on_btnOK_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_listWidget_itemClicked'
+        // method 'on_leftList_itemClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QListWidgetItem *, std::false_type>
     >,
@@ -126,7 +126,7 @@ void SearchResult::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         (void)_t;
         switch (_id) {
         case 0: _t->on_btnOK_clicked(); break;
-        case 1: _t->on_listWidget_itemClicked((*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
+        case 1: _t->on_leftList_itemClicked((*reinterpret_cast< std::add_pointer_t<QListWidgetItem*>>(_a[1]))); break;
         default: ;
         }
     }

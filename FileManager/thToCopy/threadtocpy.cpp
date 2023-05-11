@@ -2,19 +2,19 @@
 
 ThreadToCopy::ThreadToCopy(QObject* parent) : QObject{parent} {}
 
-void ThreadToCopy::runCopy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath)
+void ThreadToCopy::run_copy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath)
 {
     if (!filePath.isEmpty())
     {
         if (!file->c_py(filePath, rDir.absolutePath())) // если копирование не произошло
         {
-            emit notPerformed();
+            emit not_performed();
             return;
         }
     }
     else
         c_py(rDir, file, dir, dirPath);
-    emit copyFinished();
+    emit copy_finished();
 }
 
 void ThreadToCopy::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)
@@ -25,7 +25,7 @@ void ThreadToCopy::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)
         copyList.append(info);                           // добавление элемента в контейнеp
     if (!dir->c_py(lDir.dirName(), rDir.absolutePath())) // если копирование не выполнено
     {
-        emit notPerformed();
+        emit not_performed();
         return;
     }
     rDir.cd(lDir.dirName());
@@ -36,7 +36,7 @@ void ThreadToCopy::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)
         if (info.isFile()) // текущий элемент контейнера - файл
         {
             if (!file->c_py(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
-                emit notPerformed();
+                emit not_performed();
         }
         else if (info.isDir()) // если текущий элемент - директория
             c_py(rDir, file, dir, info.absoluteFilePath());

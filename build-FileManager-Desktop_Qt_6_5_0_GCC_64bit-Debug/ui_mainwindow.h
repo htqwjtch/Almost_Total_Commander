@@ -27,12 +27,12 @@ class Ui_MainWindow
 {
 public:
     QAction *CtrlN;
-    QAction *CtrlD;
+    QAction *CtrlDel;
     QAction *CtrlC;
     QAction *CtrlX;
     QAction *CtrlR;
     QAction *CtrlT;
-    QAction *CtrlDel;
+    QAction *CtrlD;
     QAction *CtrlLeft;
     QAction *CtrlRight;
     QAction *CtrlEsc;
@@ -59,11 +59,11 @@ public:
         QIcon icon1;
         icon1.addFile(QString::fromUtf8(":/2044254-200.png"), QSize(), QIcon::Normal, QIcon::Off);
         CtrlN->setIcon(icon1);
-        CtrlD = new QAction(MainWindow);
-        CtrlD->setObjectName("CtrlD");
+        CtrlDel = new QAction(MainWindow);
+        CtrlDel->setObjectName("CtrlDel");
         QIcon icon2;
         icon2.addFile(QString::fromUtf8(":/pngegg.png"), QSize(), QIcon::Normal, QIcon::Off);
-        CtrlD->setIcon(icon2);
+        CtrlDel->setIcon(icon2);
         CtrlC = new QAction(MainWindow);
         CtrlC->setObjectName("CtrlC");
         QIcon icon3;
@@ -84,11 +84,11 @@ public:
         QIcon icon6;
         icon6.addFile(QString::fromUtf8(":/png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png"), QSize(), QIcon::Normal, QIcon::Off);
         CtrlT->setIcon(icon6);
-        CtrlDel = new QAction(MainWindow);
-        CtrlDel->setObjectName("CtrlDel");
+        CtrlD = new QAction(MainWindow);
+        CtrlD->setObjectName("CtrlD");
         QIcon icon7;
         icon7.addFile(QString::fromUtf8(":/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png"), QSize(), QIcon::Normal, QIcon::Off);
-        CtrlDel->setIcon(icon7);
+        CtrlD->setIcon(icon7);
         CtrlLeft = new QAction(MainWindow);
         CtrlLeft->setObjectName("CtrlLeft");
         QIcon icon8;
@@ -138,13 +138,13 @@ public:
 
         menubar->addAction(menuInfo->menuAction());
         menuInfo->addAction(CtrlN);
-        menuInfo->addAction(CtrlD);
+        menuInfo->addAction(CtrlDel);
         menuInfo->addAction(CtrlC);
         menuInfo->addAction(CtrlX);
         menuInfo->addAction(CtrlR);
         menuInfo->addAction(CtrlF);
         menuInfo->addAction(CtrlT);
-        menuInfo->addAction(CtrlDel);
+        menuInfo->addAction(CtrlD);
         menuInfo->addAction(CtrlLeft);
         menuInfo->addAction(CtrlRight);
         menuInfo->addAction(CtrlEsc);
@@ -167,12 +167,12 @@ public:
 #if QT_CONFIG(shortcut)
         CtrlN->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+N", nullptr));
 #endif // QT_CONFIG(shortcut)
-        CtrlD->setText(QCoreApplication::translate("MainWindow", "Remove", nullptr));
+        CtrlDel->setText(QCoreApplication::translate("MainWindow", "Remove", nullptr));
 #if QT_CONFIG(tooltip)
-        CtrlD->setToolTip(QCoreApplication::translate("MainWindow", "Remove", nullptr));
+        CtrlDel->setToolTip(QCoreApplication::translate("MainWindow", "Remove", nullptr));
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(shortcut)
-        CtrlD->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+D", nullptr));
+        CtrlDel->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Del", nullptr));
 #endif // QT_CONFIG(shortcut)
         CtrlC->setText(QCoreApplication::translate("MainWindow", "Copy", nullptr));
 #if QT_CONFIG(shortcut)
@@ -190,9 +190,9 @@ public:
 #if QT_CONFIG(shortcut)
         CtrlT->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+T", nullptr));
 #endif // QT_CONFIG(shortcut)
-        CtrlDel->setText(QCoreApplication::translate("MainWindow", "Close Tab", nullptr));
+        CtrlD->setText(QCoreApplication::translate("MainWindow", "Close Tab", nullptr));
 #if QT_CONFIG(shortcut)
-        CtrlDel->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+Del", nullptr));
+        CtrlD->setShortcut(QCoreApplication::translate("MainWindow", "Ctrl+D", nullptr));
 #endif // QT_CONFIG(shortcut)
         CtrlLeft->setText(QCoreApplication::translate("MainWindow", "Tab before", nullptr));
 #if QT_CONFIG(shortcut)

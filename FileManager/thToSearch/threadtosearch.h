@@ -11,14 +11,14 @@ class ThreadToSearch : public QObject
     Q_OBJECT
 
 public slots:
-    void runSearch(QString lDirPath, QString rDirPath, QString searchName);
+    void run_search(QString lDirPath, QString rDirPath, QString searchName);
 
 public:
     explicit ThreadToSearch(QObject* parent = nullptr);
     void search(QDir&, QString, QFileInfoList&);
 
 signals:
-    void searchFinished(QFileInfoList);
+    void search_finished(QFileInfoList);
 };
 
 #endif // THREADTOSEARCH_H

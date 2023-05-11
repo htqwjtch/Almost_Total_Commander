@@ -5,7 +5,7 @@
 
 namespace Ui
 {
-class CreateChoice;
+    class CreateChoice;
 }
 
 class CreateChoice : public QDialog
@@ -15,12 +15,9 @@ class CreateChoice : public QDialog
 public:
     explicit CreateChoice(QWidget* parent = nullptr);
     ~CreateChoice();
-    void chooseFile(bool); // метод установки создания файла
-    void chooseDir(bool);  // метод установки создания директории
-    void chooseLink(bool);
-    bool getFile(); // метод, сообщающий о выборе создании файла
-    bool getDir();  // метод, сообщающий о выборе создания директории
-    bool getLink();
+    bool get_file(); // метод, сообщающий о создании файла
+    bool get_dir();  // директории
+    bool get_link(); // символьной ссылки
 
 private slots:
     void on_btnFile_clicked();
@@ -33,11 +30,11 @@ private slots:
 
 private:
     Ui::CreateChoice* ui;
-    QString fileName = ""; // переменная для хранения имени созданного файла
-    QString dirName = "";  // переменная для хранения имени созданной директории
-    QString linkName = "";
-    bool file = 0; // флаг выбора файла
-    bool dir = 0;  // флаг выбора директории
-    bool link = 0;
+    QString fileName = ""; // переменная для хранения имени файла
+    QString dirName = "";  // директории
+    QString linkName = ""; // символьной ссылки
+    bool file = 0;         // флаг выбора файла
+    bool dir = 0;          // директории
+    bool link = 0;         // символьной ссылки
 };
 #endif // CREATECHOICE_H

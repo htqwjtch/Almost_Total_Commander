@@ -25,6 +25,7 @@ SOURCES += \
 HEADERS += \
     createChoice/createchoice.h \
     form/form.h \
+    form/other_functions.h \
     linkedPath/linkedpath.h \
     mainWindow/mainwindow.h \
     newName/newname.h \

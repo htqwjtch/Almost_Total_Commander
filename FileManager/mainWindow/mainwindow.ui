@@ -55,13 +55,13 @@
      <string>Info</string>
     </property>
     <addaction name="CtrlN"/>
-    <addaction name="CtrlD"/>
+    <addaction name="CtrlDel"/>
     <addaction name="CtrlC"/>
     <addaction name="CtrlX"/>
     <addaction name="CtrlR"/>
     <addaction name="CtrlF"/>
     <addaction name="CtrlT"/>
-    <addaction name="CtrlDel"/>
+    <addaction name="CtrlD"/>
     <addaction name="CtrlLeft"/>
     <addaction name="CtrlRight"/>
     <addaction name="CtrlEsc"/>
@@ -84,7 +84,7 @@
     <string>Ctrl+N</string>
    </property>
   </action>
-  <action name="CtrlD">
+  <action name="CtrlDel">
    <property name="icon">
     <iconset resource="../resources/resources.qrc">
      <normaloff>:/pngegg.png</normaloff>:/pngegg.png</iconset>
@@ -96,7 +96,7 @@
     <string>Remove</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+D</string>
+    <string>Ctrl+Del</string>
    </property>
   </action>
   <action name="CtrlC">
@@ -147,7 +147,7 @@
     <string>Ctrl+T</string>
    </property>
   </action>
-  <action name="CtrlDel">
+  <action name="CtrlD">
    <property name="icon">
     <iconset resource="../resources/resources.qrc">
      <normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</iconset>
@@ -156,7 +156,7 @@
     <string>Close Tab</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+Del</string>
+    <string>Ctrl+D</string>
    </property>
   </action>
   <action name="CtrlLeft">

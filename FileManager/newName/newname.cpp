@@ -5,7 +5,6 @@ NewName::NewName(QWidget* parent) : QDialog(parent), ui(new Ui::NewName)
 {
     ui->setupUi(this);
     setWindowTitle("Rename"); // установка имени окна
-    //ui->name->setToolTip("Please don't forget about the extension, if you want to enter a file name"); // устанока информации для подсказок
 }
 
 NewName::~NewName()
@@ -13,7 +12,7 @@ NewName::~NewName()
     delete ui;
 }
 
-QString NewName::getName() // метод передачи имени
+QString NewName::get_name() // метод передачи имени
 {
     return name;
 }

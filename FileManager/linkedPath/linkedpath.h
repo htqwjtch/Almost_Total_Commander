@@ -5,7 +5,7 @@
 
 namespace Ui
 {
-class LinkedPath;
+    class LinkedPath;
 }
 
 class LinkedPath : public QDialog
@@ -15,7 +15,7 @@ class LinkedPath : public QDialog
 public:
     explicit LinkedPath(QWidget* parent = nullptr);
     ~LinkedPath();
-    QString getPath(); // метод передачи имени
+    QString get_path(); // метод передачи имени
 
 private slots:
     void on_btnCancel_clicked();

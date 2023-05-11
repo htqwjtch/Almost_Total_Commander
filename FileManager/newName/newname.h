@@ -3,19 +3,20 @@
 
 #include <QDialog>
 
-namespace Ui {
-class NewName;
+namespace Ui
+{
+    class NewName;
 }
 
 class NewName : public QDialog
 {
     Q_OBJECT
 
-    Ui::NewName *ui;
-    QString name = "";    // переменная для хранения нового имени выбранного файла
+    Ui::NewName* ui;
+    QString name = ""; // переменная для хранения нового имени выбранного файла
 
 private slots:
-    void on_name_textEdited(const QString &arg1);
+    void on_name_textEdited(const QString& arg1);
 
     void on_btnCancel_clicked();
 
@@ -24,8 +25,7 @@ private slots:
 public:
     explicit NewName(QWidget* parent = nullptr);
     ~NewName();
-    QString getName(); // метод передачи имени
-
+    QString get_name(); // метод передачи имени
 };
 
 #endif // NEWNAME_H

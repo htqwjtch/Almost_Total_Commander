@@ -39,10 +39,10 @@ namespace {
 struct qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSThreadToRemoveENDCLASS = QtMocHelpers::stringData(
     "ThreadToRemove",
-    "notPerformed",
+    "not_performed",
     "",
-    "removeFinished",
-    "runRemove",
+    "remove_finished",
+    "run_remove",
     "SysElem*",
     "file",
     "dir",
@@ -53,10 +53,10 @@ static constexpr auto qt_meta_stringdata_CLASSThreadToRemoveENDCLASS = QtMocHelp
 struct qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t {
     uint offsetsAndSizes[20];
     char stringdata0[15];
-    char stringdata1[13];
+    char stringdata1[14];
     char stringdata2[1];
-    char stringdata3[15];
-    char stringdata4[10];
+    char stringdata3[16];
+    char stringdata4[11];
     char stringdata5[9];
     char stringdata6[5];
     char stringdata7[4];
@@ -68,21 +68,21 @@ struct qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t {
 Q_CONSTINIT static const qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t qt_meta_stringdata_CLASSThreadToRemoveENDCLASS = {
     {
         QT_MOC_LITERAL(0, 14),  // "ThreadToRemove"
-        QT_MOC_LITERAL(15, 12),  // "notPerformed"
-        QT_MOC_LITERAL(28, 0),  // ""
-        QT_MOC_LITERAL(29, 14),  // "removeFinished"
-        QT_MOC_LITERAL(44, 9),  // "runRemove"
-        QT_MOC_LITERAL(54, 8),  // "SysElem*"
-        QT_MOC_LITERAL(63, 4),  // "file"
-        QT_MOC_LITERAL(68, 3),  // "dir"
-        QT_MOC_LITERAL(72, 8),  // "filePath"
-        QT_MOC_LITERAL(81, 7)   // "dirPath"
+        QT_MOC_LITERAL(15, 13),  // "not_performed"
+        QT_MOC_LITERAL(29, 0),  // ""
+        QT_MOC_LITERAL(30, 15),  // "remove_finished"
+        QT_MOC_LITERAL(46, 10),  // "run_remove"
+        QT_MOC_LITERAL(57, 8),  // "SysElem*"
+        QT_MOC_LITERAL(66, 4),  // "file"
+        QT_MOC_LITERAL(71, 3),  // "dir"
+        QT_MOC_LITERAL(75, 8),  // "filePath"
+        QT_MOC_LITERAL(84, 7)   // "dirPath"
     },
     "ThreadToRemove",
-    "notPerformed",
+    "not_performed",
     "",
-    "removeFinished",
-    "runRemove",
+    "remove_finished",
+    "run_remove",
     "SysElem*",
     "file",
     "dir",
@@ -132,11 +132,11 @@ Q_CONSTINIT const QMetaObject ThreadToRemove::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSThreadToRemoveENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<ThreadToRemove, std::true_type>,
-        // method 'notPerformed'
+        // method 'not_performed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'removeFinished'
+        // method 'remove_finished'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'runRemove'
+        // method 'run_remove'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
@@ -152,23 +152,23 @@ void ThreadToRemove::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         auto *_t = static_cast<ThreadToRemove *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->notPerformed(); break;
-        case 1: _t->removeFinished(); break;
-        case 2: _t->runRemove((*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
+        case 0: _t->not_performed(); break;
+        case 1: _t->remove_finished(); break;
+        case 2: _t->run_remove((*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (ThreadToRemove::*)();
-            if (_t _q_method = &ThreadToRemove::notPerformed; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &ThreadToRemove::not_performed; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
             using _t = void (ThreadToRemove::*)();
-            if (_t _q_method = &ThreadToRemove::removeFinished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &ThreadToRemove::remove_finished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
             }
@@ -207,13 +207,13 @@ int ThreadToRemove::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ThreadToRemove::notPerformed()
+void ThreadToRemove::not_performed()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void ThreadToRemove::removeFinished()
+void ThreadToRemove::remove_finished()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }

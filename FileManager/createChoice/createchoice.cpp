@@ -12,51 +12,36 @@ CreateChoice::~CreateChoice()
     delete ui;
 }
 
-void CreateChoice::chooseFile(bool i) // метод установки создания файла
-{
-    file = i;
-}
-
-void CreateChoice::chooseDir(bool i) // метод установки создания директории
-{
-    dir = i;
-}
-
-void CreateChoice::chooseLink(bool i)
-{
-    link = i;
-}
-
-bool CreateChoice::getFile() // метод, сообщающий о выборе создании файла
+bool CreateChoice::get_file() // метод, сообщающий о выборе создании файла
 {
     return file;
 }
 
-bool CreateChoice::getDir() // метод, сообщающий о выборе создания директории
+bool CreateChoice::get_dir() // метод, сообщающий о выборе создания директории
 {
     return dir;
 }
 
-bool CreateChoice::getLink()
+bool CreateChoice::get_link()
 {
     return link;
 }
 
 void CreateChoice::on_btnFile_clicked()
 {
-    chooseFile(true);
+    file = true;
     hide();
 }
 
 void CreateChoice::on_btnDir_clicked()
 {
-    chooseDir(true);
+    dir = true;
     hide();
 }
 
 void CreateChoice::on_btnLink_clicked()
 {
-    chooseLink(true);
+    link = true;
     hide();
 }
 

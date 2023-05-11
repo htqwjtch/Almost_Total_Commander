@@ -1,5 +1,6 @@
 #include "../form/form.h"
 #include "../createChoice/createchoice.h"
+#include "../form/other_functions.h"
 #include "../linkedPath/linkedpath.h"
 #include "../newName/newname.h"
 #include "ui_form.h"
@@ -29,63 +30,39 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 
     if (!(threadCopy = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-    connect(this, SIGNAL(destroyed()), threadCopy, SLOT(quit()));
 
     if (!(threadRemove = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-    connect(this, SIGNAL(destroyed()), threadRemove, SLOT(quit()));
 
     if (!(threadReplace = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-    connect(this, SIGNAL(destroyed()), threadReplace, SLOT(quit()));
 
     if (!(threadSearch = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-    connect(this, SIGNAL(destroyed()), threadSearch, SLOT(quit()));
-    if (!(window = new SearchResult(this)))
-        QMessageBox::warning(this, "Memory allocation", "Object of SearchResult was not created!");
 
     if (!(thCopy = new ThreadToCopy()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToCopy was not created!");
-    connect(this, SIGNAL(startCopy(QDir, SysElem*, SysElem*, QString, QString)), thCopy, SLOT(runCopy(QDir, SysElem*, SysElem*, QString, QString)));
-    thCopy->moveToThread(threadCopy);
-    threadCopy->start();
 
     if (!(thRemove = new ThreadToRemove()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToRemove was not created!");
-    connect(this, SIGNAL(startRemove(SysElem*, SysElem*, QString, QString)), thRemove, SLOT(runRemove(SysElem*, SysElem*, QString, QString)));
-    thRemove->moveToThread(threadRemove);
-    threadRemove->start();
 
     if (!(thReplace = new ThreadToReplace()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToReplace was not created!");
-    connect(this, SIGNAL(startReplace(QDir, SysElem*, SysElem*, QString, QString)), thReplace,
-            SLOT(runReplace(QDir, SysElem*, SysElem*, QString, QString)));
-    thReplace->moveToThread(threadReplace);
-    threadReplace->start();
 
     if (!(thSearch = new ThreadToSearch()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToSearch was not created!");
-    connect(this, SIGNAL(startSearch(QString, QString, QString)), thSearch, SLOT(runSearch(QString, QString, QString)));
-    thSearch->moveToThread(threadSearch);
-    threadSearch->start();
 
-    connect(thRemove, SIGNAL(notPerformed()), this, SLOT(remove_is_not_performed()));
-    connect(thCopy, SIGNAL(notPerformed()), this, SLOT(copy_is_not_performed()));
-    connect(thReplace, SIGNAL(notPerformed()), this, SLOT(replace_is_not_performed()));
+    connect_threads(this, threadCopy, threadRemove, threadReplace, threadSearch, thCopy, thRemove, thReplace, thSearch);
 
-    connect(thRemove, SIGNAL(removeFinished()), this, SLOT(ready_to_remove()));
-    connect(thCopy, SIGNAL(copyFinished()), this, SLOT(ready_to_copy()));
-    connect(thReplace, SIGNAL(replaceFinished()), this, SLOT(ready_to_replace()));
-    connect(thSearch, SIGNAL(searchFinished(QFileInfoList)), this, SLOT(ready_to_search(QFileInfoList)));
+    if (!(window = new SearchResult(this)))
+        QMessageBox::warning(this, "Memory allocation", "Object of SearchResult was not created!");
 
     // устанока информации для подсказок
-    //    ui->btnCreate->setToolTip("Create");
-    //    ui->btnRemove->setToolTip("Remove");
-    //    ui->btnCopy->setToolTip("Copy");
-    //    ui->btnReplace->setToolTip("Replace");
-    //    ui->btnRename->setToolTip("Rename");
-    //    ui->lineSearch->setToolTip("Please don't forget about the extension, if you want to enter a file name");
+    ui->btnCreate->setToolTip("Create");
+    ui->btnRemove->setToolTip("Remove");
+    ui->btnCopy->setToolTip("Copy");
+    ui->btnReplace->setToolTip("Replace");
+    ui->btnRename->setToolTip("Rename");
 
     QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); //получение текущей директории
     QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
@@ -105,34 +82,52 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 Form::~Form()
 {
     delete ui;
+    delete model;
+    emit threadCopy->quit();
+    threadCopy->wait();
+    delete threadCopy;
+    emit threadRemove->quit();
+    threadRemove->wait();
+    delete threadRemove;
+    emit threadReplace->quit();
+    threadReplace->wait();
+    delete threadReplace;
+    emit threadSearch->quit();
+    threadSearch->wait();
+    delete threadSearch;
+    delete thCopy;
+    delete thRemove;
+    delete thReplace;
+    delete thSearch;
+    delete window;
 }
 
-void Form::onBtnCreateClicked()
+void Form::btn_create()
 {
     on_btnCreate_clicked();
 }
 
-void Form::onBtnRemoveClicked()
+void Form::btn_remove()
 {
     on_btnRemove_clicked();
 }
 
-void Form::onBtnCopyClicked()
+void Form::btn_copy()
 {
     on_btnCopy_clicked();
 }
 
-void Form::onBtnReplaceClicked()
+void Form::btn_replace()
 {
     on_btnReplace_clicked();
 }
 
-void Form::onBtnRenameClicked()
+void Form::btn_rename()
 {
     on_btnRename_clicked();
 }
 
-void Form::onBtnSearchClicked()
+void Form::btn_search()
 {
     on_btnSearch_clicked();
 }
@@ -145,33 +140,7 @@ void Form::on_lvLeft_clicked(const QModelIndex& index)
     {
         if (!dirPath.isEmpty()) // если до этого была выбрана директория
             dirPath.clear();
-        QString sizeFile = "";  // переменная размера файла
-        if (info.size() < 1024) // если размер файла меньше 1 килобайта
-            sizeFile = sizeFile.append(QString::number(info.size())).append(" B"); // приведение размера к виду "B"
-        else if (info.size() >= 1024 && info.size() < 1048576) // если размер файла больше 1 килобайта и меньше 1 мегабайта
-        {
-            double d = info.size() / 1024.;
-            sizeFile = sizeFile.append(QString::number(d)).append(" KB"); // приведение размера к виду "KB"
-        }
-        else if (info.size() >= 1048576 && info.size() < 1073741824) // если размер файла больше 1 мегабайта и меньше 1 гигабайта
-        {
-            double d = info.size() / 1048576.;
-            sizeFile = sizeFile.append(QString::number(d)).append(" MB"); // приведение размера к виду "MB"
-        }
-        else if (info.size() >= 1073741824) // если размер файла больше 1 гигабайта
-        {
-            double d = info.size() / 1073741824.;
-            sizeFile = sizeFile.append(QString::number(d)).append(" GB"); // приведение размера к виду "GB"
-        }
-        QString size = "Size : ";
-        QString allSize = size.append(sizeFile); // строка для отображения размера файла
-        ui->lblSize->setText(allSize);           // отображениe размера файла
-        QString typeInfo = "Type : ";
-        if (info.isSymLink())
-            typeInfo = typeInfo.append("link ");
-        else
-            typeInfo = typeInfo.append("file ").append(info.suffix());
-        ui->lblType->setText(typeInfo);    // отображениe типа файла
+        init_infoBar(info, ui->lblSize, ui->lblType, ui->lblDate);
         filePath = model->filePath(index); // установка пути выбранного файла
     }
     else if (!info.fileName().compare(".") || !info.fileName().compare(".."))
@@ -257,32 +226,30 @@ void Form::on_btnCreate_clicked()
     NewName name;
     name.exec(); // выполняет появление окна для создания имени
     foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-        if (info.fileName() == name.getName()) // если файл с таким именем найден
+        if (info.fileName() == name.get_name()) // если файл с таким именем найден
         {
             QMessageBox::warning(this, "Create", "A file or a directory with this name exists!");
             return;
         }
-    QString createPath = qDir.absolutePath().append("/").append(name.getName()); // получение пути соозданного файла
-    if (window.getFile() || window.getLink())                                    // если был выбран файл
+    QString createPath = qDir.absolutePath().append("/").append(name.get_name()); // получение пути соозданного файла
+    if (window.get_file() || window.get_link())                                   // если был выбран файл
     {
-        if (window.getLink())
+        if (window.get_link())
         {
             LinkedPath window;
-            window.exec();                         // выполняет появление окна для создания имени
-            QString linkedPath = window.getPath(); // получение пути соозданной ссылкb
+            window.exec();                          // выполняет появление окна для создания имени
+            QString linkedPath = window.get_path(); // получение пути соозданной ссылкb
 
-	    QString cmd = "ln -s ";
-	    cmd = cmd.append(linkedPath).append(" ").append(createPath);
-	    if (system(cmd.toLocal8Bit().constData()) != 0)
+	    if (symlink(linkedPath.toLocal8Bit().constData(), createPath.toLocal8Bit().constData()) != 0)
 		QMessageBox::warning(this, "Create", "The operation was not perfomed!");
 	}
-	else if (window.getFile())
+	else if (window.get_file())
 	{
 	    if (!file->create(createPath)) // если файл не создан
 		QMessageBox::warning(this, "", "The operation was not perfomed!");
 	}
     }
-    else if (window.getDir()) // если выбранный объект - директория
+    else if (window.get_dir()) // если выбранный объект - директория
     {
         if (!dir->create(createPath)) // если директория не создана
             QMessageBox::warning(this, "", "The operation was not perfomed!");
@@ -318,7 +285,7 @@ void Form::on_btnRemove_clicked()
         return;
     }
     ui->btnRemove->setEnabled(false);
-    emit startRemove(file, dir, filePath, dirPath);
+    emit start_remove(file, dir, filePath, dirPath);
     filePath.clear(); // очистка пути файла
     dirPath.clear();  // очистка пути директории
 }
@@ -360,56 +327,13 @@ void Form::on_btnCopy_clicked()
         }
     }
     ui->btnCopy->setEnabled(false);
-    emit startCopy(rDir, file, dir, filePath, dirPath);
+    emit start_copy(rDir, file, dir, filePath, dirPath);
     filePath.clear(); // очистка пути файла
     dirPath.clear();
 }
 
 void Form::on_btnReplace_clicked()
 {
-    //    QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); // получение текущей директории
-    //    QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
-    //    if (lDir.absolutePath().contains(lDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
-    //        || rDir.absolutePath().contains(rDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
-    //        || !lDir.absolutePath().contains(lDir.homePath()) || !rDir.absolutePath().contains(rDir.homePath()))
-    //    {
-    //        QMessageBox::warning(this, "", "There is no access to perform any operation in this directory!");
-    //        filePath.clear();
-    //        dirPath.clear();
-    //        return;
-    //    }
-    //    if (filePath.isEmpty() && dirPath.isEmpty()) // если не выбран ни один объект
-    //        QMessageBox::warning(this, "", "You was not choose a file or a directory! Please try again");
-    //    else if (!filePath.isEmpty()) // если выбран файл
-    //    {
-    //        QFileInfo f = QFileInfo(filePath);
-    //        // цикл прохода по текущей директории для поиска файлов с таким именем
-    //        foreach (QFileInfo info, rDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Name))
-    //            if (info.fileName() == f.fileName()) // если файл с таким именем есть
-    //            {
-    //                QMessageBox::warning(this, "", "A file with this name exists!");
-    //                filePath.clear(); // очистка пути файла
-    //                return;
-    //            }
-    //        ui->btnReplace->setEnabled(false);
-    //        emit startReplace(rDir, file, 0, filePath, "");
-    //        filePath.clear(); // очистка пути файла
-    //    }
-    //    else if (!dirPath.isEmpty()) // если выбрана директория
-    //    {
-    //        QDir d = QDir(dirPath);
-    //        // проход по выбранной директории для поиска директории с именем копируемой
-    //        foreach (QFileInfo dirs, rDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-    //            if (dirs.fileName() == d.dirName()) // если диреткория существует
-    //            {
-    //                QMessageBox::warning(this, "", "A directory with this name exists!");
-    //                dirPath.clear();
-    //                return;
-    //            }
-    //        ui->btnReplace->setEnabled(false);
-    //        emit startReplace(rDir, file, dir, "", dirPath);
-    //        dirPath.clear();
-    //    }
     QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); // получение текущей директории
     QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
     if (lDir.absolutePath().contains(lDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
@@ -445,7 +369,7 @@ void Form::on_btnReplace_clicked()
         }
     }
     ui->btnReplace->setEnabled(false);
-    emit startReplace(rDir, file, dir, filePath, dirPath);
+    emit start_replace(rDir, file, dir, filePath, dirPath);
     filePath.clear(); // очистка пути файла
     dirPath.clear();
 }
@@ -471,23 +395,23 @@ void Form::on_btnRename_clicked()
         return;
     }
     NewName name;
-    name.exec();                  // метод выполняет появление окна для переименования файла
-    if (name.getName().isEmpty()) // если имя не введено
+    name.exec();                   // метод выполняет появление окна для переименования файла
+    if (name.get_name().isEmpty()) // если имя не введено
     {
         filePath.clear();
         dirPath.clear();
         return;
     }
     foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-        if (info.fileName() == name.getName()) // если файл с таким именем есть
+        if (info.fileName() == name.get_name()) // если файл с таким именем есть
         {
             QMessageBox::warning(this, "Rename", "A file or a directory with this name exists!");
             filePath.clear();
             dirPath.clear();
             return;
         }
-    QString newPath = qDir.absolutePath().append("/").append(name.getName()); // создание нового пути с учетом переименования
-    if (!filePath.isEmpty())                                                  // если выбран файл
+    QString newPath = qDir.absolutePath().append("/").append(name.get_name()); // создание нового пути с учетом переименования
+    if (!filePath.isEmpty())                                                   // если выбран файл
     {
         if (!file->r_name(filePath, newPath)) // если переименование не произошло
             QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
@@ -517,7 +441,7 @@ void Form::on_btnSearch_clicked()
         && !rDirPath.contains(rDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug")))
     {
         ui->btnSearch->setEnabled(false);
-        emit startSearch(lDirPath, rDirPath, searchName);
+        emit start_search(lDirPath, rDirPath, searchName);
     }
     else
         QMessageBox::warning(this, "", "There is no access to perform a search in this directory!");
@@ -573,7 +497,7 @@ void Form::ready_to_replace()
 void Form::ready_to_search(QFileInfoList list)
 {
     ui->btnSearch->setEnabled(true);
-    window->setUi(list);
+    window->set_ui(list);
     window->exec();
-    window->resetUi();
+    window->reset_ui();
 }

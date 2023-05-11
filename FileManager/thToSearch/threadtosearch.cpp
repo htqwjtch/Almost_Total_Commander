@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include <QDesktopServices>
+#include <QList>
 
 using namespace std;
 
@@ -28,7 +29,7 @@ void ThreadToSearch::search(QDir& dir, QString searchName, QFileInfoList& list)
     }
 }
 
-void ThreadToSearch::runSearch(QString lDirPath, QString rDirPath, QString searchName)
+void ThreadToSearch::run_search(QString lDirPath, QString rDirPath, QString searchName)
 {
     QDir lDir = QDir(lDirPath);
     QDir rDir = QDir(rDirPath);
@@ -39,5 +40,5 @@ void ThreadToSearch::runSearch(QString lDirPath, QString rDirPath, QString searc
         search(lDir, searchName, list);
     if (rDirPath.contains("/home"))
         search(rDir, searchName, list);
-    emit searchFinished(list);
+    emit search_finished(list);
 }

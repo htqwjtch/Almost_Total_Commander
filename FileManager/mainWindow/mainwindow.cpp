@@ -11,23 +11,23 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this); // настраивает пользовательский интерфейс для указанного виджета
     setWindowTitle("FileManager"); // установка имени главного окна
 
-    if (!(window = new SearchResult(this)))
-        QMessageBox::warning(this, "Memory allocation", "Object of SearchResult was not created!");
-
     ui->tabWidget->clear();
 
     QToolButton* tb = new QToolButton();
     tb->setText("+");
     tb->setAutoRaise(true);
-    connect(tb, SIGNAL(clicked()), this, SLOT(addTab()));
+    connect(tb, SIGNAL(clicked()), this, SLOT(add_tab()));
+
     QLabel* lbl = nullptr;
     if (!(lbl = new QLabel("You can add tabs by pressing <b>\"+\"</b>")))
         QMessageBox::warning(this, "Memory allocation", "Object of QLabel was not created!");
     lbl->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+
     ui->tabWidget->addTab(lbl, QString());
     ui->tabWidget->setTabEnabled(0, false);
     ui->tabWidget->tabBar()->setTabButton(0, QTabBar::RightSide, tb);
-    addTab();
+
+    add_tab();
 }
 
 MainWindow::~MainWindow()
@@ -35,7 +35,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::addTab()
+void MainWindow::add_tab()
 {
     form = new Form(this);
     QString tabName = "Tab " + QString::number(ui->tabWidget->count());
@@ -45,18 +45,18 @@ void MainWindow::addTab()
 
 void MainWindow::on_tabWidget_tabCloseRequested(int index)
 {
-    if (ui->tabWidget->count() > 2)
+    if (ui->tabWidget->count() > 2 && ui->tabWidget->currentIndex() != ui->tabWidget->count() - 1)
         ui->tabWidget->removeTab(index);
 }
 
 void MainWindow::on_CtrlC_triggered()
 {
-    form->onBtnCopyClicked();
+    form->btn_copy();
 }
 
 void MainWindow::on_CtrlX_triggered()
 {
-    form->onBtnReplaceClicked();
+    form->btn_replace();
 }
 
 void MainWindow::on_CtrlEsc_triggered()
@@ -66,7 +66,7 @@ void MainWindow::on_CtrlEsc_triggered()
 
 void MainWindow::on_CtrlN_triggered()
 {
-    form->onBtnCreateClicked();
+    form->btn_create();
 }
 
 void MainWindow::on_CtrlLeft_triggered()
@@ -87,20 +87,20 @@ void MainWindow::on_CtrlDel_triggered()
 
 void MainWindow::on_CtrlT_triggered()
 {
-    addTab();
+    add_tab();
 }
 
 void MainWindow::on_CtrlR_triggered()
 {
-    form->onBtnRenameClicked();
+    form->btn_rename();
 }
 
 void MainWindow::on_CtrlD_triggered()
 {
-    form->onBtnRemoveClicked();
+    form->btn_remove();
 }
 
 void MainWindow::on_CtrlF_triggered()
 {
-    form->onBtnSearchClicked();
+    form->btn_search();
 }

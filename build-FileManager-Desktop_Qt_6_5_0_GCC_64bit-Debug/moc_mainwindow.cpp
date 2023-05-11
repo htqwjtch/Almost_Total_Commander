@@ -53,7 +53,7 @@ static constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers:
     "on_CtrlR_triggered",
     "on_CtrlD_triggered",
     "on_CtrlF_triggered",
-    "addTab"
+    "add_tab"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
@@ -73,7 +73,7 @@ struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {
     char stringdata12[19];
     char stringdata13[19];
     char stringdata14[19];
-    char stringdata15[7];
+    char stringdata15[8];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_CLASSMainWindowENDCLASS_t::offsetsAndSizes) + ofs), len 
@@ -94,7 +94,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
         QT_MOC_LITERAL(212, 18),  // "on_CtrlR_triggered"
         QT_MOC_LITERAL(231, 18),  // "on_CtrlD_triggered"
         QT_MOC_LITERAL(250, 18),  // "on_CtrlF_triggered"
-        QT_MOC_LITERAL(269, 6)   // "addTab"
+        QT_MOC_LITERAL(269, 7)   // "add_tab"
     },
     "MainWindow",
     "on_tabWidget_tabCloseRequested",
@@ -111,7 +111,7 @@ Q_CONSTINIT static const qt_meta_stringdata_CLASSMainWindowENDCLASS_t qt_meta_st
     "on_CtrlR_triggered",
     "on_CtrlD_triggered",
     "on_CtrlF_triggered",
-    "addTab"
+    "add_tab"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -197,7 +197,7 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_CtrlF_triggered'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'addTab'
+        // method 'add_tab'
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -221,7 +221,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->on_CtrlR_triggered(); break;
         case 10: _t->on_CtrlD_triggered(); break;
         case 11: _t->on_CtrlF_triggered(); break;
-        case 12: _t->addTab(); break;
+        case 12: _t->add_tab(); break;
         default: ;
         }
     }

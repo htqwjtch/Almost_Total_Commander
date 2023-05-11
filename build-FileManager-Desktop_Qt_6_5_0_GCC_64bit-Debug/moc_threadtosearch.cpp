@@ -39,10 +39,10 @@ namespace {
 struct qt_meta_stringdata_CLASSThreadToSearchENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSThreadToSearchENDCLASS = QtMocHelpers::stringData(
     "ThreadToSearch",
-    "searchFinished",
+    "search_finished",
     "",
     "QFileInfoList",
-    "runSearch",
+    "run_search",
     "lDirPath",
     "rDirPath",
     "searchName"
@@ -51,10 +51,10 @@ static constexpr auto qt_meta_stringdata_CLASSThreadToSearchENDCLASS = QtMocHelp
 struct qt_meta_stringdata_CLASSThreadToSearchENDCLASS_t {
     uint offsetsAndSizes[16];
     char stringdata0[15];
-    char stringdata1[15];
+    char stringdata1[16];
     char stringdata2[1];
     char stringdata3[14];
-    char stringdata4[10];
+    char stringdata4[11];
     char stringdata5[9];
     char stringdata6[9];
     char stringdata7[11];
@@ -64,19 +64,19 @@ struct qt_meta_stringdata_CLASSThreadToSearchENDCLASS_t {
 Q_CONSTINIT static const qt_meta_stringdata_CLASSThreadToSearchENDCLASS_t qt_meta_stringdata_CLASSThreadToSearchENDCLASS = {
     {
         QT_MOC_LITERAL(0, 14),  // "ThreadToSearch"
-        QT_MOC_LITERAL(15, 14),  // "searchFinished"
-        QT_MOC_LITERAL(30, 0),  // ""
-        QT_MOC_LITERAL(31, 13),  // "QFileInfoList"
-        QT_MOC_LITERAL(45, 9),  // "runSearch"
-        QT_MOC_LITERAL(55, 8),  // "lDirPath"
-        QT_MOC_LITERAL(64, 8),  // "rDirPath"
-        QT_MOC_LITERAL(73, 10)   // "searchName"
+        QT_MOC_LITERAL(15, 15),  // "search_finished"
+        QT_MOC_LITERAL(31, 0),  // ""
+        QT_MOC_LITERAL(32, 13),  // "QFileInfoList"
+        QT_MOC_LITERAL(46, 10),  // "run_search"
+        QT_MOC_LITERAL(57, 8),  // "lDirPath"
+        QT_MOC_LITERAL(66, 8),  // "rDirPath"
+        QT_MOC_LITERAL(75, 10)   // "searchName"
     },
     "ThreadToSearch",
-    "searchFinished",
+    "search_finished",
     "",
     "QFileInfoList",
-    "runSearch",
+    "run_search",
     "lDirPath",
     "rDirPath",
     "searchName"
@@ -122,10 +122,10 @@ Q_CONSTINIT const QMetaObject ThreadToSearch::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSThreadToSearchENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<ThreadToSearch, std::true_type>,
-        // method 'searchFinished'
+        // method 'search_finished'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QFileInfoList, std::false_type>,
-        // method 'runSearch'
+        // method 'run_search'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
@@ -140,15 +140,15 @@ void ThreadToSearch::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         auto *_t = static_cast<ThreadToSearch *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->searchFinished((*reinterpret_cast< std::add_pointer_t<QFileInfoList>>(_a[1]))); break;
-        case 1: _t->runSearch((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 0: _t->search_finished((*reinterpret_cast< std::add_pointer_t<QFileInfoList>>(_a[1]))); break;
+        case 1: _t->run_search((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (ThreadToSearch::*)(QFileInfoList );
-            if (_t _q_method = &ThreadToSearch::searchFinished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &ThreadToSearch::search_finished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
@@ -187,7 +187,7 @@ int ThreadToSearch::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ThreadToSearch::searchFinished(QFileInfoList _t1)
+void ThreadToSearch::search_finished(QFileInfoList _t1)
 {
     void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

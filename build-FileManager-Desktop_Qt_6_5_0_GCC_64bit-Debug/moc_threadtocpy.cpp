@@ -39,10 +39,10 @@ namespace {
 struct qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSThreadToCopyENDCLASS = QtMocHelpers::stringData(
     "ThreadToCopy",
-    "notPerformed",
+    "not_performed",
     "",
-    "copyFinished",
-    "runCopy",
+    "copy_finished",
+    "run_copy",
     "QDir",
     "rDir",
     "SysElem*",
@@ -55,10 +55,10 @@ static constexpr auto qt_meta_stringdata_CLASSThreadToCopyENDCLASS = QtMocHelper
 struct qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t {
     uint offsetsAndSizes[24];
     char stringdata0[13];
-    char stringdata1[13];
+    char stringdata1[14];
     char stringdata2[1];
-    char stringdata3[13];
-    char stringdata4[8];
+    char stringdata3[14];
+    char stringdata4[9];
     char stringdata5[5];
     char stringdata6[5];
     char stringdata7[9];
@@ -72,23 +72,23 @@ struct qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t {
 Q_CONSTINIT static const qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t qt_meta_stringdata_CLASSThreadToCopyENDCLASS = {
     {
         QT_MOC_LITERAL(0, 12),  // "ThreadToCopy"
-        QT_MOC_LITERAL(13, 12),  // "notPerformed"
-        QT_MOC_LITERAL(26, 0),  // ""
-        QT_MOC_LITERAL(27, 12),  // "copyFinished"
-        QT_MOC_LITERAL(40, 7),  // "runCopy"
-        QT_MOC_LITERAL(48, 4),  // "QDir"
-        QT_MOC_LITERAL(53, 4),  // "rDir"
-        QT_MOC_LITERAL(58, 8),  // "SysElem*"
-        QT_MOC_LITERAL(67, 4),  // "file"
-        QT_MOC_LITERAL(72, 3),  // "dir"
-        QT_MOC_LITERAL(76, 8),  // "filePath"
-        QT_MOC_LITERAL(85, 7)   // "dirPath"
+        QT_MOC_LITERAL(13, 13),  // "not_performed"
+        QT_MOC_LITERAL(27, 0),  // ""
+        QT_MOC_LITERAL(28, 13),  // "copy_finished"
+        QT_MOC_LITERAL(42, 8),  // "run_copy"
+        QT_MOC_LITERAL(51, 4),  // "QDir"
+        QT_MOC_LITERAL(56, 4),  // "rDir"
+        QT_MOC_LITERAL(61, 8),  // "SysElem*"
+        QT_MOC_LITERAL(70, 4),  // "file"
+        QT_MOC_LITERAL(75, 3),  // "dir"
+        QT_MOC_LITERAL(79, 8),  // "filePath"
+        QT_MOC_LITERAL(88, 7)   // "dirPath"
     },
     "ThreadToCopy",
-    "notPerformed",
+    "not_performed",
     "",
-    "copyFinished",
-    "runCopy",
+    "copy_finished",
+    "run_copy",
     "QDir",
     "rDir",
     "SysElem*",
@@ -140,11 +140,11 @@ Q_CONSTINIT const QMetaObject ThreadToCopy::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSThreadToCopyENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<ThreadToCopy, std::true_type>,
-        // method 'notPerformed'
+        // method 'not_performed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'copyFinished'
+        // method 'copy_finished'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'runCopy'
+        // method 'run_copy'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
@@ -161,23 +161,23 @@ void ThreadToCopy::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         auto *_t = static_cast<ThreadToCopy *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->notPerformed(); break;
-        case 1: _t->copyFinished(); break;
-        case 2: _t->runCopy((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
+        case 0: _t->not_performed(); break;
+        case 1: _t->copy_finished(); break;
+        case 2: _t->run_copy((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (ThreadToCopy::*)();
-            if (_t _q_method = &ThreadToCopy::notPerformed; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &ThreadToCopy::not_performed; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
             using _t = void (ThreadToCopy::*)();
-            if (_t _q_method = &ThreadToCopy::copyFinished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &ThreadToCopy::copy_finished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
             }
@@ -216,13 +216,13 @@ int ThreadToCopy::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ThreadToCopy::notPerformed()
+void ThreadToCopy::not_performed()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void ThreadToCopy::copyFinished()
+void ThreadToCopy::copy_finished()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }

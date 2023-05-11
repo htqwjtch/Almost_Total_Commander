@@ -27,14 +27,14 @@ public:
     QVBoxLayout *verticalLayout;
     QGridLayout *gridLayout;
     QHBoxLayout *horizontalLayout;
-    QListWidget *listWidget;
+    QListWidget *leftList;
     QPushButton *btnOK;
 
     void setupUi(QDialog *SearchResult)
     {
         if (SearchResult->objectName().isEmpty())
             SearchResult->setObjectName("SearchResult");
-        SearchResult->resize(450, 300);
+        SearchResult->resize(800, 400);
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/kisspng-computer-icons-search-icon-5b30c8ad36d571.3385379615299237572246-removebg-preview.png"), QSize(), QIcon::Normal, QIcon::Off);
         SearchResult->setWindowIcon(icon);
@@ -44,10 +44,10 @@ public:
         gridLayout->setObjectName("gridLayout");
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName("horizontalLayout");
-        listWidget = new QListWidget(SearchResult);
-        listWidget->setObjectName("listWidget");
+        leftList = new QListWidget(SearchResult);
+        leftList->setObjectName("leftList");
 
-        horizontalLayout->addWidget(listWidget);
+        horizontalLayout->addWidget(leftList);
 
 
         gridLayout->addLayout(horizontalLayout, 0, 0, 1, 3);

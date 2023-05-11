@@ -39,10 +39,10 @@ namespace {
 struct qt_meta_stringdata_CLASSThreadToReplaceENDCLASS_t {};
 static constexpr auto qt_meta_stringdata_CLASSThreadToReplaceENDCLASS = QtMocHelpers::stringData(
     "ThreadToReplace",
-    "notPerformed",
+    "not_performed",
     "",
-    "replaceFinished",
-    "runReplace",
+    "replace_finished",
+    "run_replace",
     "QDir",
     "rDir",
     "SysElem*",
@@ -55,10 +55,10 @@ static constexpr auto qt_meta_stringdata_CLASSThreadToReplaceENDCLASS = QtMocHel
 struct qt_meta_stringdata_CLASSThreadToReplaceENDCLASS_t {
     uint offsetsAndSizes[24];
     char stringdata0[16];
-    char stringdata1[13];
+    char stringdata1[14];
     char stringdata2[1];
-    char stringdata3[16];
-    char stringdata4[11];
+    char stringdata3[17];
+    char stringdata4[12];
     char stringdata5[5];
     char stringdata6[5];
     char stringdata7[9];
@@ -72,23 +72,23 @@ struct qt_meta_stringdata_CLASSThreadToReplaceENDCLASS_t {
 Q_CONSTINIT static const qt_meta_stringdata_CLASSThreadToReplaceENDCLASS_t qt_meta_stringdata_CLASSThreadToReplaceENDCLASS = {
     {
         QT_MOC_LITERAL(0, 15),  // "ThreadToReplace"
-        QT_MOC_LITERAL(16, 12),  // "notPerformed"
-        QT_MOC_LITERAL(29, 0),  // ""
-        QT_MOC_LITERAL(30, 15),  // "replaceFinished"
-        QT_MOC_LITERAL(46, 10),  // "runReplace"
-        QT_MOC_LITERAL(57, 4),  // "QDir"
-        QT_MOC_LITERAL(62, 4),  // "rDir"
-        QT_MOC_LITERAL(67, 8),  // "SysElem*"
-        QT_MOC_LITERAL(76, 4),  // "file"
-        QT_MOC_LITERAL(81, 3),  // "dir"
-        QT_MOC_LITERAL(85, 8),  // "filePath"
-        QT_MOC_LITERAL(94, 7)   // "dirPath"
+        QT_MOC_LITERAL(16, 13),  // "not_performed"
+        QT_MOC_LITERAL(30, 0),  // ""
+        QT_MOC_LITERAL(31, 16),  // "replace_finished"
+        QT_MOC_LITERAL(48, 11),  // "run_replace"
+        QT_MOC_LITERAL(60, 4),  // "QDir"
+        QT_MOC_LITERAL(65, 4),  // "rDir"
+        QT_MOC_LITERAL(70, 8),  // "SysElem*"
+        QT_MOC_LITERAL(79, 4),  // "file"
+        QT_MOC_LITERAL(84, 3),  // "dir"
+        QT_MOC_LITERAL(88, 8),  // "filePath"
+        QT_MOC_LITERAL(97, 7)   // "dirPath"
     },
     "ThreadToReplace",
-    "notPerformed",
+    "not_performed",
     "",
-    "replaceFinished",
-    "runReplace",
+    "replace_finished",
+    "run_replace",
     "QDir",
     "rDir",
     "SysElem*",
@@ -140,11 +140,11 @@ Q_CONSTINIT const QMetaObject ThreadToReplace::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSThreadToReplaceENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<ThreadToReplace, std::true_type>,
-        // method 'notPerformed'
+        // method 'not_performed'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'replaceFinished'
+        // method 'replace_finished'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'runReplace'
+        // method 'run_replace'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QDir, std::false_type>,
         QtPrivate::TypeAndForceComplete<SysElem *, std::false_type>,
@@ -161,23 +161,23 @@ void ThreadToReplace::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         auto *_t = static_cast<ThreadToReplace *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->notPerformed(); break;
-        case 1: _t->replaceFinished(); break;
-        case 2: _t->runReplace((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
+        case 0: _t->not_performed(); break;
+        case 1: _t->replace_finished(); break;
+        case 2: _t->run_replace((*reinterpret_cast< std::add_pointer_t<QDir>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<SysElem*>>(_a[3])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[4])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[5]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
             using _t = void (ThreadToReplace::*)();
-            if (_t _q_method = &ThreadToReplace::notPerformed; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &ThreadToReplace::not_performed; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
             }
         }
         {
             using _t = void (ThreadToReplace::*)();
-            if (_t _q_method = &ThreadToReplace::replaceFinished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &ThreadToReplace::replace_finished; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
             }
@@ -216,13 +216,13 @@ int ThreadToReplace::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void ThreadToReplace::notPerformed()
+void ThreadToReplace::not_performed()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
 
 // SIGNAL 1
-void ThreadToReplace::replaceFinished()
+void ThreadToReplace::replace_finished()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
