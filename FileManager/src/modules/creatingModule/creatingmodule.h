@@ -1,5 +1,5 @@
-#ifndef CREATIONMODULE_H
-#define CREATIONMODULE_H
+#ifndef CREATINGMODULE_H
+#define CREATINGMODULE_H
 
 #include "../../localException/localexception.h"
 #include "newName/newname.h"
@@ -12,24 +12,26 @@
 
 namespace Ui
 {
-    class CreationModule;
+    class CreatingModule;
 }
 
-class CreationModule : public QDialog
+class CreatingModule : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit CreationModule(QDir&, QWidget* parent = nullptr);
-    ~CreationModule();
+    explicit CreatingModule(QDir&, QWidget* parent = nullptr);
+    ~CreatingModule();
 
 private:
-    void create_new_element_name();
-    void create_file();
-    void create_directory();
-    void create_symbol_link();
-    QString get_new_element_path();
-    void is_new_element_name_unique();
+    void setUserInterface();
+    void setButtonsInvisible();
+    void createNewElementName();
+    void createFile();
+    void createDirectory();
+    void createSymbolLink();
+    QString getNewElementPath();
+    void isNewElementNameUnique();
 
 private slots:
     void on_fileCreationButton_clicked();
@@ -38,9 +40,9 @@ private slots:
     void on_cancelButton_clicked();
 
 private:
-    Ui::CreationModule* ui;
+    Ui::CreatingModule* ui;
     QDir currentDirectory;
     NewName newElementName;
 };
 
-#endif // CREATIONMODULE_H
+#endif // CREATINGMODULE_H

@@ -1,5 +1,5 @@
 #include "../form/form.h"
-#include "../src/modules/creationModule/creationmodule.h"
+#include "../src/modules/creatingModule/creatingmodule.h"
 
 #include "../form/other_functions.h"
 #include "../linkedPath/linkedpath.h"
@@ -228,8 +228,8 @@ void Form::on_btnCreate_clicked()
         QMessageBox::warning(this, "Creation", "There is no access to perform any operation in the current directory!");
         return;
     }
-    CreationModule creationModule = CreationModule(currentDirectory);
-    creationModule.exec();
+    CreatingModule creatingModule = CreatingModule(currentDirectory);
+    creatingModule.exec();
 }
 
 void Form::on_btnRemove_clicked()

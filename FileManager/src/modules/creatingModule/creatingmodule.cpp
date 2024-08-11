@@ -1,31 +1,41 @@
-#include "creationmodule.h"
+#include "creatingmodule.h"
 #include "linkedPath/linkedpath.h"
 #include "ui_creationmodule.h"
 
 #include <QDebug>
 #include <unistd.h>
 
-CreationModule::CreationModule(QDir& currentDirectory, QWidget* parent) : QDialog(parent), ui(new Ui::CreationModule)
+CreatingModule::CreatingModule(QDir& currentDirectory, QWidget* parent) : QDialog(parent), ui(new Ui::CreatingModule)
+{
+    setUserInterface();
+    this->currentDirectory = currentDirectory;
+}
+
+void CreatingModule::setUserInterface()
 {
     ui->setupUi(this);
     setWindowTitle("Creation");
-    this->currentDirectory = currentDirectory;
+    setButtonsInvisible();
+}
+
+void CreatingModule::setButtonsInvisible()
+{
     ui->fileCreationButton->setStyleSheet("background-color: rgba(255, 255, 255, 0); border: none;");
     ui->directoryCreationButton->setStyleSheet("background-color: rgba(255, 255, 255, 0); border: none;");
     ui->symbolLinkCreationButton->setStyleSheet("background-color: rgba(255, 255, 255, 0); border: none;");
 }
 
-CreationModule::~CreationModule()
+CreatingModule::~CreatingModule()
 {
     delete ui;
 }
 
-void CreationModule::on_fileCreationButton_clicked()
+void CreatingModule::on_fileCreationButton_clicked()
 {
     try
     {
-	create_new_element_name();
-	create_file();
+	createNewElementName();
+	createFile();
     }
     catch (LocalException localException)
     {
@@ -34,13 +44,13 @@ void CreationModule::on_fileCreationButton_clicked()
     accept();
 }
 
-void CreationModule::create_new_element_name()
+void CreatingModule::createNewElementName()
 {
     newElementName.exec();
-    is_new_element_name_unique();
+    isNewElementNameUnique();
 }
 
-void CreationModule::is_new_element_name_unique()
+void CreatingModule::isNewElementNameUnique()
 {
     foreach (QFileInfo entry, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
     {
@@ -51,26 +61,26 @@ void CreationModule::is_new_element_name_unique()
     }
 }
 
-void CreationModule::create_file()
+void CreatingModule::createFile()
 {
     File file;
-    if (!file.create(get_new_element_path()))
+    if (!file.create(getNewElementPath()))
     {
 	throw LocalException("Creation", "The operation was not perfomed!");
     }
 }
 
-QString CreationModule::get_new_element_path()
+QString CreatingModule::getNewElementPath()
 {
     return currentDirectory.absolutePath().append("/").append(newElementName.get_name());
 }
 
-void CreationModule::on_directoryCreationButton_clicked()
+void CreatingModule::on_directoryCreationButton_clicked()
 {
     try
     {
-	create_new_element_name();
-	create_directory();
+	createNewElementName();
+	createDirectory();
     }
     catch (LocalException localException)
     {
@@ -79,21 +89,21 @@ void CreationModule::on_directoryCreationButton_clicked()
     accept();
 }
 
-void CreationModule::create_directory()
+void CreatingModule::createDirectory()
 {
     Dir directory;
-    if (!directory.create(get_new_element_path()))
+    if (!directory.create(getNewElementPath()))
     {
 	throw LocalException("Creation", "The operation was not perfomed!");
     }
 }
 
-void CreationModule::on_symbolLinkCreationButton_clicked()
+void CreatingModule::on_symbolLinkCreationButton_clicked()
 {
     try
     {
-	create_new_element_name();
-	create_symbol_link();
+	createNewElementName();
+	createSymbolLink();
     }
     catch (LocalException localException)
     {
@@ -102,17 +112,17 @@ void CreationModule::on_symbolLinkCreationButton_clicked()
     accept();
 }
 
-void CreationModule::create_symbol_link()
+void CreatingModule::createSymbolLink()
 {
     LinkedPath linkedElementPath;
     linkedElementPath.exec();
-    if (symlink(linkedElementPath.get_path().toLocal8Bit().constData(), get_new_element_path().toLocal8Bit().constData()))
+    if (symlink(linkedElementPath.get_path().toLocal8Bit().constData(), getNewElementPath().toLocal8Bit().constData()))
     {
 	throw LocalException("Creation", "The operation was not perfomed!");
     }
 }
 
-void CreationModule::on_cancelButton_clicked()
+void CreatingModule::on_cancelButton_clicked()
 {
     accept();
 }

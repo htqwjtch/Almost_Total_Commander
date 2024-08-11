@@ -15,7 +15,7 @@ SOURCES += \
     mainWindow/mainwindow.cpp \
     newName/newname.cpp \
     searchResult/searchresult.cpp \
-    src/modules/creationModule/creationmodule.cpp \
+    src/modules/creatingModule/creatingmodule.cpp \
     sysElem/syselem.cpp \
     thToCopy/threadtocpy.cpp \
     thToRemove/threadtoremove.cpp \
@@ -30,7 +30,7 @@ HEADERS += \
     newName/newname.h \
     searchResult/searchresult.h \
     src/localException/localexception.h \
-    src/modules/creationModule/creationmodule.h \
+    src/modules/creatingModule/creatingmodule.h \
     sysElem/syselem.h \
     thToCopy/threadtocpy.h \
     thToRemove/threadtoremove.h \
@@ -43,7 +43,7 @@ FORMS += \
     mainWindow/mainwindow.ui \
     newName/newname.ui \
     searchResult/searchresult.ui \
-    src/modules/creationModule/creationmodule.ui
+    src/modules/creatingModule/creationmodule.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
