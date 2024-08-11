@@ -8,12 +8,14 @@
 #include "../thToReplace/threadtoreplace.h"
 #include "../thToSearch/threadtosearch.h"
 
+#include <QDateTime>
 #include <QDir>
 #include <QFileSystemModel>
 #include <QListView>
 #include <QString>
 #include <QThread>
 #include <QWidget>
+#include <QUrl>
 
 namespace Ui
 {
@@ -32,7 +34,7 @@ class Form : public QWidget
     QThread* threadReplace;
     QThread* threadSearch;
 
-    QListView* view;
+    QListView* view; // список элементов файловой системы, которые пользователь видит сейчас (одна из панелей (левая или правая) коммандера)
     SearchResult* window;
     // объекты потоков копирования, удаления, перемещения, поиска
     ThreadToCopy* thCopy;

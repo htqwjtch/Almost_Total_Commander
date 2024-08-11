@@ -1,5 +1,6 @@
 #include "../form/form.h"
-#include "../createChoice/createchoice.h"
+#include "../src/modules/creationModule/creationmodule.h"
+
 #include "../form/other_functions.h"
 #include "../linkedPath/linkedpath.h"
 #include "../newName/newname.h"
@@ -200,60 +201,35 @@ void Form::on_lvLeft_doubleClicked(const QModelIndex& index)
             view->setRootIndex(model->index(qDir.absolutePath())); // получение индекса по пути
         }
         else
-            view->setRootIndex(index);         // элемент с этим индексом становится корневым
-        var->setText(info.absoluteFilePath()); // отображение нового пути
-        dirPath.clear();                       //очистка пути директории
+	{
+	    view->setRootIndex(index);
+	} // элемент с этим индексом становится корневым
+	var->setText(info.absoluteFilePath()); // отображение нового пути
+	dirPath.clear();                       //очистка пути директории
     }
 }
 
 void Form::on_btnCreate_clicked()
 {
-    QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); //получение текущей директории
-    QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
-    QDir qDir;
+    QDir leftPanelDirectory = QDir(model->filePath(ui->lvLeft->rootIndex())); //получение текущей директории
+    QDir rightPanelDirectory = QDir(model->filePath(ui->lvRight->rootIndex()));
+    QDir currentDirectory;
     if (view == ui->lvLeft)
-        qDir = lDir;
-    if (view == ui->lvRight)
-        qDir = rDir;
-    if (qDir.absolutePath().contains(qDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
-        || !qDir.absolutePath().contains(qDir.homePath())) // если это корневая директория
     {
-        QMessageBox::warning(this, "Create", "There is no access to perform any operation in this directory!");
+        currentDirectory = leftPanelDirectory;
+    }
+    if (view == ui->lvRight)
+    {
+        currentDirectory = rightPanelDirectory;
+    }
+    if (currentDirectory.absolutePath().contains(currentDirectory.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
+        || !currentDirectory.absolutePath().contains(currentDirectory.homePath())) // если это корневая директория
+    {
+        QMessageBox::warning(this, "Creation", "There is no access to perform any operation in the current directory!");
         return;
     }
-    CreateChoice window;
-    window.exec(); // метод выполняет появление окна для выбора типа создаваемого объекта
-    NewName name;
-    name.exec(); // выполняет появление окна для создания имени
-    foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-        if (info.fileName() == name.get_name()) // если файл с таким именем найден
-        {
-            QMessageBox::warning(this, "Create", "A file or a directory with this name exists!");
-            return;
-        }
-    QString createPath = qDir.absolutePath().append("/").append(name.get_name()); // получение пути соозданного файла
-    if (window.get_file() || window.get_link())                                   // если был выбран файл
-    {
-        if (window.get_link())
-        {
-            LinkedPath window;
-            window.exec();                          // выполняет появление окна для создания имени
-            QString linkedPath = window.get_path(); // получение пути соозданной ссылкb
-
-	    if (symlink(linkedPath.toLocal8Bit().constData(), createPath.toLocal8Bit().constData()) != 0)
-		QMessageBox::warning(this, "Create", "The operation was not perfomed!");
-	}
-	else if (window.get_file())
-	{
-	    if (!file->create(createPath)) // если файл не создан
-		QMessageBox::warning(this, "", "The operation was not perfomed!");
-	}
-    }
-    else if (window.get_dir()) // если выбранный объект - директория
-    {
-        if (!dir->create(createPath)) // если директория не создана
-            QMessageBox::warning(this, "", "The operation was not perfomed!");
-    }
+    CreationModule creationModule = CreationModule(currentDirectory);
+    creationModule.exec();
 }
 
 void Form::on_btnRemove_clicked()

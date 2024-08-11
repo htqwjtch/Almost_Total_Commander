@@ -9,13 +9,13 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    createChoice/createchoice.cpp \
     form/form.cpp \
     linkedPath/linkedpath.cpp \
     main.cpp \
     mainWindow/mainwindow.cpp \
     newName/newname.cpp \
     searchResult/searchresult.cpp \
+    src/modules/creationModule/creationmodule.cpp \
     sysElem/syselem.cpp \
     thToCopy/threadtocpy.cpp \
     thToRemove/threadtoremove.cpp \
@@ -23,13 +23,14 @@ SOURCES += \
     thToSearch/threadtosearch.cpp
 
 HEADERS += \
-    createChoice/createchoice.h \
     form/form.h \
     form/other_functions.h \
     linkedPath/linkedpath.h \
     mainWindow/mainwindow.h \
     newName/newname.h \
     searchResult/searchresult.h \
+    src/localException/localexception.h \
+    src/modules/creationModule/creationmodule.h \
     sysElem/syselem.h \
     thToCopy/threadtocpy.h \
     thToRemove/threadtoremove.h \
@@ -37,12 +38,12 @@ HEADERS += \
     thToSearch/threadtosearch.h
 
 FORMS += \
-    createChoice/createchoice.ui \
     form/form.ui \
     linkedPath/linkedpath.ui \
     mainWindow/mainwindow.ui \
     newName/newname.ui \
-    searchResult/searchresult.ui
+    searchResult/searchresult.ui \
+    src/modules/creationModule/creationmodule.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
