@@ -1,5 +1,4 @@
 #include "creatingmodule.h"
-#include "linkedPath/linkedpath.h"
 #include "ui_creationmodule.h"
 
 #include <QDebug>
@@ -8,7 +7,7 @@
 CreatingModule::CreatingModule(QDir& currentDirectory, QWidget* parent) : QDialog(parent), ui(new Ui::CreatingModule)
 {
     setUserInterface();
-    this->currentDirectory = currentDirectory;
+    creatingService = new CreatingService(currentDirectory);
 }
 
 void CreatingModule::setUserInterface()
@@ -28,91 +27,46 @@ void CreatingModule::setButtonsInvisible()
 CreatingModule::~CreatingModule()
 {
     delete ui;
+    delete creatingService;
 }
 
 void CreatingModule::on_fileCreationButton_clicked()
 {
     try
     {
-	namingModule.setCurrentDirectory(currentDirectory);
-	namingModule.enterNameForNotSymbolLink();
-	isNewElementNameUnique();
-	createFile();
+	creatingService->createFile();
     }
     catch (LocalException localException)
     {
 	QMessageBox::warning(this, localException.get_title(), localException.get_info());
     }
     accept();
-}
-
-void CreatingModule::isNewElementNameUnique()
-{
-    foreach (QFileInfo entry, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-    {
-	if (!entry.fileName().compare(namingModule.getName()))
-	{
-	    throw LocalException("Creating", "This name already exists in the current directory!");
-	}
-    }
-}
-
-void CreatingModule::createFile()
-{
-    File file;
-    if (!file.create(namingModule.getPath()))
-    {
-	throw LocalException("Creating", "The operation was not perfomed!");
-    }
 }
 
 void CreatingModule::on_directoryCreationButton_clicked()
 {
     try
     {
-	namingModule.setCurrentDirectory(currentDirectory);
-	namingModule.enterNameForNotSymbolLink();
-	isNewElementNameUnique();
-	createDirectory();
+	creatingService->createDirectory();
     }
     catch (LocalException localException)
     {
 	QMessageBox::warning(this, localException.get_title(), localException.get_info());
     }
     accept();
-}
-
-void CreatingModule::createDirectory()
-{
-    Dir directory;
-    if (!directory.create(namingModule.getPath()))
-    {
-	throw LocalException("Creating", "The operation was not perfomed!");
-    }
 }
 
 void CreatingModule::on_symbolLinkCreationButton_clicked()
 {
     try
     {
-	namingModule.setCurrentDirectory(currentDirectory);
-	namingModule.enterNameAndLinkedPathForSymbolLink();
-	isNewElementNameUnique();
-	createSymbolLink();
+	creatingService->createSymbolLink();
     }
     catch (LocalException localException)
     {
 	QMessageBox::warning(this, localException.get_title(), localException.get_info());
     }
     accept();
-}
-
-void CreatingModule::createSymbolLink()
-{
-    if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(), namingModule.getPath().toLocal8Bit().constData()))
-    {
-	throw LocalException("Creating", "The operation was not perfomed!");
-    }
 }
 
 void CreatingModule::on_cancelButton_clicked()

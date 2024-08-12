@@ -14,9 +14,11 @@ SOURCES += \
     mainWindow/mainwindow.cpp \
     searchResult/searchresult.cpp \
     src/modules/creatingModule/creatingmodule.cpp \
-    src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
-    src/modules/namingModule/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
-    src/modules/namingModule/namingmodule.cpp \
+    src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
+    src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
+    src/modules/namingModules/namingmodule.cpp \
+    src/services/creatingService/creatingservice.cpp \
+    src/services/namingService/namingservice.cpp \
     sysElem/syselem.cpp \
     thToCopy/threadtocpy.cpp \
     thToRemove/threadtoremove.cpp \
@@ -30,9 +32,11 @@ HEADERS += \
     searchResult/searchresult.h \
     src/localException/localexception.h \
     src/modules/creatingModule/creatingmodule.h \
-    src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
-    src/modules/namingModule/namingSymbolLinkModule/namingsymbollinkmodule.h \
-    src/modules/namingModule/namingmodule.h \
+    src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
+    src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h \
+    src/modules/namingModules/namingmodule.h \
+    src/services/creatingService/creatingservice.h \
+    src/services/namingService/namingservice.h \
     sysElem/syselem.h \
     thToCopy/threadtocpy.h \
     thToRemove/threadtoremove.h \
@@ -44,8 +48,8 @@ FORMS += \
     mainWindow/mainwindow.ui \
     searchResult/searchresult.ui \
     src/modules/creatingModule/creationmodule.ui \
-    src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.ui \
-    src/modules/namingModule/namingSymbolLinkModule/namingsymbollinkmodule.ui
+    src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.ui \
+    src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

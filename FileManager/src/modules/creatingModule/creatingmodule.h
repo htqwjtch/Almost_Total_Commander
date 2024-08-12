@@ -1,14 +1,10 @@
 #ifndef CREATINGMODULE_H
 #define CREATINGMODULE_H
 
-#include "../../localException/localexception.h"
-#include "../namingModule/namingmodule.h"
-#include "sysElem/syselem.h"
+#include "../../services/creatingService/creatingservice.h"
 
 #include <QDialog>
-#include <QDir>
 #include <QMessageBox>
-#include <QString>
 
 namespace Ui
 {
@@ -20,16 +16,12 @@ class CreatingModule : public QDialog
     Q_OBJECT
 
 public:
-    explicit CreatingModule(QDir&, QWidget* parent = nullptr);
+    CreatingModule(QDir&, QWidget* parent = nullptr);
     ~CreatingModule();
 
 private:
     void setUserInterface();
     void setButtonsInvisible();
-    void isNewElementNameUnique();
-    void createFile();
-    void createDirectory();
-    void createSymbolLink();
 
 private slots:
     void on_fileCreationButton_clicked();
@@ -39,8 +31,7 @@ private slots:
 
 private:
     Ui::CreatingModule* ui;
-    QDir currentDirectory;
-    NamingModule namingModule;
+    CreatingService* creatingService;
 };
 
 #endif // CREATINGMODULE_H
