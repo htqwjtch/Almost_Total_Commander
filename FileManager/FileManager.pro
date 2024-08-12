@@ -10,10 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     form/form.cpp \
-    linkedPath/linkedpath.cpp \
     main.cpp \
     mainWindow/mainwindow.cpp \
-    newName/newname.cpp \
     searchResult/searchresult.cpp \
     src/modules/creatingModule/creatingmodule.cpp \
     src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
@@ -28,9 +26,7 @@ SOURCES += \
 HEADERS += \
     form/form.h \
     form/other_functions.h \
-    linkedPath/linkedpath.h \
     mainWindow/mainwindow.h \
-    newName/newname.h \
     searchResult/searchresult.h \
     src/localException/localexception.h \
     src/modules/creatingModule/creatingmodule.h \
@@ -45,9 +41,7 @@ HEADERS += \
 
 FORMS += \
     form/form.ui \
-    linkedPath/linkedpath.ui \
     mainWindow/mainwindow.ui \
-    newName/newname.ui \
     searchResult/searchresult.ui \
     src/modules/creatingModule/creationmodule.ui \
     src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.ui \
