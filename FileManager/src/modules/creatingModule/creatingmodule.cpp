@@ -14,7 +14,7 @@ CreatingModule::CreatingModule(QDir& currentDirectory, QWidget* parent) : QDialo
 void CreatingModule::setUserInterface()
 {
     ui->setupUi(this);
-    setWindowTitle("Creation");
+    setWindowTitle("Creating");
     setButtonsInvisible();
 }
 
@@ -34,7 +34,9 @@ void CreatingModule::on_fileCreationButton_clicked()
 {
     try
     {
-	createNewElementName();
+	namingModule.setCurrentDirectory(currentDirectory);
+	namingModule.enterNameForNotSymbolLink();
+	isNewElementNameUnique();
 	createFile();
     }
     catch (LocalException localException)
@@ -44,19 +46,13 @@ void CreatingModule::on_fileCreationButton_clicked()
     accept();
 }
 
-void CreatingModule::createNewElementName()
-{
-    newElementName.exec();
-    isNewElementNameUnique();
-}
-
 void CreatingModule::isNewElementNameUnique()
 {
     foreach (QFileInfo entry, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
     {
-	if (!entry.fileName().compare(newElementName.get_name()))
+	if (!entry.fileName().compare(namingModule.getName()))
 	{
-	    throw LocalException("Creation", "This name already exists in the current directory!");
+	    throw LocalException("Creating", "This name already exists in the current directory!");
 	}
     }
 }
@@ -64,22 +60,19 @@ void CreatingModule::isNewElementNameUnique()
 void CreatingModule::createFile()
 {
     File file;
-    if (!file.create(getNewElementPath()))
+    if (!file.create(namingModule.getPath()))
     {
-	throw LocalException("Creation", "The operation was not perfomed!");
+	throw LocalException("Creating", "The operation was not perfomed!");
     }
-}
-
-QString CreatingModule::getNewElementPath()
-{
-    return currentDirectory.absolutePath().append("/").append(newElementName.get_name());
 }
 
 void CreatingModule::on_directoryCreationButton_clicked()
 {
     try
     {
-	createNewElementName();
+	namingModule.setCurrentDirectory(currentDirectory);
+	namingModule.enterNameForNotSymbolLink();
+	isNewElementNameUnique();
 	createDirectory();
     }
     catch (LocalException localException)
@@ -92,9 +85,9 @@ void CreatingModule::on_directoryCreationButton_clicked()
 void CreatingModule::createDirectory()
 {
     Dir directory;
-    if (!directory.create(getNewElementPath()))
+    if (!directory.create(namingModule.getPath()))
     {
-	throw LocalException("Creation", "The operation was not perfomed!");
+	throw LocalException("Creating", "The operation was not perfomed!");
     }
 }
 
@@ -102,7 +95,9 @@ void CreatingModule::on_symbolLinkCreationButton_clicked()
 {
     try
     {
-	createNewElementName();
+	namingModule.setCurrentDirectory(currentDirectory);
+	namingModule.enterNameAndLinkedPathForSymbolLink();
+	isNewElementNameUnique();
 	createSymbolLink();
     }
     catch (LocalException localException)
@@ -114,11 +109,9 @@ void CreatingModule::on_symbolLinkCreationButton_clicked()
 
 void CreatingModule::createSymbolLink()
 {
-    LinkedPath linkedElementPath;
-    linkedElementPath.exec();
-    if (symlink(linkedElementPath.get_path().toLocal8Bit().constData(), getNewElementPath().toLocal8Bit().constData()))
+    if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(), namingModule.getPath().toLocal8Bit().constData()))
     {
-	throw LocalException("Creation", "The operation was not perfomed!");
+	throw LocalException("Creating", "The operation was not perfomed!");
     }
 }
 

@@ -1,9 +1,6 @@
 #include "../form/form.h"
 #include "../src/modules/creatingModule/creatingmodule.h"
-
 #include "../form/other_functions.h"
-#include "../linkedPath/linkedpath.h"
-#include "../newName/newname.h"
 #include "ui_form.h"
 
 #include <unistd.h>
@@ -352,52 +349,54 @@ void Form::on_btnReplace_clicked()
 
 void Form::on_btnRename_clicked()
 {
-    QDir lDir = QDir(model->filePath(ui->lvLeft->rootIndex())); // получение текущей директории
-    QDir rDir = QDir(model->filePath(ui->lvRight->rootIndex()));
-    QDir qDir;
+    QDir leftPanelDirectory = QDir(model->filePath(ui->lvLeft->rootIndex()));
+    QDir rightPanelDirectory = QDir(model->filePath(ui->lvRight->rootIndex()));
+    QDir currentDirectory;
     if (view == ui->lvLeft)
-        qDir = lDir;
+	currentDirectory = leftPanelDirectory;
     if (view == ui->lvRight)
-        qDir = rDir;
-    if (qDir.absolutePath().contains(qDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
-        || !qDir.absolutePath().contains(qDir.homePath())) // если это корневая директория
+	currentDirectory = rightPanelDirectory;
+    if (currentDirectory.absolutePath().contains(currentDirectory.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
+	|| !currentDirectory.absolutePath().contains(currentDirectory.homePath()))
     {
         QMessageBox::warning(this, "Rename", "There is no access to perform any operation in this directory!");
         return;
     }
-    if (filePath.isEmpty() && dirPath.isEmpty()) // если не выбран ни один объект
+    if (filePath.isEmpty() && dirPath.isEmpty())
     {
         QMessageBox::warning(this, "Rename", "You was not choose a file or a directory! Please try again");
         return;
     }
-    NewName name;
-    name.exec();                   // метод выполняет появление окна для переименования файла
-    if (name.get_name().isEmpty()) // если имя не введено
+    NamingModule namingModule;
+    namingModule.setCurrentDirectory(currentDirectory);
+    namingModule.enterNameForNotSymbolLink();
+    if (namingModule.getName().isEmpty()) // если имя не введено
     {
         filePath.clear();
         dirPath.clear();
         return;
     }
-    foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-        if (info.fileName() == name.get_name()) // если файл с таким именем есть
-        {
-            QMessageBox::warning(this, "Rename", "A file or a directory with this name exists!");
+    foreach (QFileInfo info, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    {
+	if (info.fileName() == namingModule.getName()) // если файл с таким именем есть
+	{
+	    QMessageBox::warning(this, "Rename", "A file or a directory with this name exists!");
             filePath.clear();
             dirPath.clear();
             return;
-        }
-    QString newPath = qDir.absolutePath().append("/").append(name.get_name()); // создание нового пути с учетом переименования
+	}
+    }
     if (!filePath.isEmpty())                                                   // если выбран файл
     {
-        if (!file->r_name(filePath, newPath)) // если переименование не произошло
-            QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
-        filePath.clear(); // очистка пути файла
+	if (!file->r_name(filePath, namingModule.getPath())) // если переименование не произошло
+	    QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
+	filePath.clear(); // очистка пути файла
     }
     else if (!dirPath.isEmpty()) // если выбрана директория
     {
-        if (!dir->r_name(dirPath, newPath)) // если переименование не произошло
-            QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
-        dirPath.clear(); // очистка пути директории
+	if (!dir->r_name(dirPath, namingModule.getPath())) // если переименование не произошло
+	    QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
+	dirPath.clear(); // очистка пути директории
     }
 }
 

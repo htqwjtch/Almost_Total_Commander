@@ -16,6 +16,9 @@ SOURCES += \
     newName/newname.cpp \
     searchResult/searchresult.cpp \
     src/modules/creatingModule/creatingmodule.cpp \
+    src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
+    src/modules/namingModule/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
+    src/modules/namingModule/namingmodule.cpp \
     sysElem/syselem.cpp \
     thToCopy/threadtocpy.cpp \
     thToRemove/threadtoremove.cpp \
@@ -31,6 +34,9 @@ HEADERS += \
     searchResult/searchresult.h \
     src/localException/localexception.h \
     src/modules/creatingModule/creatingmodule.h \
+    src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
+    src/modules/namingModule/namingSymbolLinkModule/namingsymbollinkmodule.h \
+    src/modules/namingModule/namingmodule.h \
     sysElem/syselem.h \
     thToCopy/threadtocpy.h \
     thToRemove/threadtoremove.h \
@@ -43,7 +49,9 @@ FORMS += \
     mainWindow/mainwindow.ui \
     newName/newname.ui \
     searchResult/searchresult.ui \
-    src/modules/creatingModule/creationmodule.ui
+    src/modules/creatingModule/creationmodule.ui \
+    src/modules/namingModule/namingNotSymbolLinkModule/namingnotsymbollinkmodule.ui \
+    src/modules/namingModule/namingSymbolLinkModule/namingsymbollinkmodule.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

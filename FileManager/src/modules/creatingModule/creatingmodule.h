@@ -2,7 +2,7 @@
 #define CREATINGMODULE_H
 
 #include "../../localException/localexception.h"
-#include "newName/newname.h"
+#include "../namingModule/namingmodule.h"
 #include "sysElem/syselem.h"
 
 #include <QDialog>
@@ -26,12 +26,10 @@ public:
 private:
     void setUserInterface();
     void setButtonsInvisible();
-    void createNewElementName();
+    void isNewElementNameUnique();
     void createFile();
     void createDirectory();
     void createSymbolLink();
-    QString getNewElementPath();
-    void isNewElementNameUnique();
 
 private slots:
     void on_fileCreationButton_clicked();
@@ -42,7 +40,7 @@ private slots:
 private:
     Ui::CreatingModule* ui;
     QDir currentDirectory;
-    NewName newElementName;
+    NamingModule namingModule;
 };
 
 #endif // CREATINGMODULE_H
