@@ -21,7 +21,6 @@ SOURCES += \
     src/services/exceptionService/exceptionservice.cpp \
     src/services/namingService/namingservice.cpp \
     src/services/searchingService/searchingservice.cpp \
-    sysElem/syselem.cpp \
     thToCopy/threadtocpy.cpp \
     thToRemove/threadtoremove.cpp \
     thToReplace/threadtoreplace.cpp
@@ -39,7 +38,6 @@ HEADERS += \
     src/services/exceptionService/exceptionservice.h \
     src/services/namingService/namingservice.h \
     src/services/searchingService/searchingservice.h \
-    sysElem/syselem.h \
     thToCopy/threadtocpy.h \
     thToRemove/threadtoremove.h \
     thToReplace/threadtoreplace.h

@@ -2,55 +2,55 @@
 
 ThreadToRemove::ThreadToRemove(QObject* parent) : QObject{parent} {}
 
-void ThreadToRemove::run_remove(SysElem* file, SysElem* dir, QString filePath, QString dirPath)
+void ThreadToRemove::run_remove(const QString& filePath, const QString& directoryPath)
 {
     if (!filePath.isEmpty()) // если выбран файл
     {
-        if (!file->r_move(filePath)) // удаление файла
-        {
+	if (!QFile::remove(filePath)) // удаление файла
+	{
             emit not_performed();
             return;
         }
     }
     else
-        r_move(file, dir, dirPath);
+	remove(directoryPath);
     emit remove_finished();
 }
 
-bool ThreadToRemove::rec_remove(QDir& qDir, SysElem* file, SysElem* dir) // функция рекурсивного удаления содержимого выбранной папки
+bool ThreadToRemove::rec_remove(QDir& directory) // функция рекурсивного удаления содержимого выбранной папки
 {
     // цикл прохода по текущей директории для удаления файлов и директорий внутри
-    foreach (QFileInfo info, qDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
+    foreach (QFileInfo info, directory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
     {
         if (info.isDir()) // если директория
         {
-            qDir.cd(info.fileName());                  // заходим в нее
-            rec_remove(qDir, file, dir);               // рекурсивно удаляем внутренности
-            qDir.cdUp();                               // возврат
-            if (!dir->r_move(info.absoluteFilePath())) // теперь папка пуста и мы можем ее удалить
-                return false;
+	    directory.cd(info.fileName()); // заходим в нее
+	    rec_remove(directory);         // рекурсивно удаляем внутренности
+	    directory.cdUp();
+	    if (!directory.rmdir(info.absoluteFilePath())) // теперь папка пуста и мы можем ее удалить
+		return false;
         }
         else if (info.isFile()) // если текущий объект - файл
-            if (!file->r_move(info.absoluteFilePath()))
-                return false;
+	    if (!QFile::remove(info.absoluteFilePath()))
+		return false;
     }
     return true;
 }
 
-void ThreadToRemove::r_move(SysElem* file, SysElem* dir, QString dirPath)
+void ThreadToRemove::remove(const QString& directoryPath)
 {
-    QDir qDir = QDir(dirPath); // получение выбранной директории
-    if (!qDir.isEmpty())       // если директория не пуста
+    QDir directory = QDir(directoryPath); // получение выбранной директории
+    if (!directory.isEmpty())             // если директория не пуста
     {
-        if (!rec_remove(qDir, file, dir)) // если внутренние файлы не удалены
-        {
+	if (!rec_remove(directory)) // если внутренние файлы не удалены
+	{
             emit not_performed();
             return;
         }
     }
-    if (qDir.isEmpty()) // если директория пуста
+    if (directory.isEmpty()) // если директория пуста
     {
-        if (!dir->r_move(dirPath)) // если удаление не выпонено
-            emit not_performed();
+	if (!directory.rmdir(directoryPath))
+	    emit not_performed();
     }
 }

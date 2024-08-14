@@ -1,10 +1,8 @@
 #ifndef THREADTOCPY_H
 #define THREADTOCPY_H
 
-#include "../sysElem/syselem.h"
-
 #include <QDir>
-#include <QFileInfo>
+#include <QFile>
 #include <QObject>
 
 class ThreadToCopy : public QObject
@@ -12,11 +10,11 @@ class ThreadToCopy : public QObject
     Q_OBJECT
 
 public slots:
-    void run_copy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
+    void run_copy(QDir rDir, const QString& filePath, const QString& dirPath);
 
 public:
     explicit ThreadToCopy(QObject* parent = nullptr);
-    void c_py(QDir, SysElem*, SysElem*, QString);
+    void c_py(QDir, const QString&);
 
 signals:
     void not_performed();

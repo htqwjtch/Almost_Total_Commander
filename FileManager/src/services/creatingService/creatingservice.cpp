@@ -1,7 +1,8 @@
 #include "creatingservice.h"
 #include "../exceptionService/exceptionservice.h"
-#include "sysElem/syselem.h"
 
+#include <QDir>
+#include <QFile>
 #include <unistd.h>
 
 CreatingService::CreatingService(QDir& currentDirectory)
@@ -11,15 +12,20 @@ CreatingService::CreatingService(QDir& currentDirectory)
 
 void CreatingService::createFile()
 {
-    namingModule.setCurrentDirectory(currentDirectory);
-    namingModule.enterNameForNotSymbolLink();
-    isNewElementNameUnique();
+    createNameAndPathForNotSymbolLink();
 
-    File file;
-    if (!file.create(namingModule.getPath()))
+    QFile file = QFile(namingModule.getPath());
+    if (!file.open(QIODevice::ReadWrite))
     {
 	throw ExceptionService("Creating", "The operation was not perfomed!");
     }
+}
+
+void CreatingService::createNameAndPathForNotSymbolLink()
+{
+    namingModule.setCurrentDirectory(currentDirectory);
+    namingModule.setNameAndPathForNotSymbolLink();
+    isNewElementNameUnique();
 }
 
 void CreatingService::isNewElementNameUnique()
@@ -35,12 +41,10 @@ void CreatingService::isNewElementNameUnique()
 
 void CreatingService::createDirectory()
 {
-    namingModule.setCurrentDirectory(currentDirectory);
-    namingModule.enterNameForNotSymbolLink();
-    isNewElementNameUnique();
+    createNameAndPathForNotSymbolLink();
 
-    Dir directory;
-    if (!directory.create(namingModule.getPath()))
+    QDir directory = QDir();
+    if (!directory.mkdir(namingModule.getPath()))
     {
 	throw ExceptionService("Creating", "The operation was not perfomed!");
     }
@@ -48,12 +52,17 @@ void CreatingService::createDirectory()
 
 void CreatingService::createSymbolLink()
 {
-    namingModule.setCurrentDirectory(currentDirectory);
-    namingModule.enterNameAndLinkedPathForSymbolLink();
-    isNewElementNameUnique();
+    createNameAndPathesForSymbolLink();
 
     if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(), namingModule.getPath().toLocal8Bit().constData()))
     {
 	throw ExceptionService("Creating", "The operation was not perfomed!");
     }
+}
+
+void CreatingService::createNameAndPathesForSymbolLink()
+{
+    namingModule.setCurrentDirectory(currentDirectory);
+    namingModule.setNameAndPathesForSymbolLink();
+    isNewElementNameUnique();
 }

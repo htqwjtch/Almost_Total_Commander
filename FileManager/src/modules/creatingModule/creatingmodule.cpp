@@ -27,8 +27,8 @@ void CreatingModule::setButtonsInvisible()
 
 CreatingModule::~CreatingModule()
 {
-    delete ui;
     delete creatingService;
+    delete ui;
 }
 
 void CreatingModule::on_fileCreationButton_clicked()

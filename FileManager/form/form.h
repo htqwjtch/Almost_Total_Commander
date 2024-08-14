@@ -2,7 +2,6 @@
 #define FORM_H
 
 #include "../src/modules/searchingModule/searchingmodule.h"
-#include "../sysElem/syselem.h"
 #include "../thToCopy/threadtocpy.h"
 #include "../thToRemove/threadtoremove.h"
 #include "../thToReplace/threadtoreplace.h"
@@ -39,12 +38,6 @@ class Form : public QWidget
     ThreadToReplace* thReplace;
     SearchingModule* searchingModule;
 
-    File f; //объект класса File для выполнения операций с текстовыми файлами
-    Dir d;  //объект класса Dir для выполнения операций с директориями
-
-    SysElem* file = &f;
-    SysElem* dir = &d;
-
     QString filePath = "";
     QString dirPath = "";
 
@@ -52,37 +45,21 @@ class Form : public QWidget
 
 private slots:
     void on_lvLeft_clicked(const QModelIndex& index);
-
     void on_lvLeft_doubleClicked(const QModelIndex& index);
-
     void on_btnCreate_clicked();
-
     void on_btnRemove_clicked();
-
     void on_btnCopy_clicked();
-
     void on_btnReplace_clicked();
-
     void on_btnRename_clicked();
-
     void on_lineSearch_textEdited(const QString& arg1);
-
     void on_btnSearch_clicked();
-
     void on_leftPath_textEdited(const QString& arg1);
-
     void remove_is_not_performed();
-
     void copy_is_not_performed();
-
     void replace_is_not_performed();
-
     void ready_to_remove();
-
     void ready_to_copy();
-
     void ready_to_replace();
-
     void readyToSearching();
 
 public:
@@ -98,10 +75,9 @@ public:
     void btn_search();
 
 signals:
-    void start_copy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
-    void start_remove(SysElem* file, SysElem* dir, QString filePath, QString dirPath);
-    void start_replace(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath);
-    void start_search(QString, QString, QString);
+    void start_copy(QDir, QString, QString);
+    void start_remove(QString, QString);
+    void start_replace(QDir, QString, QString);
 };
 
 #endif // FORM_H

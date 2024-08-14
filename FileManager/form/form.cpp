@@ -1,6 +1,6 @@
-#include "../form/form.h"
+#include "form.h"
 #include "../src/modules/creatingModule/creatingmodule.h"
-#include "../form/other_functions.h"
+#include "other_functions.h"
 #include "ui_form.h"
 
 #include <unistd.h>
@@ -52,12 +52,9 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     QObject::connect(this, SIGNAL(destroyed()), threadRemove, SLOT(quit()));
     QObject::connect(this, SIGNAL(destroyed()), threadReplace, SLOT(quit()));
 
-    QObject::connect(this, SIGNAL(start_copy(QDir, SysElem*, SysElem*, QString, QString)), thCopy,
-		     SLOT(run_copy(QDir, SysElem*, SysElem*, QString, QString)));
-    QObject::connect(this, SIGNAL(start_remove(SysElem*, SysElem*, QString, QString)), thRemove,
-		     SLOT(run_remove(SysElem*, SysElem*, QString, QString)));
-    QObject::connect(this, SIGNAL(start_replace(QDir, SysElem*, SysElem*, QString, QString)), thReplace,
-		     SLOT(run_replace(QDir, SysElem*, SysElem*, QString, QString)));
+    QObject::connect(this, SIGNAL(start_copy(QDir, QString, QString)), thCopy, SLOT(run_copy(QDir, QString, QString)));
+    QObject::connect(this, SIGNAL(start_remove(QString, QString)), thRemove, SLOT(run_remove(const QString&, const QString&)));
+    QObject::connect(this, SIGNAL(start_replace(QDir, QString, QString)), thReplace, SLOT(run_replace(QDir, const QString&, const QString&)));
 
     thCopy->moveToThread(threadCopy);
     threadCopy->start();
@@ -279,7 +276,7 @@ void Form::on_btnRemove_clicked()
         return;
     }
     ui->btnRemove->setEnabled(false);
-    emit start_remove(file, dir, filePath, dirPath);
+    emit start_remove(filePath, dirPath);
     filePath.clear(); // очистка пути файла
     dirPath.clear();  // очистка пути директории
 }
@@ -321,7 +318,7 @@ void Form::on_btnCopy_clicked()
         }
     }
     ui->btnCopy->setEnabled(false);
-    emit start_copy(rDir, file, dir, filePath, dirPath);
+    emit start_copy(rDir, filePath, dirPath);
     filePath.clear(); // очистка пути файла
     dirPath.clear();
 }
@@ -363,7 +360,7 @@ void Form::on_btnReplace_clicked()
         }
     }
     ui->btnReplace->setEnabled(false);
-    emit start_replace(rDir, file, dir, filePath, dirPath);
+    emit start_replace(rDir, filePath, dirPath);
     filePath.clear(); // очистка пути файла
     dirPath.clear();
 }
@@ -390,7 +387,7 @@ void Form::on_btnRename_clicked()
     }
     NamingModule namingModule;
     namingModule.setCurrentDirectory(currentDirectory);
-    namingModule.enterNameForNotSymbolLink();
+    namingModule.setNameAndPathForNotSymbolLink();
     if (namingModule.getName().isEmpty()) // если имя не введено
     {
         filePath.clear();
@@ -409,13 +406,13 @@ void Form::on_btnRename_clicked()
     }
     if (!filePath.isEmpty())                                                   // если выбран файл
     {
-	if (!file->r_name(filePath, namingModule.getPath())) // если переименование не произошло
+	if (!QFile::rename(filePath, namingModule.getPath())) // если переименование не произошло
 	    QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
 	filePath.clear(); // очистка пути файла
     }
     else if (!dirPath.isEmpty()) // если выбрана директория
     {
-	if (!dir->r_name(dirPath, namingModule.getPath())) // если переименование не произошло
+	if (!currentDirectory.rename(dirPath, namingModule.getPath())) // если переименование не произошло
 	    QMessageBox::warning(this, "Rename", "The operation was not perfomed!");
 	dirPath.clear(); // очистка пути директории
     }

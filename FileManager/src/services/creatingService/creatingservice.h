@@ -13,7 +13,9 @@ public:
     void createSymbolLink();
 
 private:
+    void createNameAndPathForNotSymbolLink();
     void isNewElementNameUnique();
+    void createNameAndPathesForSymbolLink();
 
 public:
     QDir currentDirectory;

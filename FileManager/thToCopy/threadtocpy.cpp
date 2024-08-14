@@ -2,28 +2,29 @@
 
 ThreadToCopy::ThreadToCopy(QObject* parent) : QObject{parent} {}
 
-void ThreadToCopy::run_copy(QDir rDir, SysElem* file, SysElem* dir, QString filePath, QString dirPath)
+void ThreadToCopy::run_copy(QDir rDir, const QString& filePath, const QString& dirPath)
 {
     if (!filePath.isEmpty())
     {
-        if (!file->c_py(filePath, rDir.absolutePath())) // если копирование не произошло
-        {
-            emit not_performed();
+	if (!QFile::copy(filePath, rDir.absolutePath())) // если копирование не произошло
+	{
+	    emit not_performed();
             return;
-        }
+	}
     }
     else
-        c_py(rDir, file, dir, dirPath);
+	c_py(rDir, dirPath);
     emit copy_finished();
 }
 
-void ThreadToCopy::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)
+void ThreadToCopy::c_py(QDir rDir, const QString& dirPath)
 {
     QFileInfoList copyList = QFileInfoList(); // создание контейнера для хранения внутренних файлов выбранной директории
     QDir lDir = QDir(dirPath);
     foreach (QFileInfo info, lDir.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
         copyList.append(info);                           // добавление элемента в контейнеp
-    if (!dir->c_py(lDir.dirName(), rDir.absolutePath())) // если копирование не выполнено
+
+    if (!rDir.mkdir(rDir.absolutePath().append(lDir.dirName()))) // если копирование не выполнено
     {
         emit not_performed();
         return;
@@ -35,11 +36,11 @@ void ThreadToCopy::c_py(QDir rDir, SysElem* file, SysElem* dir, QString dirPath)
     {
         if (info.isFile()) // текущий элемент контейнера - файл
         {
-            if (!file->c_py(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
-                emit not_performed();
-        }
+	    if (!QFile::copy(info.absoluteFilePath(), copyPath)) // если копирование не выполнено
+		emit not_performed();
+	}
         else if (info.isDir()) // если текущий элемент - директория
-            c_py(rDir, file, dir, info.absoluteFilePath());
+	    c_py(rDir, info.absoluteFilePath());
     }
     rDir.cdUp();
 }

@@ -5,14 +5,14 @@ void NamingModule::setCurrentDirectory(QDir& currentDirectory)
     this->currentDirectory = currentDirectory;
 }
 
-void NamingModule::enterNameForNotSymbolLink()
+void NamingModule::setNameAndPathForNotSymbolLink()
 {
     namingNotSymbolLinkModule.exec();
     name = namingNotSymbolLinkModule.getName();
     path = currentDirectory.absolutePath().append("/").append(namingNotSymbolLinkModule.getName());
 }
 
-void NamingModule::enterNameAndLinkedPathForSymbolLink()
+void NamingModule::setNameAndPathesForSymbolLink()
 {
     namingSymbolLinkModule.exec();
     name = namingSymbolLinkModule.getName();

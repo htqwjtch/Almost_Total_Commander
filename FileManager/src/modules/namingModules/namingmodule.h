@@ -11,8 +11,8 @@ class NamingModule
 public:
     NamingModule() = default;
     void setCurrentDirectory(QDir&);
-    void enterNameForNotSymbolLink();
-    void enterNameAndLinkedPathForSymbolLink();
+    void setNameAndPathForNotSymbolLink();
+    void setNameAndPathesForSymbolLink();
     QString getName();
     QString getPath();
     QString getLinkedPath();
