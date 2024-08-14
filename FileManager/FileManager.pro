@@ -11,8 +11,8 @@ CONFIG += c++17
 SOURCES += \
     form/form.cpp \
     main.cpp \
-    mainWindow/mainwindow.cpp \
     src/modules/creatingModule/creatingmodule.cpp \
+    src/modules/mainModule/mainmodule.cpp \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
     src/modules/namingModules/namingmodule.cpp \
@@ -29,8 +29,8 @@ SOURCES += \
 HEADERS += \
     form/form.h \
     form/other_functions.h \
-    mainWindow/mainwindow.h \
     src/modules/creatingModule/creatingmodule.h \
+    src/modules/mainModule/mainmodule.h \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h \
     src/modules/namingModules/namingmodule.h \
@@ -46,8 +46,8 @@ HEADERS += \
 
 FORMS += \
     form/form.ui \
-    mainWindow/mainwindow.ui \
     src/modules/creatingModule/creationmodule.ui \
+    src/modules/mainModule/mainmodule.ui \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.ui \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.ui \
     src/modules/searchingModule/searchingmodule.ui

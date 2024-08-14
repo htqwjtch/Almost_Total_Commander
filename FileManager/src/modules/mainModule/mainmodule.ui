@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainModule</class>
+ <widget class="QMainWindow" name="MainModule">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>900</width>
+    <height>800</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>1</number>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string/>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string/>
+       </attribute>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>900</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAdd_Tab"/>
+    <addaction name="actionClose_Tab"/>
+    <addaction name="actionLeft_tab"/>
+    <addaction name="actionRight_Tab"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionAdd_Tab">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png</normaloff>:/png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Add Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+T</string>
+   </property>
+  </action>
+  <action name="actionClose_Tab">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Close Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Del</string>
+   </property>
+  </action>
+  <action name="actionLeft_tab">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/77-773183_left-arrow-comments-instagram-plus-icon-png-transparent-removebg-preview.png</normaloff>:/77-773183_left-arrow-comments-instagram-plus-icon-png-transparent-removebg-preview.png</iconset>
+   </property>
+   <property name="text">
+    <string>Left Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Left</string>
+   </property>
+  </action>
+  <action name="actionRight_Tab">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/image.png</normaloff>:/image.png</iconset>
+   </property>
+   <property name="text">
+    <string>Right Tab</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Right</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/pngimg.com - exit_PNG42.png</normaloff>:/pngimg.com - exit_PNG42.png</iconset>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Esc</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../../../resources/resources.qrc"/>
+  <include location="../../../resources/resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>

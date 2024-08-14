@@ -2,8 +2,6 @@
 #define CREATINGSERVICE_H
 
 #include "../../modules/namingModules/namingmodule.h"
-#include "../exceptionService/exceptionservice.h"
-#include "sysElem/syselem.h"
 
 class CreatingService
 {

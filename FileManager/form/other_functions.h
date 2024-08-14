@@ -1,12 +1,8 @@
 #ifndef OTHER_FUNCTIONS_H
 #define OTHER_FUNCTIONS_H
 
-#include "../form/form.h"
-#include "../thToCopy/threadtocpy.h"
-#include "../thToRemove/threadtoremove.h"
-#include "../thToReplace/threadtoreplace.h"
-#include "../thToSearch/threadtosearch.h"
-
+#include <QDateTime>
+#include <QFileInfo>
 #include <QLabel>
 #include <QThread>
 
