@@ -36,9 +36,9 @@ void CreatingModule::on_fileCreationButton_clicked()
     {
 	creatingService->createFile();
     }
-    catch (LocalException localException)
+    catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, localException.get_title(), localException.get_info());
+	QMessageBox::warning(this, exceptionService.getTitle(), exceptionService.getInfo());
     }
     accept();
 }
@@ -49,9 +49,9 @@ void CreatingModule::on_directoryCreationButton_clicked()
     {
 	creatingService->createDirectory();
     }
-    catch (LocalException localException)
+    catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, localException.get_title(), localException.get_info());
+	QMessageBox::warning(this, exceptionService.getTitle(), exceptionService.getInfo());
     }
     accept();
 }
@@ -62,9 +62,9 @@ void CreatingModule::on_symbolLinkCreationButton_clicked()
     {
 	creatingService->createSymbolLink();
     }
-    catch (LocalException localException)
+    catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, localException.get_title(), localException.get_info());
+	QMessageBox::warning(this, exceptionService.getTitle(), exceptionService.getInfo());
     }
     accept();
 }

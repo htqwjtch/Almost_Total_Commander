@@ -16,7 +16,7 @@ void CreatingService::createFile()
     File file;
     if (!file.create(namingModule.getPath()))
     {
-	throw LocalException("Creating", "The operation was not perfomed!");
+	throw ExceptionService("Creating", "The operation was not perfomed!");
     }
 }
 
@@ -26,7 +26,7 @@ void CreatingService::isNewElementNameUnique()
     {
 	if (!entry.fileName().compare(namingModule.getName()))
 	{
-	    throw LocalException("Creating", "This name already exists in the current directory!");
+	    throw ExceptionService("Creating", "This name already exists in the current directory!");
 	}
     }
 }
@@ -40,7 +40,7 @@ void CreatingService::createDirectory()
     Dir directory;
     if (!directory.create(namingModule.getPath()))
     {
-	throw LocalException("Creating", "The operation was not perfomed!");
+	throw ExceptionService("Creating", "The operation was not perfomed!");
     }
 }
 
@@ -52,6 +52,6 @@ void CreatingService::createSymbolLink()
 
     if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(), namingModule.getPath().toLocal8Bit().constData()))
     {
-	throw LocalException("Creating", "The operation was not perfomed!");
+	throw ExceptionService("Creating", "The operation was not perfomed!");
     }
 }

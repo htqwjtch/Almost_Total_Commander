@@ -18,6 +18,7 @@ SOURCES += \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
     src/modules/namingModules/namingmodule.cpp \
     src/services/creatingService/creatingservice.cpp \
+    src/services/exceptionService/exceptionservice.cpp \
     src/services/namingService/namingservice.cpp \
     sysElem/syselem.cpp \
     thToCopy/threadtocpy.cpp \
@@ -30,12 +31,12 @@ HEADERS += \
     form/other_functions.h \
     mainWindow/mainwindow.h \
     searchResult/searchresult.h \
-    src/localException/localexception.h \
     src/modules/creatingModule/creatingmodule.h \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h \
     src/modules/namingModules/namingmodule.h \
     src/services/creatingService/creatingservice.h \
+    src/services/exceptionService/exceptionservice.h \
     src/services/namingService/namingservice.h \
     sysElem/syselem.h \
     thToCopy/threadtocpy.h \
