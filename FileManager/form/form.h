@@ -1,12 +1,11 @@
 #ifndef FORM_H
 #define FORM_H
 
-#include "../searchResult/searchresult.h"
+#include "../src/modules/searchingModule/searchingmodule.h"
 #include "../sysElem/syselem.h"
 #include "../thToCopy/threadtocpy.h"
 #include "../thToRemove/threadtoremove.h"
 #include "../thToReplace/threadtoreplace.h"
-#include "../thToSearch/threadtosearch.h"
 
 #include <QDateTime>
 #include <QDir>
@@ -32,15 +31,13 @@ class Form : public QWidget
     QThread* threadCopy;
     QThread* threadRemove;
     QThread* threadReplace;
-    QThread* threadSearch;
 
     QListView* view; // список элементов файловой системы, которые пользователь видит сейчас (одна из панелей (левая или правая) коммандера)
-    SearchResult* window;
-    // объекты потоков копирования, удаления, перемещения, поиска
+
     ThreadToCopy* thCopy;
     ThreadToRemove* thRemove;
     ThreadToReplace* thReplace;
-    ThreadToSearch* thSearch;
+    SearchingModule* searchingModule;
 
     File f; //объект класса File для выполнения операций с текстовыми файлами
     Dir d;  //объект класса Dir для выполнения операций с директориями
@@ -49,7 +46,6 @@ class Form : public QWidget
     SysElem* dir = &d;
 
     QString filePath = "";
-
     QString dirPath = "";
 
     QString searchName = "";
@@ -87,7 +83,7 @@ private slots:
 
     void ready_to_replace();
 
-    void ready_to_search(QFileInfoList list);
+    void readyToSearching();
 
 public:
     explicit Form(QWidget* parent = nullptr);

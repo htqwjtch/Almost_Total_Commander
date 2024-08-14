@@ -35,9 +35,6 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     if (!(threadReplace = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
 
-    if (!(threadSearch = new QThread(this)))
-        QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-
     if (!(thCopy = new ThreadToCopy()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToCopy was not created!");
 
@@ -47,13 +44,41 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     if (!(thReplace = new ThreadToReplace()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToReplace was not created!");
 
-    if (!(thSearch = new ThreadToSearch()))
-        QMessageBox::warning(this, "Memory allocation", "Object of ThreadToSearch was not created!");
+    searchingModule = new SearchingModule(this);
 
-    connect_threads(this, threadCopy, threadRemove, threadReplace, threadSearch, thCopy, thRemove, thReplace, thSearch);
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    if (!(window = new SearchResult(this)))
-        QMessageBox::warning(this, "Memory allocation", "Object of SearchResult was not created!");
+    QObject::connect(this, SIGNAL(destroyed()), threadCopy, SLOT(quit()));
+    QObject::connect(this, SIGNAL(destroyed()), threadRemove, SLOT(quit()));
+    QObject::connect(this, SIGNAL(destroyed()), threadReplace, SLOT(quit()));
+
+    QObject::connect(this, SIGNAL(start_copy(QDir, SysElem*, SysElem*, QString, QString)), thCopy,
+		     SLOT(run_copy(QDir, SysElem*, SysElem*, QString, QString)));
+    QObject::connect(this, SIGNAL(start_remove(SysElem*, SysElem*, QString, QString)), thRemove,
+		     SLOT(run_remove(SysElem*, SysElem*, QString, QString)));
+    QObject::connect(this, SIGNAL(start_replace(QDir, SysElem*, SysElem*, QString, QString)), thReplace,
+		     SLOT(run_replace(QDir, SysElem*, SysElem*, QString, QString)));
+
+    thCopy->moveToThread(threadCopy);
+    threadCopy->start();
+
+    thRemove->moveToThread(threadRemove);
+    threadRemove->start();
+
+    thReplace->moveToThread(threadReplace);
+    threadReplace->start();
+
+    QObject::connect(thRemove, SIGNAL(not_performed()), this, SLOT(remove_is_not_performed()));
+    QObject::connect(thCopy, SIGNAL(not_performed()), this, SLOT(copy_is_not_performed()));
+    QObject::connect(thReplace, SIGNAL(not_performed()), this, SLOT(replace_is_not_performed()));
+
+    QObject::connect(thRemove, SIGNAL(remove_finished()), this, SLOT(ready_to_remove()));
+    QObject::connect(thCopy, SIGNAL(copy_finished()), this, SLOT(ready_to_copy()));
+    QObject::connect(thReplace, SIGNAL(replace_finished()), this, SLOT(ready_to_replace()));
+
+    QObject::connect(searchingModule, SIGNAL(searchingFinished()), this, SLOT(readyToSearching()));
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // устанока информации для подсказок
     ui->btnCreate->setToolTip("Create");
@@ -90,14 +115,10 @@ Form::~Form()
     emit threadReplace->quit();
     threadReplace->wait();
     delete threadReplace;
-    emit threadSearch->quit();
-    threadSearch->wait();
-    delete threadSearch;
     delete thCopy;
     delete thRemove;
     delete thReplace;
-    delete thSearch;
-    delete window;
+    delete searchingModule;
 }
 
 void Form::btn_create()
@@ -407,19 +428,25 @@ void Form::on_lineSearch_textEdited(const QString& arg1)
 
 void Form::on_btnSearch_clicked()
 {
-    QString lDirPath = model->filePath(ui->lvLeft->rootIndex());
-    QString rDirPath = model->filePath(ui->lvRight->rootIndex());
-    QDir lDir = QDir(lDirPath); // получение текущей директории
-    QDir rDir = QDir(rDirPath);
-    if (lDirPath.contains(lDir.homePath()) && rDirPath.contains(rDir.homePath())
-        && !lDirPath.contains(lDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
-        && !rDirPath.contains(rDir.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug")))
+    QDir leftPanelDirectory = QDir(model->filePath(ui->lvLeft->rootIndex()));
+    QDir rightPanelDirectory = QDir(model->filePath(ui->lvRight->rootIndex()));
+    QDir currentDirectory;
+    if (view == ui->lvLeft)
+	currentDirectory = leftPanelDirectory;
+    if (view == ui->lvRight)
+	currentDirectory = rightPanelDirectory;
+    if (currentDirectory.absolutePath().contains(currentDirectory.homePath().append("/kypck/build-FileManager-Desktop_Qt_6_5_0_GCC_64bit-Debug"))
+	|| !currentDirectory.absolutePath().contains(currentDirectory.homePath()))
     {
-        ui->btnSearch->setEnabled(false);
-        emit start_search(lDirPath, rDirPath, searchName);
+	QMessageBox::warning(this, "Rename", "There is no access to perform any operation in this directory!");
+	return;
     }
-    else
-        QMessageBox::warning(this, "", "There is no access to perform a search in this directory!");
+
+    ui->btnSearch->setEnabled(false);
+    searchingModule->setCurrentDirectoryPath(currentDirectory.absolutePath());
+    searchingModule->setSearchingName(searchName);
+    searchingModule->search();
+    //QMessageBox::warning(this, "", "There is no access to perform a search in this directory!");
 }
 
 void Form::on_leftPath_textEdited(const QString& arg1)
@@ -469,10 +496,8 @@ void Form::ready_to_replace()
     ui->btnReplace->setEnabled(true);
 }
 
-void Form::ready_to_search(QFileInfoList list)
+void Form::readyToSearching()
 {
     ui->btnSearch->setEnabled(true);
-    window->set_ui(list);
-    window->exec();
-    window->reset_ui();
+    searchingModule->exec();
 }

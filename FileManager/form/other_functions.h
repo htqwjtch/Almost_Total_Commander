@@ -10,46 +10,6 @@
 #include <QLabel>
 #include <QThread>
 
-void connect_threads(Form* form, QThread* threadCopy, QThread* threadRemove, QThread* threadReplace, QThread* threadSearch, ThreadToCopy* thCopy,
-                     ThreadToRemove* thRemove, ThreadToReplace* thReplace, ThreadToSearch* thSearch)
-{
-    QObject::connect(form, SIGNAL(destroyed()), threadCopy, SLOT(quit()));
-
-    QObject::connect(form, SIGNAL(destroyed()), threadRemove, SLOT(quit()));
-
-    QObject::connect(form, SIGNAL(destroyed()), threadReplace, SLOT(quit()));
-
-    QObject::connect(form, SIGNAL(destroyed()), threadSearch, SLOT(quit()));
-
-    QObject::connect(form, SIGNAL(start_copy(QDir, SysElem*, SysElem*, QString, QString)), thCopy,
-                     SLOT(run_copy(QDir, SysElem*, SysElem*, QString, QString)));
-    thCopy->moveToThread(threadCopy);
-    threadCopy->start();
-
-    QObject::connect(form, SIGNAL(start_remove(SysElem*, SysElem*, QString, QString)), thRemove,
-                     SLOT(run_remove(SysElem*, SysElem*, QString, QString)));
-    thRemove->moveToThread(threadRemove);
-    threadRemove->start();
-
-    QObject::connect(form, SIGNAL(start_replace(QDir, SysElem*, SysElem*, QString, QString)), thReplace,
-                     SLOT(run_replace(QDir, SysElem*, SysElem*, QString, QString)));
-    thReplace->moveToThread(threadReplace);
-    threadReplace->start();
-
-    QObject::connect(form, SIGNAL(start_search(QString, QString, QString)), thSearch, SLOT(run_search(QString, QString, QString)));
-    thSearch->moveToThread(threadSearch);
-    threadSearch->start();
-
-    QObject::connect(thRemove, SIGNAL(not_performed()), form, SLOT(remove_is_not_performed()));
-    QObject::connect(thCopy, SIGNAL(not_performed()), form, SLOT(copy_is_not_performed()));
-    QObject::connect(thReplace, SIGNAL(not_performed()), form, SLOT(replace_is_not_performed()));
-
-    QObject::connect(thRemove, SIGNAL(remove_finished()), form, SLOT(ready_to_remove()));
-    QObject::connect(thCopy, SIGNAL(copy_finished()), form, SLOT(ready_to_copy()));
-    QObject::connect(thReplace, SIGNAL(replace_finished()), form, SLOT(ready_to_replace()));
-    QObject::connect(thSearch, SIGNAL(search_finished(QFileInfoList)), form, SLOT(ready_to_search(QFileInfoList)));
-}
-
 void init_infoBar(QFileInfo info, QLabel* uiSize, QLabel* uiType, QLabel* uiDate)
 {
     QString sizeFile = "";                                                     // переменная размера файла

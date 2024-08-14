@@ -2,7 +2,6 @@
 #define MAINWINDOW_H
 
 #include "../form/form.h"
-#include "../searchResult/searchresult.h"
 
 #include <QMainWindow> //предоставляет главное окно приложения
 
@@ -20,9 +19,9 @@ class MainWindow : public QMainWindow //класс главного окна п�
     Ui::MainWindow* ui; //указатель на объект соотв типа в классе основной формы
     Form* form;         //указатель для связи с моделью данных для файловой системы
 
-    ThreadToSearch* thSearch;
+    // ThreadToSearch* thSearch;
 
-    SearchResult* window;
+    // SearchResult* window;
 
 private slots:
 
