@@ -7,7 +7,7 @@ void SearchingService::startSearching(const QString& currentDirectoryPath, const
     QDir currentDirectory = QDir(currentDirectoryPath);
     QStringList searchingResult = QStringList();
     searchingResult.append(search(currentDirectory, searchingName));
-    emit searchingFinished(searchingResult);
+    emit searchingIsPerformedSignal(searchingResult);
 }
 
 QStringList SearchingService::search(QDir& currentDirectory, const QString& searchingName)

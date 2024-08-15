@@ -4,16 +4,9 @@
 SearchingModule::SearchingModule(QWidget* parent) : QDialog(parent), ui(new Ui::SearchingModule)
 {
     setUserInterface();
-
-    threadForSearching = new QThread(this);
-    searchingService = new SearchingService();
-
-    QObject::connect(this, SIGNAL(destroyed()), threadForSearching, SLOT(quit()));
-    QObject::connect(this, SIGNAL(startSearching(QString, QString)), searchingService, SLOT(startSearching(const QString&, const QString&)));
-    QObject::connect(searchingService, SIGNAL(searchingFinished(QStringList)), this, SLOT(fillSearchingResultWidget(QStringList)));
-
-    searchingService->moveToThread(threadForSearching);
-    threadForSearching->start();
+    allocateMemory();
+    connectSignalsWithSlots();
+    setThreadForSearching();
 }
 
 void SearchingModule::setUserInterface()
@@ -22,28 +15,37 @@ void SearchingModule::setUserInterface()
     setWindowTitle("Searching");
 }
 
+void SearchingModule::allocateMemory()
+{
+    searchingService = new SearchingService();
+    threadForSearching = new QThread(this);
+}
+
+void SearchingModule::connectSignalsWithSlots()
+{
+    QObject::connect(this, SIGNAL(destroyed()), threadForSearching, SLOT(quit()));
+    QObject::connect(this, SIGNAL(startSearchingSignal(QString, QString)), searchingService, SLOT(startSearching(const QString&, const QString&)));
+    QObject::connect(searchingService, SIGNAL(searchingIsPerformedSignal(QStringList)), this, SLOT(fillSearchingResultWidget(QStringList)));
+}
+
+void SearchingModule::setThreadForSearching()
+{
+    searchingService->moveToThread(threadForSearching);
+    threadForSearching->start();
+}
+
 SearchingModule::~SearchingModule()
 {
-    delete ui;
     emit threadForSearching->quit();
     threadForSearching->wait();
     delete threadForSearching;
     delete searchingService;
+    delete ui;
 }
 
-void SearchingModule::search()
+void SearchingModule::search(const QString& searchingName, const QString& currentDirectoryPath)
 {
-    emit startSearching(currentDirectoryPath, searchingName);
-}
-
-void SearchingModule::setCurrentDirectoryPath(const QString& currentDirectoryPath)
-{
-    this->currentDirectoryPath = currentDirectoryPath;
-}
-
-void SearchingModule::setSearchingName(const QString& searchingName)
-{
-    this->searchingName = searchingName;
+    emit startSearchingSignal(currentDirectoryPath, searchingName);
 }
 
 void SearchingModule::fillSearchingResultWidget(QStringList searchingResult)
@@ -56,7 +58,7 @@ void SearchingModule::fillSearchingResultWidget(QStringList searchingResult)
     {
 	ui->searchingResultWidget->addItems(searchingResult);
     }
-    emit searchingFinished();
+    emit searchingIsPerformedSignal();
 }
 
 void SearchingModule::on_searchingResultWidget_itemClicked(QListWidgetItem* item)

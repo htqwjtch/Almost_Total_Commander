@@ -3,7 +3,6 @@
 
 #include <QDir>
 #include <QObject>
-#include <QThread>
 
 class SearchingService : public QObject
 {
@@ -18,7 +17,7 @@ private:
     QStringList search(QDir&, const QString&);
 
 signals:
-    void searchingFinished(QStringList);
+    void searchingIsPerformedSignal(QStringList);
 };
 
 #endif // SEARCHINGSERVICE_H

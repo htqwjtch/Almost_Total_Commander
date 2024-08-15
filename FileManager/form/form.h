@@ -1,8 +1,8 @@
 #ifndef FORM_H
 #define FORM_H
 
+#include "../src/modules/copyingModule/copyingmodule.h"
 #include "../src/modules/searchingModule/searchingmodule.h"
-#include "../thToCopy/threadtocpy.h"
 #include "../thToRemove/threadtoremove.h"
 #include "../thToReplace/threadtoreplace.h"
 
@@ -27,15 +27,15 @@ class Form : public QWidget
     Ui::Form* ui;
     QFileSystemModel* model; //указатель для связи с моделью данных для файловой системы
     //объекты для копирования, удаления, перемещения, поиска в отдельном потоке
-    QThread* threadCopy;
     QThread* threadRemove;
     QThread* threadReplace;
 
     QListView* view; // список элементов файловой системы, которые пользователь видит сейчас (одна из панелей (левая или правая) коммандера)
 
-    ThreadToCopy* thCopy;
     ThreadToRemove* thRemove;
     ThreadToReplace* thReplace;
+
+    CopyingModule* copyingModule;
     SearchingModule* searchingModule;
 
     QString filePath = "";
@@ -55,12 +55,13 @@ private slots:
     void on_btnSearch_clicked();
     void on_leftPath_textEdited(const QString& arg1);
     void remove_is_not_performed();
-    void copy_is_not_performed();
     void replace_is_not_performed();
     void ready_to_remove();
-    void ready_to_copy();
     void ready_to_replace();
-    void readyToSearching();
+
+    void copyingIsPerformed();
+    void copyingIsNotPerformed();
+    void searchingIsPerformed();
 
 public:
     explicit Form(QWidget* parent = nullptr);
@@ -75,7 +76,6 @@ public:
     void btn_search();
 
 signals:
-    void start_copy(QDir, QString, QString);
     void start_remove(QString, QString);
     void start_replace(QDir, QString, QString);
 };

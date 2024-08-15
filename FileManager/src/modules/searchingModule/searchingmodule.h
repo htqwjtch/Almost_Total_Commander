@@ -7,6 +7,7 @@
 #include <QDialog>
 #include <QListWidgetItem>
 #include <QStringList>
+#include <QThread>
 
 namespace Ui
 {
@@ -20,12 +21,13 @@ class SearchingModule : public QDialog
 public:
     SearchingModule(QWidget* parent = nullptr);
     ~SearchingModule();
-    void search();
-    void setCurrentDirectoryPath(const QString&);
-    void setSearchingName(const QString&);
+    void search(const QString&, const QString&);
 
 private:
     void setUserInterface();
+    void allocateMemory();
+    void connectSignalsWithSlots();
+    void setThreadForSearching();
     void clearSearchingResultWidget();
 
 private slots:
@@ -35,14 +37,12 @@ private slots:
 
 private:
     Ui::SearchingModule* ui;
-    QThread* threadForSearching;
     SearchingService* searchingService;
-    QString currentDirectoryPath = "";
-    QString searchingName = "";
+    QThread* threadForSearching;
 
 signals:
-    void startSearching(QString, QString);
-    void searchingFinished();
+    void startSearchingSignal(QString, QString);
+    void searchingIsPerformedSignal();
 };
 
 #endif // SEARCHINGMODULE_H

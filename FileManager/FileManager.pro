@@ -11,34 +11,36 @@ CONFIG += c++17
 SOURCES += \
     form/form.cpp \
     main.cpp \
+    src/modules/copyingModule/copyingmodule.cpp \
     src/modules/creatingModule/creatingmodule.cpp \
     src/modules/mainModule/mainmodule.cpp \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
     src/modules/namingModules/namingmodule.cpp \
     src/modules/searchingModule/searchingmodule.cpp \
+    src/services/copyingService/copyingservice.cpp \
     src/services/creatingService/creatingservice.cpp \
     src/services/exceptionService/exceptionservice.cpp \
     src/services/namingService/namingservice.cpp \
     src/services/searchingService/searchingservice.cpp \
-    thToCopy/threadtocpy.cpp \
     thToRemove/threadtoremove.cpp \
     thToReplace/threadtoreplace.cpp
 
 HEADERS += \
     form/form.h \
     form/other_functions.h \
+    src/modules/copyingModule/copyingmodule.h \
     src/modules/creatingModule/creatingmodule.h \
     src/modules/mainModule/mainmodule.h \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h \
     src/modules/namingModules/namingmodule.h \
     src/modules/searchingModule/searchingmodule.h \
+    src/services/copyingService/copyingservice.h \
     src/services/creatingService/creatingservice.h \
     src/services/exceptionService/exceptionservice.h \
     src/services/namingService/namingservice.h \
     src/services/searchingService/searchingservice.h \
-    thToCopy/threadtocpy.h \
     thToRemove/threadtoremove.h \
     thToReplace/threadtoreplace.h
 

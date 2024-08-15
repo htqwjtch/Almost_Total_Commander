@@ -26,17 +26,11 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 
     connect(ui->rightPath, SIGNAL(textEdited(QString)), this, SLOT(on_leftPath_textEdited(QString)));
 
-    if (!(threadCopy = new QThread(this)))
-        QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-
     if (!(threadRemove = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
 
     if (!(threadReplace = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-
-    if (!(thCopy = new ThreadToCopy()))
-        QMessageBox::warning(this, "Memory allocation", "Object of ThreadToCopy was not created!");
 
     if (!(thRemove = new ThreadToRemove()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToRemove was not created!");
@@ -44,20 +38,16 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     if (!(thReplace = new ThreadToReplace()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToReplace was not created!");
 
+    copyingModule = new CopyingModule(this);
     searchingModule = new SearchingModule(this);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    QObject::connect(this, SIGNAL(destroyed()), threadCopy, SLOT(quit()));
     QObject::connect(this, SIGNAL(destroyed()), threadRemove, SLOT(quit()));
     QObject::connect(this, SIGNAL(destroyed()), threadReplace, SLOT(quit()));
 
-    QObject::connect(this, SIGNAL(start_copy(QDir, QString, QString)), thCopy, SLOT(run_copy(QDir, QString, QString)));
     QObject::connect(this, SIGNAL(start_remove(QString, QString)), thRemove, SLOT(run_remove(const QString&, const QString&)));
     QObject::connect(this, SIGNAL(start_replace(QDir, QString, QString)), thReplace, SLOT(run_replace(QDir, const QString&, const QString&)));
-
-    thCopy->moveToThread(threadCopy);
-    threadCopy->start();
 
     thRemove->moveToThread(threadRemove);
     threadRemove->start();
@@ -66,14 +56,14 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
     threadReplace->start();
 
     QObject::connect(thRemove, SIGNAL(not_performed()), this, SLOT(remove_is_not_performed()));
-    QObject::connect(thCopy, SIGNAL(not_performed()), this, SLOT(copy_is_not_performed()));
     QObject::connect(thReplace, SIGNAL(not_performed()), this, SLOT(replace_is_not_performed()));
 
     QObject::connect(thRemove, SIGNAL(remove_finished()), this, SLOT(ready_to_remove()));
-    QObject::connect(thCopy, SIGNAL(copy_finished()), this, SLOT(ready_to_copy()));
     QObject::connect(thReplace, SIGNAL(replace_finished()), this, SLOT(ready_to_replace()));
 
-    QObject::connect(searchingModule, SIGNAL(searchingFinished()), this, SLOT(readyToSearching()));
+    QObject::connect(copyingModule, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
+    QObject::connect(copyingModule, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
+    QObject::connect(searchingModule, SIGNAL(searchingIsPerformedSignal()), this, SLOT(searchingIsPerformed()));
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -101,21 +91,18 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 
 Form::~Form()
 {
-    delete ui;
-    delete model;
-    emit threadCopy->quit();
-    threadCopy->wait();
-    delete threadCopy;
-    emit threadRemove->quit();
-    threadRemove->wait();
-    delete threadRemove;
+    delete searchingModule;
+    delete copyingModule;
+    delete thReplace;
     emit threadReplace->quit();
     threadReplace->wait();
     delete threadReplace;
-    delete thCopy;
     delete thRemove;
-    delete thReplace;
-    delete searchingModule;
+    emit threadRemove->quit();
+    threadRemove->wait();
+    delete threadRemove;
+    delete model;
+    delete ui;
 }
 
 void Form::btn_create()
@@ -318,7 +305,8 @@ void Form::on_btnCopy_clicked()
         }
     }
     ui->btnCopy->setEnabled(false);
-    emit start_copy(rDir, filePath, dirPath);
+    copyingModule->copy(data.fileName(), lDir.absolutePath(), rDir.absolutePath());
+
     filePath.clear(); // очистка пути файла
     dirPath.clear();
 }
@@ -440,9 +428,7 @@ void Form::on_btnSearch_clicked()
     }
 
     ui->btnSearch->setEnabled(false);
-    searchingModule->setCurrentDirectoryPath(currentDirectory.absolutePath());
-    searchingModule->setSearchingName(searchName);
-    searchingModule->search();
+    searchingModule->search(searchName, currentDirectory.absolutePath());
     //QMessageBox::warning(this, "", "There is no access to perform a search in this directory!");
 }
 
@@ -466,10 +452,10 @@ void Form::remove_is_not_performed()
     QMessageBox::warning(this, "Remove", "The operation is not performed!");
 }
 
-void Form::copy_is_not_performed()
+void Form::copyingIsNotPerformed()
 {
     ui->btnCopy->setEnabled(true);
-    QMessageBox::warning(this, "Copy", "The operation is not performed!");
+    QMessageBox::warning(this, "Copying", "The operation is not performed!");
 }
 
 void Form::replace_is_not_performed()
@@ -483,7 +469,7 @@ void Form::ready_to_remove()
     ui->btnRemove->setEnabled(true);
 }
 
-void Form::ready_to_copy()
+void Form::copyingIsPerformed()
 {
     ui->btnCopy->setEnabled(true);
 }
@@ -493,7 +479,7 @@ void Form::ready_to_replace()
     ui->btnReplace->setEnabled(true);
 }
 
-void Form::readyToSearching()
+void Form::searchingIsPerformed()
 {
     ui->btnSearch->setEnabled(true);
     searchingModule->exec();

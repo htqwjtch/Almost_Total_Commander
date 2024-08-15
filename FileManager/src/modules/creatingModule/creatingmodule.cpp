@@ -2,7 +2,6 @@
 #include "../../services/exceptionService/exceptionservice.h"
 #include "ui_creationmodule.h"
 
-#include <QDebug>
 #include <unistd.h>
 
 CreatingModule::CreatingModule(QDir& currentDirectory, QWidget* parent) : QDialog(parent), ui(new Ui::CreatingModule)
