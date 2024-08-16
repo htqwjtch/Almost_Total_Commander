@@ -26,26 +26,6 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 
     connect(ui->rightPath, SIGNAL(textEdited(QString)), this, SLOT(on_leftPath_textEdited(QString)));
 
-    copyingModule = new CopyingModule(this);
-    removingModule = new RemovingModule(this);
-    replacingModule = new ReplacingModule(this);
-    searchingModule = new SearchingModule(this);
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    QObject::connect(copyingModule, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
-    QObject::connect(copyingModule, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
-
-    QObject::connect(removingModule, SIGNAL(removingIsPerformedSignal()), this, SLOT(removingIsPerformed()));
-    QObject::connect(removingModule, SIGNAL(removingIsNotPerformedSignal()), this, SLOT(removingIsNotPerformed()));
-
-    QObject::connect(replacingModule, SIGNAL(replacingIsPerformedSignal()), this, SLOT(replacingIsPerformed()));
-    QObject::connect(replacingModule, SIGNAL(replacingIsNotPerformedSignal()), this, SLOT(replacingIsNotPerformed()));
-
-    QObject::connect(searchingModule, SIGNAL(searchingIsPerformedSignal()), this, SLOT(searchingIsPerformed()));
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     // устанока информации для подсказок
     ui->btnCreate->setToolTip("Create");
     ui->btnRemove->setToolTip("Remove");
@@ -70,10 +50,10 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 
 Form::~Form()
 {
-    delete searchingModule;
+    // delete searchingModule;
     delete replacingModule;
     delete removingModule;
-    delete copyingModule;
+    // delete copyingModule;
 
     delete model;
     delete ui;
@@ -246,7 +226,12 @@ void Form::on_btnRemove_clicked()
 	data = QFileInfo(dirPath);
     }
     ui->btnRemove->setEnabled(false);
+
+    removingModule = new RemovingModule(this);
+    QObject::connect(removingModule, SIGNAL(removingIsPerformedSignal()), this, SLOT(removingIsPerformed()));
+    QObject::connect(removingModule, SIGNAL(removingIsNotPerformedSignal()), this, SLOT(removingIsNotPerformed()));
     removingModule->remove(data.absoluteFilePath());
+
     filePath.clear(); // очистка пути файла
     dirPath.clear();  // очистка пути директории
 }
@@ -288,6 +273,10 @@ void Form::on_btnCopy_clicked()
         }
     }
     ui->btnCopy->setEnabled(false);
+
+    copyingModule = new CopyingModule(this);
+    QObject::connect(copyingModule, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
+    QObject::connect(copyingModule, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
     copyingModule->copy(data.absoluteFilePath(), rDir.absolutePath());
 
     filePath.clear(); // очистка пути файла
@@ -331,6 +320,10 @@ void Form::on_btnReplace_clicked()
         }
     }
     ui->btnReplace->setEnabled(false);
+
+    replacingModule = new ReplacingModule(this);
+    QObject::connect(replacingModule, SIGNAL(replacingIsPerformedSignal()), this, SLOT(replacingIsPerformed()));
+    QObject::connect(replacingModule, SIGNAL(replacingIsNotPerformedSignal()), this, SLOT(replacingIsNotPerformed()));
     replacingModule->setReplacingObjectPath(data.absoluteFilePath());
     replacingModule->replaceIn(rDir.absolutePath());
 
@@ -411,8 +404,9 @@ void Form::on_btnSearch_clicked()
 	QMessageBox::warning(this, "Rename", "There is no access to perform any operation in this directory!");
 	return;
     }
-
     ui->btnSearch->setEnabled(false);
+    searchingModule = new SearchingModule(this);
+    QObject::connect(searchingModule, SIGNAL(searchingIsPerformedSignal()), this, SLOT(searchingIsPerformed()));
     searchingModule->search(searchName, currentDirectory.absolutePath());
     //QMessageBox::warning(this, "", "There is no access to perform a search in this directory!");
 }
@@ -433,39 +427,43 @@ void Form::on_leftPath_textEdited(const QString& arg1)
 
 void Form::removingIsNotPerformed()
 {
-    ui->btnRemove->setEnabled(true);
+    removingIsPerformed();
     QMessageBox::warning(this, "Removing", "The operation is not performed!");
 }
 
 void Form::copyingIsNotPerformed()
 {
-    ui->btnCopy->setEnabled(true);
+    copyingIsPerformed();
     QMessageBox::warning(this, "Copying", "The operation is not performed!");
 }
 
 void Form::replacingIsNotPerformed()
 {
-    ui->btnReplace->setEnabled(true);
+    replacingIsPerformed();
     QMessageBox::warning(this, "Replacing", "The operation is not performed!");
 }
 
 void Form::removingIsPerformed()
 {
     ui->btnRemove->setEnabled(true);
+    delete removingModule;
 }
 
 void Form::copyingIsPerformed()
 {
     ui->btnCopy->setEnabled(true);
+    delete copyingModule;
 }
 
 void Form::replacingIsPerformed()
 {
     ui->btnReplace->setEnabled(true);
+    delete replacingModule;
 }
 
 void Form::searchingIsPerformed()
 {
     ui->btnSearch->setEnabled(true);
     searchingModule->exec();
+    delete searchingModule;
 }
