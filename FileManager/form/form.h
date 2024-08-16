@@ -3,15 +3,13 @@
 
 #include "../src/modules/copyingModule/copyingmodule.h"
 #include "../src/modules/removingModule/removingmodule.h"
+#include "../src/modules/replacingModule/replacingmodule.h"
 #include "../src/modules/searchingModule/searchingmodule.h"
-#include "../thToReplace/threadtoreplace.h"
 
 #include <QDateTime>
-#include <QDir>
 #include <QFileSystemModel>
 #include <QListView>
 #include <QString>
-#include <QThread>
 #include <QWidget>
 #include <QUrl>
 
@@ -26,16 +24,12 @@ class Form : public QWidget
 
     Ui::Form* ui;
     QFileSystemModel* model; //указатель для связи с моделью данных для файловой системы
-    //объекты для копирования, удаления, перемещения, поиска в отдельном потоке
-    QThread* threadRemove;
-    QThread* threadReplace;
 
     QListView* view; // список элементов файловой системы, которые пользователь видит сейчас (одна из панелей (левая или правая) коммандера)
 
-    ThreadToReplace* thReplace;
-
     CopyingModule* copyingModule;
     RemovingModule* removingModule;
+    ReplacingModule* replacingModule;
     SearchingModule* searchingModule;
 
     QString filePath = "";
@@ -55,13 +49,12 @@ private slots:
     void on_btnSearch_clicked();
     void on_leftPath_textEdited(const QString& arg1);
 
-    void replace_is_not_performed();
-    void ready_to_replace();
-
     void copyingIsPerformed();
     void copyingIsNotPerformed();
     void removingIsPerformed();
     void removingIsNotPerformed();
+    void replacingIsPerformed();
+    void replacingIsNotPerformed();
     void searchingIsPerformed();
 
 public:
@@ -75,9 +68,6 @@ public:
     void btn_replace();
     void btn_rename();
     void btn_search();
-
-signals:
-    void start_replace(QDir, QString, QString);
 };
 
 #endif // FORM_H

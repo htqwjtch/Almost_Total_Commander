@@ -26,34 +26,21 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 
     connect(ui->rightPath, SIGNAL(textEdited(QString)), this, SLOT(on_leftPath_textEdited(QString)));
 
-    if (!(threadReplace = new QThread(this)))
-        QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-
-    if (!(thReplace = new ThreadToReplace()))
-        QMessageBox::warning(this, "Memory allocation", "Object of ThreadToReplace was not created!");
-
     copyingModule = new CopyingModule(this);
     removingModule = new RemovingModule(this);
+    replacingModule = new ReplacingModule(this);
     searchingModule = new SearchingModule(this);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    QObject::connect(this, SIGNAL(destroyed()), threadReplace, SLOT(quit()));
-
-    QObject::connect(this, SIGNAL(start_replace(QDir, QString, QString)), thReplace, SLOT(run_replace(QDir, const QString&, const QString&)));
-
-    thReplace->moveToThread(threadReplace);
-    threadReplace->start();
-
-    QObject::connect(thReplace, SIGNAL(not_performed()), this, SLOT(replace_is_not_performed()));
-
-    QObject::connect(thReplace, SIGNAL(replace_finished()), this, SLOT(ready_to_replace()));
 
     QObject::connect(copyingModule, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
     QObject::connect(copyingModule, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
 
     QObject::connect(removingModule, SIGNAL(removingIsPerformedSignal()), this, SLOT(removingIsPerformed()));
     QObject::connect(removingModule, SIGNAL(removingIsNotPerformedSignal()), this, SLOT(removingIsNotPerformed()));
+
+    QObject::connect(replacingModule, SIGNAL(replacingIsPerformedSignal()), this, SLOT(replacingIsPerformed()));
+    QObject::connect(replacingModule, SIGNAL(replacingIsNotPerformedSignal()), this, SLOT(replacingIsNotPerformed()));
 
     QObject::connect(searchingModule, SIGNAL(searchingIsPerformedSignal()), this, SLOT(searchingIsPerformed()));
 
@@ -84,13 +71,9 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 Form::~Form()
 {
     delete searchingModule;
+    delete replacingModule;
     delete removingModule;
     delete copyingModule;
-
-    delete thReplace;
-    emit threadReplace->quit();
-    threadReplace->wait();
-    delete threadReplace;
 
     delete model;
     delete ui;
@@ -348,7 +331,9 @@ void Form::on_btnReplace_clicked()
         }
     }
     ui->btnReplace->setEnabled(false);
-    emit start_replace(rDir, filePath, dirPath);
+    replacingModule->setReplacingObjectPath(data.absoluteFilePath());
+    replacingModule->replaceIn(rDir.absolutePath());
+
     filePath.clear(); // очистка пути файла
     dirPath.clear();
 }
@@ -458,10 +443,10 @@ void Form::copyingIsNotPerformed()
     QMessageBox::warning(this, "Copying", "The operation is not performed!");
 }
 
-void Form::replace_is_not_performed()
+void Form::replacingIsNotPerformed()
 {
     ui->btnReplace->setEnabled(true);
-    QMessageBox::warning(this, "Replace", "The operation is not performed!");
+    QMessageBox::warning(this, "Replacing", "The operation is not performed!");
 }
 
 void Form::removingIsPerformed()
@@ -474,7 +459,7 @@ void Form::copyingIsPerformed()
     ui->btnCopy->setEnabled(true);
 }
 
-void Form::ready_to_replace()
+void Form::replacingIsPerformed()
 {
     ui->btnReplace->setEnabled(true);
 }

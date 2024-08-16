@@ -18,14 +18,14 @@ SOURCES += \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
     src/modules/namingModules/namingmodule.cpp \
     src/modules/removingModule/removingmodule.cpp \
+    src/modules/replacingModule/replacingmodule.cpp \
     src/modules/searchingModule/searchingmodule.cpp \
     src/services/copyingService/copyingservice.cpp \
     src/services/creatingService/creatingservice.cpp \
     src/services/exceptionService/exceptionservice.cpp \
     src/services/namingService/namingservice.cpp \
     src/services/removingService/removingservice.cpp \
-    src/services/searchingService/searchingservice.cpp \
-    thToReplace/threadtoreplace.cpp
+    src/services/searchingService/searchingservice.cpp
 
 HEADERS += \
     form/form.h \
@@ -37,14 +37,14 @@ HEADERS += \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h \
     src/modules/namingModules/namingmodule.h \
     src/modules/removingModule/removingmodule.h \
+    src/modules/replacingModule/replacingmodule.h \
     src/modules/searchingModule/searchingmodule.h \
     src/services/copyingService/copyingservice.h \
     src/services/creatingService/creatingservice.h \
     src/services/exceptionService/exceptionservice.h \
     src/services/namingService/namingservice.h \
     src/services/removingService/removingservice.h \
-    src/services/searchingService/searchingservice.h \
-    thToReplace/threadtoreplace.h
+    src/services/searchingService/searchingservice.h
 
 FORMS += \
     form/form.ui \
