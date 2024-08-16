@@ -2,10 +2,11 @@
 
 CopyingService::CopyingService(QObject* parent) : QObject{parent} {}
 
-void CopyingService::startCopying(const QString& sourceDirectoryPath, const QString& destinationDirectoryPath, const QString& copyingObjectName)
+void CopyingService::startCopying(const QString& sourceCopyingObjectPath, const QString& destinationDirectoryPath)
 {
-    setSourceCopyingObjectPath(sourceDirectoryPath + QDir::separator() + copyingObjectName);
-    setDestinationCopyingObjectPath(destinationDirectoryPath + QDir::separator() + copyingObjectName);
+    setSourceCopyingObjectPath(sourceCopyingObjectPath);
+    QFileInfo copyingObjectInfo = QFileInfo(sourceCopyingObjectPath);
+    setDestinationCopyingObjectPath(destinationDirectoryPath + QDir::separator() + copyingObjectInfo.fileName());
     copyIn(destinationDirectoryPath);
 
     emit copyingIsPerformedSignal();

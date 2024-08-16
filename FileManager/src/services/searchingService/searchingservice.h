@@ -14,7 +14,7 @@ public slots:
     void startSearching(const QString&, const QString&);
 
 private:
-    QStringList search(QDir&, const QString&);
+    QStringList search(const QString&, QDir&);
 
 signals:
     void searchingIsPerformedSignal(QStringList);

@@ -16,8 +16,7 @@ void CopyingModule::allocateMemory()
 void CopyingModule::connectSignalsWithSlots()
 {
     QObject::connect(this, SIGNAL(destroyed()), threadForCopying, SLOT(quit()));
-    QObject::connect(this, SIGNAL(startCopyingSignal(QString, QString, QString)), copyingService,
-		     SLOT(startCopying(const QString&, const QString&, const QString&)));
+    QObject::connect(this, SIGNAL(startCopyingSignal(QString, QString)), copyingService, SLOT(startCopying(const QString&, const QString&)));
     QObject::connect(copyingService, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
     QObject::connect(copyingService, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
 }
@@ -36,9 +35,9 @@ CopyingModule::~CopyingModule()
     delete copyingService;
 }
 
-void CopyingModule::copy(const QString& copyingObjectName, const QString& sourceDirectoryPath, const QString& destinationDirectoryPath)
+void CopyingModule::copy(const QString& copyingObjectPath, const QString& destinationDirectoryPath)
 {
-    emit startCopyingSignal(sourceDirectoryPath, destinationDirectoryPath, copyingObjectName);
+    emit startCopyingSignal(copyingObjectPath, destinationDirectoryPath);
 }
 
 void CopyingModule::copyingIsPerformed()

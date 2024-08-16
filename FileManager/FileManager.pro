@@ -17,13 +17,14 @@ SOURCES += \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
     src/modules/namingModules/namingmodule.cpp \
+    src/modules/removingModule/removingmodule.cpp \
     src/modules/searchingModule/searchingmodule.cpp \
     src/services/copyingService/copyingservice.cpp \
     src/services/creatingService/creatingservice.cpp \
     src/services/exceptionService/exceptionservice.cpp \
     src/services/namingService/namingservice.cpp \
+    src/services/removingService/removingservice.cpp \
     src/services/searchingService/searchingservice.cpp \
-    thToRemove/threadtoremove.cpp \
     thToReplace/threadtoreplace.cpp
 
 HEADERS += \
@@ -35,13 +36,14 @@ HEADERS += \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h \
     src/modules/namingModules/namingmodule.h \
+    src/modules/removingModule/removingmodule.h \
     src/modules/searchingModule/searchingmodule.h \
     src/services/copyingService/copyingservice.h \
     src/services/creatingService/creatingservice.h \
     src/services/exceptionService/exceptionservice.h \
     src/services/namingService/namingservice.h \
+    src/services/removingService/removingservice.h \
     src/services/searchingService/searchingservice.h \
-    thToRemove/threadtoremove.h \
     thToReplace/threadtoreplace.h
 
 FORMS += \

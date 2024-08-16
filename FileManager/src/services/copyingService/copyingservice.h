@@ -13,7 +13,7 @@ public:
     explicit CopyingService(QObject* parent = nullptr);
 
 public slots:
-    void startCopying(const QString&, const QString&, const QString&);
+    void startCopying(const QString&, const QString&);
 
 private:
     void setSourceCopyingObjectPath(const QString&);
@@ -27,7 +27,6 @@ private:
 private:
     QString sourceCopyingObjectPath = "";
     QString destinationCopyingObjectPath = "";
-    int two = 0;
 
 signals:
     void copyingIsPerformedSignal();

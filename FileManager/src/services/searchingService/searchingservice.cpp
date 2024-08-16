@@ -2,15 +2,15 @@
 
 SearchingService::SearchingService(QObject* parent) : QObject{parent} {}
 
-void SearchingService::startSearching(const QString& currentDirectoryPath, const QString& searchingName)
+void SearchingService::startSearching(const QString& searchingName, const QString& currentDirectoryPath)
 {
     QDir currentDirectory = QDir(currentDirectoryPath);
     QStringList searchingResult = QStringList();
-    searchingResult.append(search(currentDirectory, searchingName));
+    searchingResult.append(search(searchingName, currentDirectory));
     emit searchingIsPerformedSignal(searchingResult);
 }
 
-QStringList SearchingService::search(QDir& currentDirectory, const QString& searchingName)
+QStringList SearchingService::search(const QString& searchingName, QDir& currentDirectory)
 {
     QStringList searchingResult = QStringList();
     foreach (QFileInfo entry, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
@@ -22,7 +22,7 @@ QStringList SearchingService::search(QDir& currentDirectory, const QString& sear
 	if (entry.isDir())
 	{
 	    currentDirectory.cd(entry.fileName());
-	    searchingResult.append(search(currentDirectory, searchingName));
+	    searchingResult.append(search(searchingName, currentDirectory));
 	    currentDirectory.cdUp();
 	}
     }

@@ -26,43 +26,35 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 
     connect(ui->rightPath, SIGNAL(textEdited(QString)), this, SLOT(on_leftPath_textEdited(QString)));
 
-    if (!(threadRemove = new QThread(this)))
-        QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-
     if (!(threadReplace = new QThread(this)))
         QMessageBox::warning(this, "Memory allocation", "Object of QThread was not created!");
-
-    if (!(thRemove = new ThreadToRemove()))
-        QMessageBox::warning(this, "Memory allocation", "Object of ThreadToRemove was not created!");
 
     if (!(thReplace = new ThreadToReplace()))
         QMessageBox::warning(this, "Memory allocation", "Object of ThreadToReplace was not created!");
 
     copyingModule = new CopyingModule(this);
+    removingModule = new RemovingModule(this);
     searchingModule = new SearchingModule(this);
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    QObject::connect(this, SIGNAL(destroyed()), threadRemove, SLOT(quit()));
     QObject::connect(this, SIGNAL(destroyed()), threadReplace, SLOT(quit()));
 
-    QObject::connect(this, SIGNAL(start_remove(QString, QString)), thRemove, SLOT(run_remove(const QString&, const QString&)));
     QObject::connect(this, SIGNAL(start_replace(QDir, QString, QString)), thReplace, SLOT(run_replace(QDir, const QString&, const QString&)));
-
-    thRemove->moveToThread(threadRemove);
-    threadRemove->start();
 
     thReplace->moveToThread(threadReplace);
     threadReplace->start();
 
-    QObject::connect(thRemove, SIGNAL(not_performed()), this, SLOT(remove_is_not_performed()));
     QObject::connect(thReplace, SIGNAL(not_performed()), this, SLOT(replace_is_not_performed()));
 
-    QObject::connect(thRemove, SIGNAL(remove_finished()), this, SLOT(ready_to_remove()));
     QObject::connect(thReplace, SIGNAL(replace_finished()), this, SLOT(ready_to_replace()));
 
     QObject::connect(copyingModule, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
     QObject::connect(copyingModule, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
+
+    QObject::connect(removingModule, SIGNAL(removingIsPerformedSignal()), this, SLOT(removingIsPerformed()));
+    QObject::connect(removingModule, SIGNAL(removingIsNotPerformedSignal()), this, SLOT(removingIsNotPerformed()));
+
     QObject::connect(searchingModule, SIGNAL(searchingIsPerformedSignal()), this, SLOT(searchingIsPerformed()));
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,15 +84,14 @@ Form::Form(QWidget* parent) : QWidget(parent), ui(new Ui::Form)
 Form::~Form()
 {
     delete searchingModule;
+    delete removingModule;
     delete copyingModule;
+
     delete thReplace;
     emit threadReplace->quit();
     threadReplace->wait();
     delete threadReplace;
-    delete thRemove;
-    emit threadRemove->quit();
-    threadRemove->wait();
-    delete threadRemove;
+
     delete model;
     delete ui;
 }
@@ -262,8 +253,17 @@ void Form::on_btnRemove_clicked()
         dirPath.clear();  // очистка пути директории
         return;
     }
+    QFileInfo data;
+    if (!filePath.isEmpty()) // если выбран файл
+    {
+	data = QFileInfo(filePath);
+    }
+    else if (!dirPath.isEmpty()) // если выбрана директория
+    {
+	data = QFileInfo(dirPath);
+    }
     ui->btnRemove->setEnabled(false);
-    emit start_remove(filePath, dirPath);
+    removingModule->remove(data.absoluteFilePath());
     filePath.clear(); // очистка пути файла
     dirPath.clear();  // очистка пути директории
 }
@@ -305,7 +305,7 @@ void Form::on_btnCopy_clicked()
         }
     }
     ui->btnCopy->setEnabled(false);
-    copyingModule->copy(data.fileName(), lDir.absolutePath(), rDir.absolutePath());
+    copyingModule->copy(data.absoluteFilePath(), rDir.absolutePath());
 
     filePath.clear(); // очистка пути файла
     dirPath.clear();
@@ -446,10 +446,10 @@ void Form::on_leftPath_textEdited(const QString& arg1)
         view->setRootIndex(model->index(arg1)); // элемент с этим индексом становится корневым
 }
 
-void Form::remove_is_not_performed()
+void Form::removingIsNotPerformed()
 {
     ui->btnRemove->setEnabled(true);
-    QMessageBox::warning(this, "Remove", "The operation is not performed!");
+    QMessageBox::warning(this, "Removing", "The operation is not performed!");
 }
 
 void Form::copyingIsNotPerformed()
@@ -464,7 +464,7 @@ void Form::replace_is_not_performed()
     QMessageBox::warning(this, "Replace", "The operation is not performed!");
 }
 
-void Form::ready_to_remove()
+void Form::removingIsPerformed()
 {
     ui->btnRemove->setEnabled(true);
 }

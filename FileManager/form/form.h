@@ -2,8 +2,8 @@
 #define FORM_H
 
 #include "../src/modules/copyingModule/copyingmodule.h"
+#include "../src/modules/removingModule/removingmodule.h"
 #include "../src/modules/searchingModule/searchingmodule.h"
-#include "../thToRemove/threadtoremove.h"
 #include "../thToReplace/threadtoreplace.h"
 
 #include <QDateTime>
@@ -32,10 +32,10 @@ class Form : public QWidget
 
     QListView* view; // список элементов файловой системы, которые пользователь видит сейчас (одна из панелей (левая или правая) коммандера)
 
-    ThreadToRemove* thRemove;
     ThreadToReplace* thReplace;
 
     CopyingModule* copyingModule;
+    RemovingModule* removingModule;
     SearchingModule* searchingModule;
 
     QString filePath = "";
@@ -54,13 +54,14 @@ private slots:
     void on_lineSearch_textEdited(const QString& arg1);
     void on_btnSearch_clicked();
     void on_leftPath_textEdited(const QString& arg1);
-    void remove_is_not_performed();
+
     void replace_is_not_performed();
-    void ready_to_remove();
     void ready_to_replace();
 
     void copyingIsPerformed();
     void copyingIsNotPerformed();
+    void removingIsPerformed();
+    void removingIsNotPerformed();
     void searchingIsPerformed();
 
 public:
@@ -76,7 +77,6 @@ public:
     void btn_search();
 
 signals:
-    void start_remove(QString, QString);
     void start_replace(QDir, QString, QString);
 };
 

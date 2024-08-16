@@ -45,7 +45,7 @@ SearchingModule::~SearchingModule()
 
 void SearchingModule::search(const QString& searchingName, const QString& currentDirectoryPath)
 {
-    emit startSearchingSignal(currentDirectoryPath, searchingName);
+    emit startSearchingSignal(searchingName, currentDirectoryPath);
 }
 
 void SearchingModule::fillSearchingResultWidget(QStringList searchingResult)

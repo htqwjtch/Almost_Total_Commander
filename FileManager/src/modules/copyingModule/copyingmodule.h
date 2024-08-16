@@ -13,7 +13,7 @@ class CopyingModule : public QObject
 public:
     explicit CopyingModule(QObject* parent = nullptr);
     ~CopyingModule();
-    void copy(const QString&, const QString&, const QString&);
+    void copy(const QString&, const QString&);
 
 private:
     void allocateMemory();
@@ -29,7 +29,7 @@ private:
     QThread* threadForCopying;
 
 signals:
-    void startCopyingSignal(QString, QString, QString);
+    void startCopyingSignal(QString, QString);
     void copyingIsPerformedSignal();
     void copyingIsNotPerformedSignal();
 };
