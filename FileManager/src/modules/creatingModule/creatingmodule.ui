@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>CreationModule</class>
- <widget class="QDialog" name="CreationModule">
+ <class>CreatingModule</class>
+ <widget class="QDialog" name="CreatingModule">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -80,7 +80,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Symbol Link</string>
+      <string>Symbolic Link</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -100,7 +100,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../resources/resources.qrc">
-       <normaloff>:/document.png</normaloff>:/document.png</iconset>
+       <normaloff>:/fileSystemIcons/fileSystemIcons/document.png</normaloff>:/fileSystemIcons/fileSystemIcons/document.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -123,7 +123,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../resources/resources.qrc">
-       <normaloff>:/folder.png</normaloff>:/folder.png</iconset>
+       <normaloff>:/fileSystemIcons/fileSystemIcons/folder.png</normaloff>:/fileSystemIcons/fileSystemIcons/folder.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -149,7 +149,7 @@
      </property>
      <property name="icon">
       <iconset resource="../../../resources/resources.qrc">
-       <normaloff>:/link.png</normaloff>:/link.png</iconset>
+       <normaloff>:/fileSystemIcons/fileSystemIcons/file.png</normaloff>:/fileSystemIcons/fileSystemIcons/file.png</iconset>
      </property>
      <property name="iconSize">
       <size>

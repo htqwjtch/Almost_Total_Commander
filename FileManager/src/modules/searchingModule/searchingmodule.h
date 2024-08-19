@@ -42,7 +42,7 @@ private:
 
 signals:
     void startSearchingSignal(QString, QString);
-    void searchingIsPerformedSignal();
+    void searchingCompletedSignal();
 };
 
 #endif // SEARCHINGMODULE_H

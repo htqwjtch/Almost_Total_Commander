@@ -60,6 +60,12 @@
     <addaction name="actionClose_Tab"/>
     <addaction name="actionLeft_tab"/>
     <addaction name="actionRight_Tab"/>
+    <addaction name="actionCreate"/>
+    <addaction name="actionRemove"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionReplace"/>
+    <addaction name="actionRename"/>
+    <addaction name="actionSearch"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuHelp"/>
@@ -68,7 +74,7 @@
   <action name="actionAdd_Tab">
    <property name="icon">
     <iconset resource="../../../resources/resources.qrc">
-     <normaloff>:/png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png</normaloff>:/png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png</iconset>
+     <normaloff>:/tabIcons/tabIcons/add-square-outlined-interface-button.png</normaloff>:/tabIcons/tabIcons/add-square-outlined-interface-button.png</iconset>
    </property>
    <property name="text">
     <string>Add Tab</string>
@@ -80,7 +86,7 @@
   <action name="actionClose_Tab">
    <property name="icon">
     <iconset resource="../../../resources/resources.qrc">
-     <normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</normaloff>:/png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</iconset>
+     <normaloff>:/tabIcons/tabIcons/cross-square-button.png</normaloff>:/tabIcons/tabIcons/cross-square-button.png</iconset>
    </property>
    <property name="text">
     <string>Close Tab</string>
@@ -92,7 +98,7 @@
   <action name="actionLeft_tab">
    <property name="icon">
     <iconset resource="../../../resources/resources.qrc">
-     <normaloff>:/77-773183_left-arrow-comments-instagram-plus-icon-png-transparent-removebg-preview.png</normaloff>:/77-773183_left-arrow-comments-instagram-plus-icon-png-transparent-removebg-preview.png</iconset>
+     <normaloff>:/tabIcons/tabIcons/back-left-arrow-square-button-outline.png</normaloff>:/tabIcons/tabIcons/back-left-arrow-square-button-outline.png</iconset>
    </property>
    <property name="text">
     <string>Left Tab</string>
@@ -104,7 +110,7 @@
   <action name="actionRight_Tab">
    <property name="icon">
     <iconset resource="../../../resources/resources.qrc">
-     <normaloff>:/image.png</normaloff>:/image.png</iconset>
+     <normaloff>:/tabIcons/tabIcons/right-arrow-square-button-symbol.png</normaloff>:/tabIcons/tabIcons/right-arrow-square-button-symbol.png</iconset>
    </property>
    <property name="text">
     <string>Right Tab</string>
@@ -116,13 +122,85 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../../../resources/resources.qrc">
-     <normaloff>:/pngimg.com - exit_PNG42.png</normaloff>:/pngimg.com - exit_PNG42.png</iconset>
+     <normaloff>:/tabIcons/tabIcons/logout.png</normaloff>:/tabIcons/tabIcons/logout.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Esc</string>
+   </property>
+  </action>
+  <action name="actionCreate">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/new-document.png</normaloff>:/fileSystemIcons/fileSystemIcons/new-document.png</iconset>
+   </property>
+   <property name="text">
+    <string>Create</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionRemove">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/bin.png</normaloff>:/fileSystemIcons/fileSystemIcons/bin.png</iconset>
+   </property>
+   <property name="text">
+    <string>Remove</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/copy.png</normaloff>:/fileSystemIcons/fileSystemIcons/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionReplace">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/import-export.png</normaloff>:/fileSystemIcons/fileSystemIcons/import-export.png</iconset>
+   </property>
+   <property name="text">
+    <string>Replace</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionRename">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/rename (1).png</normaloff>:/fileSystemIcons/fileSystemIcons/rename (1).png</iconset>
+   </property>
+   <property name="text">
+    <string>Rename</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="actionSearch">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/search.png</normaloff>:/fileSystemIcons/fileSystemIcons/search.png</iconset>
+   </property>
+   <property name="text">
+    <string>Search</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+F</string>
    </property>
   </action>
  </widget>

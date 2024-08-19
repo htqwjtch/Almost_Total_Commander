@@ -20,14 +20,14 @@ void ReplacingModule::connectSignalsWithSlots()
 
 void ReplacingModule::connectSignalsWithSlotsForCopying()
 {
-    QObject::connect(copyingModule, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
-    QObject::connect(copyingModule, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
+    QObject::connect(copyingModule, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
+    QObject::connect(copyingModule, SIGNAL(copyingFailedSignal(QString)), this, SLOT(copyingFailed(const QString&)));
 }
 
 void ReplacingModule::connectSignalsWithSlotsForRemoving()
 {
-    QObject::connect(removingModule, SIGNAL(removingIsPerformedSignal()), this, SLOT(removingIsPerformed()));
-    QObject::connect(removingModule, SIGNAL(removingIsNotPerformedSignal()), this, SLOT(removingIsNotPerformed()));
+    QObject::connect(removingModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
+    QObject::connect(removingModule, SIGNAL(removingFailedSignal(QString)), this, SLOT(removingFailed(const QString&)));
 }
 
 ReplacingModule::~ReplacingModule()
@@ -36,32 +36,33 @@ ReplacingModule::~ReplacingModule()
     delete copyingModule;
 }
 
+void ReplacingModule::replace(const QString& replacingObjectPath, const QString& destinationDirectoryPath)
+{
+    setReplacingObjectPath(replacingObjectPath);
+    copyingModule->copy(replacingObjectPath, destinationDirectoryPath);
+}
+
 void ReplacingModule::setReplacingObjectPath(const QString& replacingObjectPath)
 {
     this->replacingObjectPath = replacingObjectPath;
 }
 
-void ReplacingModule::replaceIn(const QString& destinationDirectoryPath)
-{
-    copyingModule->copy(replacingObjectPath, destinationDirectoryPath);
-}
-
-void ReplacingModule::copyingIsPerformed()
+void ReplacingModule::copyingCompleted()
 {
     removingModule->remove(replacingObjectPath);
 }
 
-void ReplacingModule::copyingIsNotPerformed()
+void ReplacingModule::copyingFailed(const QString& exceptionInfo)
 {
-    emit replacingIsNotPerformedSignal();
+    emit replacingFailedSignal(exceptionInfo);
 }
 
-void ReplacingModule::removingIsPerformed()
+void ReplacingModule::removingCompleted()
 {
-    emit replacingIsPerformedSignal();
+    emit replacingCompletedSignal();
 }
 
-void ReplacingModule::removingIsNotPerformed()
+void ReplacingModule::removingFailed(const QString& exceptionInfo)
 {
-    emit replacingIsNotPerformedSignal();
+    emit replacingFailedSignal(exceptionInfo);
 }

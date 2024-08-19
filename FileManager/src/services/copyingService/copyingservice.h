@@ -29,8 +29,8 @@ private:
     QString destinationCopyingObjectPath = "";
 
 signals:
-    void copyingIsPerformedSignal();
-    void copyingIsNotPerformedSignal();
+    void copyingCompletedSignal();
+    void copyingFailedSignal(QString);
 };
 
 #endif // COPYINGSERVICE_H

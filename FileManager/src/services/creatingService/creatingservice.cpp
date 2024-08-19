@@ -17,7 +17,7 @@ void CreatingService::createFile()
     QFile file = QFile(namingModule.getPath());
     if (!file.open(QIODevice::ReadWrite))
     {
-	throw ExceptionService("Creating", "The operation was not perfomed!");
+	throw ExceptionService("Creating was not perfomed!");
     }
 }
 
@@ -34,7 +34,7 @@ void CreatingService::isNewElementNameUnique()
     {
 	if (!entry.fileName().compare(namingModule.getName()))
 	{
-	    throw ExceptionService("Creating", "This name already exists in the current directory!");
+	    throw ExceptionService("This name already exists in the current directory!");
 	}
     }
 }
@@ -46,7 +46,7 @@ void CreatingService::createDirectory()
     QDir directory = QDir();
     if (!directory.mkdir(namingModule.getPath()))
     {
-	throw ExceptionService("Creating", "The operation was not perfomed!");
+	throw ExceptionService("Creating was not perfomed!");
     }
 }
 
@@ -56,7 +56,7 @@ void CreatingService::createSymbolLink()
 
     if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(), namingModule.getPath().toLocal8Bit().constData()))
     {
-	throw ExceptionService("Creating", "The operation was not perfomed!");
+	throw ExceptionService("Creating was not perfomed!");
     }
 }
 

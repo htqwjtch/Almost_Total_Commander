@@ -17,7 +17,7 @@ private:
     QStringList search(const QString&, QDir&);
 
 signals:
-    void searchingIsPerformedSignal(QStringList);
+    void searchingCompletedSignal(QStringList);
 };
 
 #endif // SEARCHINGSERVICE_H

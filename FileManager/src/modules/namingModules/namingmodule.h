@@ -1,10 +1,12 @@
 #ifndef NAMINGMODULE_H
 #define NAMINGMODULE_H
 
-#include "../../modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h"
-#include "../../modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h"
+#include "../../services/exceptionService/exceptionservice.h"
+#include "namingNotSymbolLinkModule/namingnotsymbollinkmodule.h"
+#include "namingSymbolLinkModule/namingsymbollinkmodule.h"
 
 #include <QDir>
+#include <QMessageBox>
 
 class NamingModule
 {
@@ -16,6 +18,10 @@ public:
     QString getName();
     QString getPath();
     QString getLinkedPath();
+    void rename(const QString&);
+
+private:
+    void checkName(const QString&);
 
 private:
     NamingNotSymbolLinkModule namingNotSymbolLinkModule;

@@ -1,7 +1,7 @@
 #ifndef MAINMODULE_H
 #define MAINMODULE_H
 
-#include "form/form.h"
+#include "../tabModule/tabmodule.h"
 
 #include <QMainWindow>
 #include <QToolButton>
@@ -34,11 +34,17 @@ private slots:
     void on_actionLeft_tab_triggered();
     void on_actionRight_Tab_triggered();
     void on_actionExit_triggered();
+    void on_actionSearch_triggered();
+    void on_actionCreate_triggered();
+    void on_actionRemove_triggered();
+    void on_actionCopy_triggered();
+    void on_actionReplace_triggered();
+    void on_actionRename_triggered();
 
 private:
     Ui::MainModule* ui;
     QToolButton* addTabButton;
-    Form* tabModule;
+    TabModule* tabModule;
 };
 
 #endif // MAINMODULE_H

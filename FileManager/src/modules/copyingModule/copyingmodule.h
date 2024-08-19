@@ -2,7 +2,9 @@
 #define COPYINGMODULE_H
 
 #include "../../services/copyingService/copyingservice.h"
+#include "../../services/exceptionService/exceptionservice.h"
 
+#include <QMessageBox>
 #include <QObject>
 #include <QThread>
 
@@ -21,8 +23,8 @@ private:
     void setThreadForCopying();
 
 private slots:
-    void copyingIsPerformed();
-    void copyingIsNotPerformed();
+    void copyingCompleted();
+    void copyingFailed(const QString&);
 
 private:
     CopyingService* copyingService;
@@ -30,8 +32,8 @@ private:
 
 signals:
     void startCopyingSignal(QString, QString);
-    void copyingIsPerformedSignal();
-    void copyingIsNotPerformedSignal();
+    void copyingCompletedSignal();
+    void copyingFailedSignal(QString);
 };
 
 #endif // COPYINGMODULE_H

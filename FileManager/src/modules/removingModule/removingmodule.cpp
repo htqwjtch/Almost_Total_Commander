@@ -17,8 +17,8 @@ void RemovingModule::connectSignalsWithSlots()
 {
     QObject::connect(this, SIGNAL(destroyed()), threadForRemoving, SLOT(quit()));
     QObject::connect(this, SIGNAL(startRemovingSignal(QString)), removingService, SLOT(startRemoving(const QString&)));
-    QObject::connect(removingService, SIGNAL(removingIsNotPerformedSignal()), this, SLOT(removingIsNotPerformed()));
-    QObject::connect(removingService, SIGNAL(removingIsPerformedSignal()), this, SLOT(removingIsPerformed()));
+    QObject::connect(removingService, SIGNAL(removingFailedSignal(QString)), this, SLOT(removingFailed(const QString&)));
+    QObject::connect(removingService, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
 }
 
 void RemovingModule::setThreadForRemoving()
@@ -40,12 +40,12 @@ void RemovingModule::remove(const QString& removingObjectPath)
     emit startRemovingSignal(removingObjectPath);
 }
 
-void RemovingModule::removingIsPerformed()
+void RemovingModule::removingCompleted()
 {
-    emit removingIsPerformedSignal();
+    emit removingCompletedSignal();
 }
 
-void RemovingModule::removingIsNotPerformed()
+void RemovingModule::removingFailed(const QString& exceptionInfo)
 {
-    emit removingIsNotPerformedSignal();
+    emit removingFailedSignal(exceptionInfo);
 }

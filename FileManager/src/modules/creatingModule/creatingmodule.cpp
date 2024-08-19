@@ -1,6 +1,6 @@
 #include "creatingmodule.h"
 #include "../../services/exceptionService/exceptionservice.h"
-#include "ui_creationmodule.h"
+#include "ui_creatingmodule.h"
 
 #include <unistd.h>
 
@@ -14,14 +14,29 @@ void CreatingModule::setUserInterface()
 {
     ui->setupUi(this);
     setWindowTitle("Creating");
-    setButtonsInvisible();
+    setButtonsStyleSheets();
 }
 
-void CreatingModule::setButtonsInvisible()
+void CreatingModule::setButtonsStyleSheets()
 {
-    ui->fileCreationButton->setStyleSheet("background-color: rgba(255, 255, 255, 0); border: none;");
-    ui->directoryCreationButton->setStyleSheet("background-color: rgba(255, 255, 255, 0); border: none;");
-    ui->symbolLinkCreationButton->setStyleSheet("background-color: rgba(255, 255, 255, 0); border: none;");
+    ui->fileCreationButton->setStyleSheet("QPushButton {"
+					  "    border: none;"
+					  "}"
+					  "QPushButton:hover {"
+					  "    border: 1px ridge grey;"
+					  "}");
+    ui->directoryCreationButton->setStyleSheet("QPushButton {"
+					       "    border: none;"
+					       "}"
+					       "QPushButton:hover {"
+					       "    border: 1px ridge grey;"
+					       "}");
+    ui->symbolLinkCreationButton->setStyleSheet("QPushButton {"
+						"    border: none;"
+						"}"
+						"QPushButton:hover {"
+						"    border: 1px ridge grey;"
+						"}");
 }
 
 CreatingModule::~CreatingModule()
@@ -38,7 +53,7 @@ void CreatingModule::on_fileCreationButton_clicked()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, exceptionService.getTitle(), exceptionService.getInfo());
+	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
     accept();
 }
@@ -51,7 +66,7 @@ void CreatingModule::on_directoryCreationButton_clicked()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, exceptionService.getTitle(), exceptionService.getInfo());
+	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
     accept();
 }
@@ -64,7 +79,7 @@ void CreatingModule::on_symbolLinkCreationButton_clicked()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, exceptionService.getTitle(), exceptionService.getInfo());
+	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
     accept();
 }

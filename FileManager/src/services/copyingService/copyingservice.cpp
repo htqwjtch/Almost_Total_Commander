@@ -9,7 +9,7 @@ void CopyingService::startCopying(const QString& sourceCopyingObjectPath, const 
     setDestinationCopyingObjectPath(destinationDirectoryPath + QDir::separator() + copyingObjectInfo.fileName());
     copyIn(destinationDirectoryPath);
 
-    emit copyingIsPerformedSignal();
+    emit copyingCompletedSignal();
 }
 
 void CopyingService::setSourceCopyingObjectPath(const QString& sourceCopyingObjectPath)
@@ -32,7 +32,7 @@ void CopyingService::copyIn(const QString& destinationDirectoryPath)
     }
     else if (!QFile::copy(sourceCopyingObjectPath, destinationCopyingObjectPath))
     {
-	emit copyingIsNotPerformedSignal();
+	emit copyingFailedSignal("Copying failed!");
     }
 }
 
@@ -65,8 +65,7 @@ void CopyingService::createCopyingDirectoryInDestinationDirectory(const QString&
 {
     if (!destinationDirectory.mkdir(destinationCopyingDirectoryPath))
     {
-	emit copyingIsNotPerformedSignal();
-	return;
+	emit copyingFailedSignal("Copying failed!");
     }
 }
 
@@ -78,7 +77,7 @@ void CopyingService::copyDirectoryObjects(QFileInfoList& copyingDirectoryObjects
 	{
 	    if (!QFile::copy(entry.absoluteFilePath(), QString(destinationCopyingDirectoryPath + QDir::separator() + entry.fileName())))
 	    {
-		emit copyingIsNotPerformedSignal();
+		emit copyingFailedSignal("Copying failed!");
 		break;
 	    }
 	}

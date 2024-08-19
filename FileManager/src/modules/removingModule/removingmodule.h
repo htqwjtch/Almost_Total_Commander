@@ -21,8 +21,8 @@ private:
     void setThreadForRemoving();
 
 private slots:
-    void removingIsPerformed();
-    void removingIsNotPerformed();
+    void removingCompleted();
+    void removingFailed(const QString&);
 
 private:
     RemovingService* removingService;
@@ -30,8 +30,8 @@ private:
 
 signals:
     void startRemovingSignal(QString);
-    void removingIsPerformedSignal();
-    void removingIsNotPerformedSignal();
+    void removingCompletedSignal();
+    void removingFailedSignal(QString);
 };
 
 #endif // REMOVINGMODULE_H

@@ -12,10 +12,10 @@ void RemovingService::startRemoving(const QString& removingObjectPath)
     }
     else if (!QFile::remove(removingObjectPath))
     {
-	emit removingIsNotPerformedSignal();
+	emit removingFailedSignal("Removing failed!");
     }
 
-    emit removingIsPerformedSignal();
+    emit removingCompletedSignal();
 }
 
 void RemovingService::removeDirectory(const QString& removingDirectoryPath)
@@ -27,7 +27,7 @@ void RemovingService::removeDirectory(const QString& removingDirectoryPath)
     }
     if (!removingDirectory.rmdir(removingDirectoryPath))
     {
-	emit removingIsNotPerformedSignal();
+	emit removingFailedSignal("Removing failed!");
     }
 }
 
@@ -42,7 +42,7 @@ void RemovingService::removeDirectoryObjectsFrom(QDir& removingDirectory)
 	    removingDirectory.cdUp();
 	    if (!removingDirectory.rmdir(entry.absoluteFilePath()))
 	    {
-		emit removingIsNotPerformedSignal();
+		emit removingFailedSignal("Removing failed!");
 		break;
 	    }
 	}
@@ -50,7 +50,7 @@ void RemovingService::removeDirectoryObjectsFrom(QDir& removingDirectory)
 	{
 	    if (!QFile::remove(entry.absoluteFilePath()))
 	    {
-		emit removingIsNotPerformedSignal();
+		emit removingFailedSignal("Removing failed!");
 		break;
 	    }
 	}

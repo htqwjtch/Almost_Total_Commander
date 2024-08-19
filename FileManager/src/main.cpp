@@ -1,4 +1,4 @@
-#include "src/modules/mainModule/mainmodule.h"
+#include "modules/mainModule/mainmodule.h"
 #include <QApplication>
 
 int main(int argc, char* argv[])

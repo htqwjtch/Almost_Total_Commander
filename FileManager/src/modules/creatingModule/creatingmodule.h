@@ -21,7 +21,7 @@ public:
 
 private:
     void setUserInterface();
-    void setButtonsInvisible();
+    void setButtonsStyleSheets();
 
 private slots:
     void on_fileCreationButton_clicked();

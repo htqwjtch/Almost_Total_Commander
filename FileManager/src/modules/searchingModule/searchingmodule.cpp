@@ -26,7 +26,7 @@ void SearchingModule::connectSignalsWithSlots()
 {
     QObject::connect(this, SIGNAL(destroyed()), threadForSearching, SLOT(quit()));
     QObject::connect(this, SIGNAL(startSearchingSignal(QString, QString)), searchingService, SLOT(startSearching(const QString&, const QString&)));
-    QObject::connect(searchingService, SIGNAL(searchingIsPerformedSignal(QStringList)), this, SLOT(fillSearchingResultWidget(QStringList)));
+    QObject::connect(searchingService, SIGNAL(searchingCompletedSignal(QStringList)), this, SLOT(fillSearchingResultWidget(QStringList)));
 }
 
 void SearchingModule::setThreadForSearching()
@@ -59,7 +59,7 @@ void SearchingModule::fillSearchingResultWidget(QStringList searchingResult)
     {
 	ui->searchingResultWidget->addItems(searchingResult);
     }
-    emit searchingIsPerformedSignal();
+    emit searchingCompletedSignal();
 }
 
 void SearchingModule::on_searchingResultWidget_itemClicked(QListWidgetItem* item)

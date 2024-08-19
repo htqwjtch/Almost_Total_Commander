@@ -20,8 +20,8 @@ private:
     void removeDirectoryObjectsFrom(QDir&);
 
 signals:
-    void removingIsPerformedSignal();
-    void removingIsNotPerformedSignal();
+    void removingCompletedSignal();
+    void removingFailedSignal(QString);
 };
 
 #endif // REMOVINGSERVICE_H

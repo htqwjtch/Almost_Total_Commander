@@ -1,20 +1,23 @@
 <RCC>
     <qresource prefix="/">
-        <file>77-773183_left-arrow-comments-instagram-plus-icon-png-transparent-removebg-preview.png</file>
-        <file>1827319.png</file>
-        <file>2044254-200.png</file>
-        <file>5261910.png</file>
-        <file>image.png</file>
-        <file>kisspng-computer-icons-search-icon-5b30c8ad36d571.3385379615299237572246-removebg-preview.png</file>
-        <file>png-clipart-computer-icons-file-explorer-internet-explorer-internet-explorer-blue-angle__2_-removebg-preview (1).png</file>
-        <file>pngegg.png</file>
-        <file>pngimg.com - exit_PNG42.png</file>
-        <file>png-transparent-cancel-delete-remove-close-cross-circle-ink-alert-icon-removebg-preview.png</file>
-        <file>png-transparent-creative-commons-license-copyright-symbol-attribution-copyright-trademark-words-phrases-wikimedia-commons-thumbnail-removebg-preview.png</file>
-        <file>png-transparent-paper-computer-icons-cut-copy-and-paste-symbol-user-interface-symbol-miscellaneous-angle-text-thumbnail-removebg-preview.png</file>
         <file>resources.qrc</file>
-        <file>document.png</file>
-        <file>folder.png</file>
-        <file>link.png</file>
+    </qresource>
+    <qresource prefix="/tabIcons">
+        <file>tabIcons/add-square-outlined-interface-button.png</file>
+        <file>tabIcons/back-left-arrow-square-button-outline.png</file>
+        <file>tabIcons/cross-square-button.png</file>
+        <file>tabIcons/logout.png</file>
+        <file>tabIcons/right-arrow-square-button-symbol.png</file>
+    </qresource>
+    <qresource prefix="/fileSystemIcons">
+        <file>fileSystemIcons/bin.png</file>
+        <file>fileSystemIcons/copy.png</file>
+        <file>fileSystemIcons/document.png</file>
+        <file>fileSystemIcons/file.png</file>
+        <file>fileSystemIcons/folder.png</file>
+        <file>fileSystemIcons/rename (1).png</file>
+        <file>fileSystemIcons/new-document.png</file>
+        <file>fileSystemIcons/import-export.png</file>
+        <file>fileSystemIcons/search.png</file>
     </qresource>
 </RCC>

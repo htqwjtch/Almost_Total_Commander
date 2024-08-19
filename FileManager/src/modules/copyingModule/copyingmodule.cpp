@@ -17,8 +17,8 @@ void CopyingModule::connectSignalsWithSlots()
 {
     QObject::connect(this, SIGNAL(destroyed()), threadForCopying, SLOT(quit()));
     QObject::connect(this, SIGNAL(startCopyingSignal(QString, QString)), copyingService, SLOT(startCopying(const QString&, const QString&)));
-    QObject::connect(copyingService, SIGNAL(copyingIsNotPerformedSignal()), this, SLOT(copyingIsNotPerformed()));
-    QObject::connect(copyingService, SIGNAL(copyingIsPerformedSignal()), this, SLOT(copyingIsPerformed()));
+    QObject::connect(copyingService, SIGNAL(copyingFailedSignal(QString)), this, SLOT(copyingFailed(const QString&)));
+    QObject::connect(copyingService, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
 }
 
 void CopyingModule::setThreadForCopying()
@@ -37,15 +37,31 @@ CopyingModule::~CopyingModule()
 
 void CopyingModule::copy(const QString& copyingObjectPath, const QString& destinationDirectoryPath)
 {
-    emit startCopyingSignal(copyingObjectPath, destinationDirectoryPath);
+    try
+    {
+	QFileInfo copyingObjectInfo = QFileInfo(copyingObjectPath);
+	QDir destinationDirectory = QDir(destinationDirectoryPath);
+	foreach (QFileInfo entry, destinationDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+	{
+	    if (entry.fileName() == copyingObjectInfo.fileName())
+	    {
+		throw ExceptionService("A file or a directory with this name exists!");
+	    }
+	}
+	emit startCopyingSignal(copyingObjectPath, destinationDirectoryPath);
+    }
+    catch (ExceptionService exceptionService)
+    {
+	emit copyingFailedSignal(exceptionService.getInfo());
+    }
 }
 
-void CopyingModule::copyingIsPerformed()
+void CopyingModule::copyingCompleted()
 {
-    emit copyingIsPerformedSignal();
+    emit copyingCompletedSignal();
 }
 
-void CopyingModule::copyingIsNotPerformed()
+void CopyingModule::copyingFailed(const QString& exceptionInfo)
 {
-    emit copyingIsNotPerformedSignal();
+    emit copyingFailedSignal(exceptionInfo);
 }

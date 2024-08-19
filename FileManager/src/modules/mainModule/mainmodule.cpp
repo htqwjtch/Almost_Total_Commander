@@ -49,7 +49,7 @@ void MainModule::on_actionAdd_Tab_triggered()
 
 void MainModule::addTab()
 {
-    tabModule = new Form(this);
+    tabModule = new TabModule(this);
     QString tabName = "Tab " + QString::number(ui->tabWidget->count());
     ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tabModule, tabName);
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 2);
@@ -85,4 +85,34 @@ void MainModule::on_actionRight_Tab_triggered()
 void MainModule::on_actionExit_triggered()
 {
     this->close();
+}
+
+void MainModule::on_actionSearch_triggered()
+{
+    tabModule->execute("Search");
+}
+
+void MainModule::on_actionCreate_triggered()
+{
+    tabModule->execute("Create");
+}
+
+void MainModule::on_actionRemove_triggered()
+{
+    tabModule->execute("Remove");
+}
+
+void MainModule::on_actionCopy_triggered()
+{
+    tabModule->execute("Copy");
+}
+
+void MainModule::on_actionReplace_triggered()
+{
+    tabModule->execute("Replace");
+}
+
+void MainModule::on_actionRename_triggered()
+{
+    tabModule->execute("Rename");
 }
