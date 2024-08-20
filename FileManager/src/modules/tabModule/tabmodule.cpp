@@ -71,6 +71,7 @@ void TabModule::setToolTipsForButtons()
     ui->copyingButton->setToolTip("Copy");
     ui->replacingButton->setToolTip("Replace");
     ui->renamingButton->setToolTip("Rename");
+    ui->showHiddenButton->setToolTip("Show hidden files");
 }
 
 void TabModule::setButtonsStyleSheets()
@@ -105,6 +106,12 @@ void TabModule::setButtonsStyleSheets()
 				      "QPushButton:hover {"
 				      "    border: 1px ridge grey;"
 				      "}");
+    ui->showHiddenButton->setStyleSheet("QPushButton {"
+					"    border: none;"
+					"}"
+					"QPushButton:hover {"
+					"    border: 1px ridge grey;"
+					"}");
 }
 
 void TabModule::connectSignalsWithSlots()
@@ -627,6 +634,23 @@ void TabModule::on_renamingButton_clicked()
     }
     setClickedDirectoryPath("");
     setClickedFilePath("");
+}
+
+void TabModule::on_showHiddenButton_clicked()
+{
+    static bool showHidden = false;
+    if (showHidden)
+    {
+	fileSystemModel->setFilter(QDir::QDir::AllEntries);
+	ui->showHiddenButton->setToolTip("Show hidden files");
+	showHidden = false;
+    }
+    else
+    {
+	fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::Hidden);
+	ui->showHiddenButton->setToolTip("Don't show hidden files");
+	showHidden = true;
+    }
 }
 
 void TabModule::copyingFailed(const QString& exceptionInfo)

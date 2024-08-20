@@ -86,6 +86,7 @@ private slots:
     void on_copyingButton_clicked();
     void on_replacingButton_clicked();
     void on_renamingButton_clicked();
+    void on_showHiddenButton_clicked();
 
     void copyingFailed(const QString&);
     void copyingCompleted();

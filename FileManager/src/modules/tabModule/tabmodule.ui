@@ -16,21 +16,8 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="buttonGridLayout">
-     <item row="0" column="5">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QPushButton" name="creatingButton">
+     <item row="0" column="4">
+      <widget class="QPushButton" name="renamingButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -43,18 +30,12 @@
          <height>42</height>
         </size>
        </property>
-       <property name="mouseTracking">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string/>
-       </property>
        <property name="text">
         <string/>
        </property>
        <property name="icon">
         <iconset resource="../../../resources/resources.qrc">
-         <normaloff>:/fileSystemIcons/fileSystemIcons/new-document.png</normaloff>:/fileSystemIcons/fileSystemIcons/new-document.png</iconset>
+         <normaloff>:/fileSystemIcons/fileSystemIcons/rename (1).png</normaloff>:/fileSystemIcons/fileSystemIcons/rename (1).png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -63,6 +44,19 @@
         </size>
        </property>
       </widget>
+     </item>
+     <item row="0" column="5">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item row="0" column="3">
       <widget class="QPushButton" name="replacingButton">
@@ -84,35 +78,6 @@
        <property name="icon">
         <iconset resource="../../../resources/resources.qrc">
          <normaloff>:/fileSystemIcons/fileSystemIcons/import-export.png</normaloff>:/fileSystemIcons/fileSystemIcons/import-export.png</iconset>
-       </property>
-       <property name="iconSize">
-        <size>
-         <width>36</width>
-         <height>36</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QPushButton" name="renamingButton">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="minimumSize">
-        <size>
-         <width>42</width>
-         <height>42</height>
-        </size>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../../resources/resources.qrc">
-         <normaloff>:/fileSystemIcons/fileSystemIcons/rename (1).png</normaloff>:/fileSystemIcons/fileSystemIcons/rename (1).png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -171,6 +136,70 @@
        <property name="icon">
         <iconset resource="../../../resources/resources.qrc">
          <normaloff>:/fileSystemIcons/fileSystemIcons/bin.png</normaloff>:/fileSystemIcons/fileSystemIcons/bin.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>36</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QPushButton" name="creatingButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>42</width>
+         <height>42</height>
+        </size>
+       </property>
+       <property name="mouseTracking">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../resources/resources.qrc">
+         <normaloff>:/fileSystemIcons/fileSystemIcons/new-document.png</normaloff>:/fileSystemIcons/fileSystemIcons/new-document.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>36</width>
+         <height>36</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QPushButton" name="showHiddenButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>42</width>
+         <height>42</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../resources/resources.qrc">
+         <normaloff>:/fileSystemIcons/fileSystemIcons/hidden.png</normaloff>:/fileSystemIcons/fileSystemIcons/hidden.png</iconset>
        </property>
        <property name="iconSize">
         <size>
@@ -253,6 +282,18 @@
     <layout class="QGridLayout" name="searchingGridLayout">
      <item row="0" column="1">
       <widget class="QPushButton" name="searchingButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>80</width>
+         <height>26</height>
+        </size>
+       </property>
        <property name="text">
         <string>Search</string>
        </property>

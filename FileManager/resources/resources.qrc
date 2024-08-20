@@ -19,5 +19,7 @@
         <file>fileSystemIcons/new-document.png</file>
         <file>fileSystemIcons/import-export.png</file>
         <file>fileSystemIcons/search.png</file>
+        <file>fileSystemIcons/hidden.png</file>
+        <file>fileSystemIcons/hide.png</file>
     </qresource>
 </RCC>
