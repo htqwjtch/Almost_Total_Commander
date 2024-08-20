@@ -6,7 +6,6 @@
 class CreatingService
 {
 public:
-    CreatingService() = default;
     CreatingService(QDir&);
     void createFile();
     void createDirectory();
@@ -14,10 +13,9 @@ public:
 
 private:
     void createNameAndPathForNotSymbolLink();
-    void isNewElementNameUnique();
     void createNameAndPathesForSymbolLink();
 
-public:
+private:
     QDir currentDirectory;
     NamingModule namingModule;
 };

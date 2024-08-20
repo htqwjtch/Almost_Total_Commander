@@ -3,11 +3,6 @@
 
 #include <QDebug>
 
-ll Bytes::KB = 1024;
-ll Bytes::MB = 1048576;
-ll Bytes::GB = 1073741824;
-ll Bytes::TB = 1099511627776;
-
 TabModule::TabModule(QWidget* parent) : QDialog(parent), ui(new Ui::TabModule)
 {
     setFileSystemModel();
@@ -22,6 +17,7 @@ void TabModule::setFileSystemModel()
 {
     fileSystemModel = new QFileSystemModel(this);
     fileSystemModel->setFilter(QDir::QDir::AllEntries);
+
     fileSystemModel->setRootPath("/");
 }
 
@@ -270,29 +266,29 @@ void TabModule::setTypeLabelForFile(QFileInfo& fileInfo)
 void TabModule::setSizeLabelForFile(QFileInfo& fileInfo)
 {
     QString size = "";
-    if (fileInfo.size() < Bytes::KB)
+    if (fileInfo.size() < KB)
     {
 	size.append(QString::number(fileInfo.size())).append(" B");
     }
-    else if (fileInfo.size() >= Bytes::KB && fileInfo.size() < Bytes::MB)
+    else if (fileInfo.size() >= KB && fileInfo.size() < MB)
     {
-	double d = fileInfo.size() / double(Bytes::KB);
-	size.append(QString::number(d)).append(" KB");
+	double sizeInKB = fileInfo.size() / double(KB);
+	size.append(QString::number(sizeInKB)).append(" KB");
     }
-    else if (fileInfo.size() >= Bytes::MB && fileInfo.size() < Bytes::GB)
+    else if (fileInfo.size() >= MB && fileInfo.size() < GB)
     {
-	double d = fileInfo.size() / double(Bytes::MB);
-	size.append(QString::number(d)).append(" MB");
+	double sizeInMB = fileInfo.size() / double(MB);
+	size.append(QString::number(sizeInMB)).append(" MB");
     }
-    else if (fileInfo.size() >= Bytes::GB && fileInfo.size() < Bytes::TB)
+    else if (fileInfo.size() >= GB && fileInfo.size() < TB)
     {
-	double d = fileInfo.size() / double(Bytes::GB);
-	size.append(QString::number(d)).append(" GB");
+	double sizeInGB = fileInfo.size() / double(GB);
+	size.append(QString::number(sizeInGB)).append(" GB");
     }
-    else if (fileInfo.size() >= Bytes::TB)
+    else if (fileInfo.size() >= TB)
     {
-	double d = fileInfo.size() / double(Bytes::TB);
-	size.append(QString::number(d)).append(" TB");
+	double sizeInTB = fileInfo.size() / double(TB);
+	size.append(QString::number(sizeInTB)).append(" TB");
     }
     ui->sizeLabel->setText(size);
 }

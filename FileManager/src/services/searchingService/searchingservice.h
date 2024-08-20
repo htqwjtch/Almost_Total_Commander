@@ -7,6 +7,7 @@
 class SearchingService : public QObject
 {
     Q_OBJECT
+
 public:
     explicit SearchingService(QObject* parent = nullptr);
 

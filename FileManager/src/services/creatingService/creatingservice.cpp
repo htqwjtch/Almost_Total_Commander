@@ -17,7 +17,7 @@ void CreatingService::createFile()
     QFile file = QFile(namingModule.getPath());
     if (!file.open(QIODevice::ReadWrite))
     {
-	throw ExceptionService("Creating was not perfomed!");
+	throw ExceptionService("Creating failed!");
     }
 }
 
@@ -25,18 +25,6 @@ void CreatingService::createNameAndPathForNotSymbolLink()
 {
     namingModule.setCurrentDirectory(currentDirectory);
     namingModule.setNameAndPathForNotSymbolLink();
-    isNewElementNameUnique();
-}
-
-void CreatingService::isNewElementNameUnique()
-{
-    foreach (QFileInfo entry, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-    {
-	if (!entry.fileName().compare(namingModule.getName()))
-	{
-	    throw ExceptionService("This name already exists in the current directory!");
-	}
-    }
 }
 
 void CreatingService::createDirectory()
@@ -46,7 +34,7 @@ void CreatingService::createDirectory()
     QDir directory = QDir();
     if (!directory.mkdir(namingModule.getPath()))
     {
-	throw ExceptionService("Creating was not perfomed!");
+	throw ExceptionService("Creating failed!");
     }
 }
 
@@ -56,7 +44,7 @@ void CreatingService::createSymbolLink()
 
     if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(), namingModule.getPath().toLocal8Bit().constData()))
     {
-	throw ExceptionService("Creating was not perfomed!");
+	throw ExceptionService("Creating failed!");
     }
 }
 
@@ -64,5 +52,4 @@ void CreatingService::createNameAndPathesForSymbolLink()
 {
     namingModule.setCurrentDirectory(currentDirectory);
     namingModule.setNameAndPathesForSymbolLink();
-    isNewElementNameUnique();
 }

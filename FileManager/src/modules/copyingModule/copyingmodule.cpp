@@ -39,20 +39,24 @@ void CopyingModule::copy(const QString& copyingObjectPath, const QString& destin
 {
     try
     {
-	QFileInfo copyingObjectInfo = QFileInfo(copyingObjectPath);
-	QDir destinationDirectory = QDir(destinationDirectoryPath);
-	foreach (QFileInfo entry, destinationDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
-	{
-	    if (entry.fileName() == copyingObjectInfo.fileName())
-	    {
-		throw ExceptionService("A file or a directory with this name exists!");
-	    }
-	}
+	checkName(copyingObjectPath, destinationDirectoryPath);
 	emit startCopyingSignal(copyingObjectPath, destinationDirectoryPath);
     }
     catch (ExceptionService exceptionService)
     {
 	emit copyingFailedSignal(exceptionService.getInfo());
+    }
+}
+void CopyingModule::checkName(const QString& copyingObjectPath, const QString& destinationDirectoryPath)
+{
+    QFileInfo copyingObjectInfo = QFileInfo(copyingObjectPath);
+    QDir destinationDirectory = QDir(destinationDirectoryPath);
+    foreach (QFileInfo entry, destinationDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    {
+	if (entry.fileName() == copyingObjectInfo.fileName())
+	{
+	    throw ExceptionService("This name already exists in the current directory!");
+	}
     }
 }
 
