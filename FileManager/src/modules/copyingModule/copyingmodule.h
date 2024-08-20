@@ -21,6 +21,7 @@ private:
     void allocateMemory();
     void connectSignalsWithSlots();
     void setThreadForCopying();
+    void checkName(const QString&, const QString&);
 
 private slots:
     void copyingCompleted();

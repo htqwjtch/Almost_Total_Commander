@@ -5,12 +5,12 @@
 
 class ExceptionService
 {
-    QString exceptionInfo = "Something went wrong";
-
 public:
-    ExceptionService() = default;
     ExceptionService(QString exceptionInfo);
     const QString getInfo() const noexcept;
+
+private:
+    QString exceptionInfo = "Something went wrong";
 };
 
 #endif // EXCEPTIONSERVICE_H

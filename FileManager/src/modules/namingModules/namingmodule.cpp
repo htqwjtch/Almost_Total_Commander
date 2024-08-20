@@ -28,7 +28,7 @@ void NamingModule::checkName(const QString& name)
     {
 	if (entry.fileName() == name)
 	{
-	    throw ExceptionService("A file or a directory with this name exists!");
+	    throw ExceptionService("This name already exists in the current directory!");
 	}
     }
 }
@@ -66,24 +66,31 @@ QString NamingModule::getLinkedPath()
 
 void NamingModule::rename(const QString& renamingObjectPath)
 {
-    setNameAndPathForNotSymbolLink();
-    QFileInfo renamingFileInfo = QFileInfo(renamingObjectPath);
-    if (!name.isEmpty())
+    try
     {
-	if (renamingFileInfo.isDir())
+	setNameAndPathForNotSymbolLink();
+	QFileInfo renamingFileInfo = QFileInfo(renamingObjectPath);
+	if (!name.isEmpty())
 	{
-	    if (!currentDirectory.rename(renamingObjectPath, path))
+	    if (renamingFileInfo.isDir())
+	    {
+		if (!currentDirectory.rename(renamingObjectPath, path))
+		{
+		    throw ExceptionService("Renaming failed!");
+		}
+	    }
+	    else if (!QFile::rename(renamingObjectPath, path))
 	    {
 		throw ExceptionService("Renaming failed!");
 	    }
 	}
-	else if (!QFile::rename(renamingObjectPath, path))
+	else
 	{
-	    throw ExceptionService("Renaming failed!");
+	    throw ExceptionService("Name is empty!");
 	}
     }
-    else
+    catch (ExceptionService exceptionService)
     {
-	throw ExceptionService("Name is empty!");
+	QMessageBox::warning((QWidget*)this, "", exceptionService.getInfo());
     }
 }

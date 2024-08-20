@@ -13,7 +13,6 @@ void SearchingModule::setUserInterface()
 {
     ui->setupUi(this);
     setWindowTitle("Searching");
-    //ui->infoLabel->clear();
 }
 
 void SearchingModule::allocateMemory()
@@ -64,8 +63,8 @@ void SearchingModule::fillSearchingResultWidget(QStringList searchingResult)
 
 void SearchingModule::on_searchingResultWidget_itemClicked(QListWidgetItem* item)
 {
-    QClipboard* pcb = QApplication::clipboard(); //создание объекта для взаимодействия с буфером обмена
-    pcb->setText(item->text(), QClipboard::Clipboard); //копирование выбранного текста в буфер обмена
+    QClipboard* clipboard = QApplication::clipboard(); //создание объекта для взаимодействия с буфером обмена
+    clipboard->setText(item->text(), QClipboard::Clipboard); //копирование выбранного текста в буфер обмена
     ui->infoLabel->setText("Copied to the clipboard");
 }
 

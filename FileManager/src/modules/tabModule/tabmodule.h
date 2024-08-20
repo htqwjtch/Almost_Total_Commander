@@ -2,6 +2,7 @@
 #define TABMODULE_H
 
 #include "../../services/exceptionService/exceptionservice.h"
+#include "../../services/tabService/tabservice.h"
 #include "../copyingModule/copyingmodule.h"
 #include "../creatingModule/creatingmodule.h"
 #include "../namingModules/namingmodule.h"
@@ -18,16 +19,6 @@
 #include <QString>
 #include <QUrl>
 #include <QWidget>
-
-typedef long long ll;
-
-struct Bytes
-{
-    static ll KB;
-    static ll MB;
-    static ll GB;
-    static ll TB;
-};
 
 namespace Ui
 {
