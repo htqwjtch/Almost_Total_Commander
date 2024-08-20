@@ -73,17 +73,17 @@ void CopyingService::copyDirectoryObjects(QFileInfoList& copyingDirectoryObjects
 {
     foreach (QFileInfo entry, copyingDirectoryObjects)
     {
-	if (entry.isFile() || entry.isSymLink())
+	if (entry.isDir())
+	{
+	    copyDirectory(entry.absoluteFilePath(), destinationCopyingDirectoryPath);
+	}
+	else if (entry.isFile() || entry.isSymLink())
 	{
 	    if (!QFile::copy(entry.absoluteFilePath(), QString(destinationCopyingDirectoryPath + QDir::separator() + entry.fileName())))
 	    {
 		emit copyingFailedSignal("Copying failed!");
 		break;
 	    }
-	}
-	else if (entry.isDir())
-	{
-	    copyDirectory(entry.absoluteFilePath(), destinationCopyingDirectoryPath);
 	}
     }
 }
