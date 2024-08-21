@@ -65,6 +65,7 @@
     <addaction name="actionCopy"/>
     <addaction name="actionReplace"/>
     <addaction name="actionRename"/>
+    <addaction name="actionShow_Hidden"/>
     <addaction name="actionSearch"/>
     <addaction name="actionExit"/>
    </widget>
@@ -201,6 +202,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F</string>
+   </property>
+  </action>
+  <action name="actionShow_Hidden">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/hidden.png</normaloff>:/fileSystemIcons/fileSystemIcons/hidden.png</iconset>
+   </property>
+   <property name="text">
+    <string>Show Hidden</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+H</string>
    </property>
   </action>
  </widget>

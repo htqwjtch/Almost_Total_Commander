@@ -35,27 +35,27 @@ CopyingModule::~CopyingModule()
     delete copyingService;
 }
 
-void CopyingModule::copy(const QString& copyingObjectPath, const QString& destinationDirectoryPath)
+void CopyingModule::copy(const QString& copyingObjectPath, const QString& destinationFolderPath)
 {
     try
     {
-	checkName(copyingObjectPath, destinationDirectoryPath);
-	emit startCopyingSignal(copyingObjectPath, destinationDirectoryPath);
+	checkName(copyingObjectPath, destinationFolderPath);
+	emit startCopyingSignal(copyingObjectPath, destinationFolderPath);
     }
     catch (ExceptionService exceptionService)
     {
 	emit copyingFailedSignal(exceptionService.getInfo());
     }
 }
-void CopyingModule::checkName(const QString& copyingObjectPath, const QString& destinationDirectoryPath)
+void CopyingModule::checkName(const QString& copyingObjectPath, const QString& destinationFolderPath)
 {
     QFileInfo copyingObjectInfo = QFileInfo(copyingObjectPath);
-    QDir destinationDirectory = QDir(destinationDirectoryPath);
-    foreach (QFileInfo entry, destinationDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    QDir destinationFolder = QDir(destinationFolderPath);
+    foreach (QFileInfo entry, destinationFolder.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
     {
 	if (entry.fileName() == copyingObjectInfo.fileName())
 	{
-	    throw ExceptionService("This name already exists in the current directory!");
+	    throw ExceptionService("This name already exists in the current folder!");
 	}
     }
 }

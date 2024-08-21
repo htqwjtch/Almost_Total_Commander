@@ -2,7 +2,6 @@
 #define TABMODULE_H
 
 #include "../../services/exceptionService/exceptionservice.h"
-#include "../../services/tabService/tabservice.h"
 #include "../copyingModule/copyingmodule.h"
 #include "../creatingModule/creatingmodule.h"
 #include "../namingModules/namingmodule.h"
@@ -36,49 +35,41 @@ public:
     void execute(const QString&);
 
 private:
-    void setFileSystemModel();
-    void setSortFilterModel();
-    void setUserInterface();
-    void setTableViewsModels();
-    void setTableViews();
     void setTableViewsDirectories();
-    void setTableViewsDirectoriesAsHomeDirectories();
-    void setTableViewsRootIndexes();
-    void setLineEditsTexts();
-    void setSortingButton();
-    void setToolTipsForButtons();
-    void setButtonsStyleSheets();
-    void connectSignalsWithSlots();
-    void connectTableViewsSignalsWithSlots();
-    void connectLineEditsSignalsWithSlots();
     void setCurrenTableView(QTableView*);
+
     void setCurrentFileInfo(QFileInfo);
-    bool isDot(QFileInfo&);
-    bool isDotDot(QFileInfo&);
-    void setLabelGridLayoutForDirectory(QFileInfo&);
-    void setLastModeDateLabel(QFileInfo&);
-    void setTypeLabelForDirectory();
-    void setSizeLabelForDirectory(QFileInfo&);
-    void setLabelGridLayoutForFile(QFileInfo&);
-    void setTypeLabelForFile(QFileInfo&);
-    void setSizeLabelForFile(QFileInfo&);
-    void setClickedFilePath(const QString&);
-    void setClickedDirectoryPath(const QString&);
-    void openFile();
-    void openDirectory(const QString&);
-    void openDot();
+    void setClickedFolderPath(const QString&);
     void openDotDot();
+    void openFolder(const QString&);
     void setCurrentLineEdit(QLineEdit*);
+    void resetLabelGridLayout();
+
+    void setLabelGridLayoutForFolder();
+    void setTypeLabel();
+    void setSizeLabelForFolder();
+    void setLastModeDateLabel();
+    void setLabelGridLayoutForFile();
+    void setSizeLabelForFile();
+    void setClickedFilePath(const QString&);
+
+    void selectFolder(QFileInfo&);
     void selectFile(QFileInfo&);
-    void selectDirectory(QFileInfo&);
-    void checkCurrentDirectory();
-    void setCurrentDirectory(QDir&);
+
+    void checkCurrentFolder();
+    void setCurrentFolder(QDir&);
     void setSearchingModule();
+
+    void checkClickedObjectsPathes();
     void setRemovingModule();
+
     void setCopyingModule();
+
     void setReplacingModule();
 
 private slots:
+    void on_leftAboveButton_clicked();
+    void on_rightAboveButton_clicked();
     void on_leftTableView_clicked(const QModelIndex& index);
     void on_leftTableView_doubleClicked(const QModelIndex& index);
     void on_leftLineEdit_textEdited(const QString& arg1);
@@ -106,9 +97,9 @@ private:
     QFileSystemModel* fileSystemModel;
     QSortFilterProxyModel* sortFilterModel;
 
-    QDir leftTableViewDirectory;
-    QDir rightTableViewDirectory;
-    QDir currentDirectory;
+    QDir leftTableViewFolder;
+    QDir rightTableViewFolder;
+    QDir currentFolder;
 
     QFileInfo currentFileInfo;
 
@@ -121,7 +112,7 @@ private:
     SearchingModule* searchingModule;
 
     QString clickedFilePath = "";
-    QString clickedDirectoryPath = "";
+    QString clickedFolderPath = "";
 
     QString searchingName = "";
 };

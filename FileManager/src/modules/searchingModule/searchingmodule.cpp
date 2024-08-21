@@ -43,9 +43,9 @@ SearchingModule::~SearchingModule()
     delete ui;
 }
 
-void SearchingModule::search(const QString& searchingName, const QString& currentDirectoryPath)
+void SearchingModule::search(const QString& searchingName, const QString& currentFolderPath)
 {
-    emit startSearchingSignal(searchingName, currentDirectoryPath);
+    emit startSearchingSignal(searchingName, currentFolderPath);
 }
 
 void SearchingModule::fillSearchingResultWidget(QStringList searchingResult)

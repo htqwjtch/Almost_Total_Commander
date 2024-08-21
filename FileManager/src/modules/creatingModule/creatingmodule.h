@@ -25,7 +25,7 @@ private:
 
 private slots:
     void on_fileCreationButton_clicked();
-    void on_directoryCreationButton_clicked();
+    void on_folderCreationButton_clicked();
     void on_symbolLinkCreationButton_clicked();
     void on_cancelButton_clicked();
 

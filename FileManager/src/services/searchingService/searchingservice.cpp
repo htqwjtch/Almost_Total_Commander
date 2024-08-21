@@ -2,18 +2,18 @@
 
 SearchingService::SearchingService(QObject* parent) : QObject{parent} {}
 
-void SearchingService::startSearching(const QString& searchingName, const QString& currentDirectoryPath)
+void SearchingService::startSearching(const QString& searchingName, const QString& currentFolderPath)
 {
-    QDir currentDirectory = QDir(currentDirectoryPath);
+    QDir currentFolder = QDir(currentFolderPath);
     QStringList searchingResult = QStringList();
-    searchingResult.append(search(searchingName, currentDirectory));
+    searchingResult.append(search(searchingName, currentFolder));
     emit searchingCompletedSignal(searchingResult);
 }
 
-QStringList SearchingService::search(const QString& searchingName, QDir& currentDirectory)
+QStringList SearchingService::search(const QString& searchingName, QDir& currentFolder)
 {
     QStringList searchingResult = QStringList();
-    foreach (QFileInfo entry, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
+    foreach (QFileInfo entry, currentFolder.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
     {
 	if (!entry.fileName().compare(searchingName))
 	{
@@ -21,9 +21,9 @@ QStringList SearchingService::search(const QString& searchingName, QDir& current
 	}
 	if (entry.isDir())
 	{
-	    currentDirectory.cd(entry.fileName());
-	    searchingResult.append(search(searchingName, currentDirectory));
-	    currentDirectory.cdUp();
+	    currentFolder.cd(entry.fileName());
+	    searchingResult.append(search(searchingName, currentFolder));
+	    currentFolder.cdUp();
 	}
     }
     return searchingResult;

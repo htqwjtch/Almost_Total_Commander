@@ -5,9 +5,9 @@
 #include <QFile>
 #include <unistd.h>
 
-CreatingService::CreatingService(QDir& currentDirectory)
+CreatingService::CreatingService(QDir& currentFolder)
 {
-    this->currentDirectory = currentDirectory;
+    this->currentFolder = currentFolder;
 }
 
 void CreatingService::createFile()
@@ -23,16 +23,16 @@ void CreatingService::createFile()
 
 void CreatingService::createNameAndPathForNotSymbolLink()
 {
-    namingModule.setCurrentDirectory(currentDirectory);
+    namingModule.setCurrentFolder(currentFolder);
     namingModule.setNameAndPathForNotSymbolLink();
 }
 
-void CreatingService::createDirectory()
+void CreatingService::createFolder()
 {
     createNameAndPathForNotSymbolLink();
 
-    QDir directory = QDir();
-    if (!directory.mkdir(namingModule.getPath()))
+    QDir folder = QDir();
+    if (!folder.mkdir(namingModule.getPath()))
     {
 	throw ExceptionService("Creating failed!");
     }
@@ -50,6 +50,6 @@ void CreatingService::createSymbolLink()
 
 void CreatingService::createNameAndPathesForSymbolLink()
 {
-    namingModule.setCurrentDirectory(currentDirectory);
+    namingModule.setCurrentFolder(currentFolder);
     namingModule.setNameAndPathesForSymbolLink();
 }

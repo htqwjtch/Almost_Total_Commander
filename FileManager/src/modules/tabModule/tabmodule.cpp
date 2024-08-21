@@ -5,44 +5,15 @@
 
 TabModule::TabModule(QWidget* parent) : QDialog(parent), ui(new Ui::TabModule)
 {
-    setFileSystemModel();
-    setUserInterface();
-    setCurrenTableView(ui->leftTableView);
-    connectSignalsWithSlots();
-    setCurrentFileInfo(QFileInfo(fileSystemModel->filePath(ui->leftTableView->rootIndex())));
-    setLabelGridLayoutForDirectory(currentFileInfo);
-    on_sortingBox_currentIndexChanged(0);
-}
-
-void TabModule::setFileSystemModel()
-{
     fileSystemModel = new QFileSystemModel(this);
-    fileSystemModel->setFilter(QDir::QDir::AllEntries);
-
+    fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::NoDotAndDotDot);
     fileSystemModel->setRootPath(QDir::rootPath());
-}
 
-void TabModule::setUserInterface()
-{
     ui->setupUi(this);
-    setTableViewsModels();
-    setTableViews();
-    setTableViewsDirectories();
-    setTableViewsDirectoriesAsHomeDirectories();
-    setTableViewsRootIndexes();
-    setLineEditsTexts();
-    setToolTipsForButtons();
-    setButtonsStyleSheets();
-}
 
-void TabModule::setTableViewsModels()
-{
     ui->leftTableView->setModel(fileSystemModel);
     ui->rightTableView->setModel(fileSystemModel);
-}
 
-void TabModule::setTableViews()
-{
     ui->leftTableView->setShowGrid(false);
     ui->rightTableView->setShowGrid(false);
     ui->leftTableView->horizontalHeader()->hide();
@@ -59,50 +30,29 @@ void TabModule::setTableViews()
     ui->rightTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->leftTableView->setSortingEnabled(true);
     ui->rightTableView->setSortingEnabled(true);
-}
 
-void TabModule::setTableViewsDirectories()
-{
-    leftTableViewDirectory = QDir(fileSystemModel->filePath(ui->leftTableView->rootIndex()));
-    rightTableViewDirectory = QDir(fileSystemModel->filePath(ui->rightTableView->rootIndex()));
-}
+    setTableViewsDirectories();
 
-void TabModule::setTableViewsDirectoriesAsHomeDirectories()
-{
-    leftTableViewDirectory.cd(leftTableViewDirectory.homePath());
-    rightTableViewDirectory.cd(rightTableViewDirectory.homePath());
-}
+    leftTableViewFolder.cd(leftTableViewFolder.homePath());
+    rightTableViewFolder.cd(rightTableViewFolder.homePath());
 
-void TabModule::setTableViewsRootIndexes()
-{
-    ui->leftTableView->setRootIndex(fileSystemModel->index(leftTableViewDirectory.absolutePath()));
-    ui->rightTableView->setRootIndex(fileSystemModel->index(rightTableViewDirectory.absolutePath()));
-}
+    ui->leftTableView->setRootIndex(fileSystemModel->index(leftTableViewFolder.absolutePath()));
+    ui->rightTableView->setRootIndex(fileSystemModel->index(rightTableViewFolder.absolutePath()));
 
-void TabModule::setLineEditsTexts()
-{
-    ui->leftLineEdit->setText(leftTableViewDirectory.absolutePath());
-    ui->rightLineEdit->setText(rightTableViewDirectory.absolutePath());
+    ui->leftLineEdit->setText(leftTableViewFolder.absolutePath());
+    ui->rightLineEdit->setText(rightTableViewFolder.absolutePath());
     ui->searchingLineEdit->setText("Enter searching name");
-}
 
-void TabModule::setSortingButton()
-{
-    connect(ui->sortingBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TabModule::on_sortingBox_currentIndexChanged);
-}
-
-void TabModule::setToolTipsForButtons()
-{
     ui->creatingButton->setToolTip("Create");
     ui->removingButton->setToolTip("Remove");
     ui->copyingButton->setToolTip("Copy");
     ui->replacingButton->setToolTip("Replace");
     ui->renamingButton->setToolTip("Rename");
-    ui->showHiddenButton->setToolTip("Show hidden files");
-}
+    ui->showHiddenButton->setToolTip("Show Hidden");
+    ui->leftAboveButton->setToolTip("Parent Folder");
+    ui->rightAboveButton->setToolTip("Parent Folder");
+    ui->sortingBox->setToolTip("Sort By");
 
-void TabModule::setButtonsStyleSheets()
-{
     ui->creatingButton->setStyleSheet("QPushButton {"
 				      "    border: none;"
 				      "}"
@@ -139,23 +89,22 @@ void TabModule::setButtonsStyleSheets()
 					"QPushButton:hover {"
 					"    border: 1px ridge grey;"
 					"}");
-}
 
-void TabModule::connectSignalsWithSlots()
-{
-    connectTableViewsSignalsWithSlots();
-    connectLineEditsSignalsWithSlots();
-}
-
-void TabModule::connectTableViewsSignalsWithSlots()
-{
     connect(ui->rightTableView, SIGNAL(clicked(QModelIndex)), this, SLOT(on_leftTableView_clicked(QModelIndex)));
     connect(ui->rightTableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(on_leftTableView_doubleClicked(QModelIndex)));
+
+    connect(ui->rightLineEdit, SIGNAL(textEdited(QString)), this, SLOT(on_leftLineEdit_textEdited(QString)));
+
+    connect(ui->sortingBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TabModule::on_sortingBox_currentIndexChanged);
+
+    setCurrenTableView(ui->leftTableView);
+    on_sortingBox_currentIndexChanged(0);
 }
 
-void TabModule::connectLineEditsSignalsWithSlots()
+void TabModule::setTableViewsDirectories()
 {
-    connect(ui->rightLineEdit, SIGNAL(textEdited(QString)), this, SLOT(on_leftLineEdit_textEdited(QString)));
+    leftTableViewFolder = QDir(fileSystemModel->filePath(ui->leftTableView->rootIndex()));
+    rightTableViewFolder = QDir(fileSystemModel->filePath(ui->rightTableView->rootIndex()));
 }
 
 void TabModule::setCurrenTableView(QTableView* currentTableView)
@@ -195,42 +144,30 @@ void TabModule::execute(const QString& operation)
     {
 	on_renamingButton_clicked();
     }
+    else if (operation == "Show Hidden")
+    {
+	on_showHiddenButton_clicked();
+    }
 }
 
-void TabModule::on_leftTableView_clicked(const QModelIndex& index)
+void TabModule::on_leftAboveButton_clicked()
 {
-    setCurrenTableView((QTableView*)sender());
-    setCurrentFileInfo(fileSystemModel->fileInfo(index));
-    QString directoryPath = "";
-    QString filePath = "";
-    if (isDot(currentFileInfo))
+    setTableViewsDirectories();
+    setCurrenTableView(ui->leftTableView);
+    setCurrentFileInfo(fileSystemModel->fileInfo(fileSystemModel->index(leftTableViewFolder.absolutePath())));
+    setClickedFolderPath(currentFileInfo.absoluteFilePath());
+    openDotDot();
+    if (currentTableView == ui->leftTableView)
     {
-	directoryPath = "";
-	filePath = "";
-	QFileInfo rootFileInfo = QFileInfo(currentFileInfo.dir().rootPath());
-	setLabelGridLayoutForDirectory(rootFileInfo);
+	setCurrentLineEdit(ui->leftLineEdit);
     }
-    else if (isDotDot(currentFileInfo))
+    else if (currentTableView == ui->rightTableView)
     {
-	directoryPath = "";
-	filePath = "";
-	QFileInfo previousFileInfo = QFileInfo(currentFileInfo.absoluteFilePath());
-	setLabelGridLayoutForDirectory(previousFileInfo);
+	setCurrentLineEdit(ui->rightLineEdit);
     }
-    else if (currentFileInfo.isDir())
-    {
-	directoryPath = currentFileInfo.absoluteFilePath();
-	filePath = "";
-	setLabelGridLayoutForDirectory(currentFileInfo);
-    }
-    else
-    {
-	directoryPath = "";
-	filePath = currentFileInfo.absoluteFilePath();
-	setLabelGridLayoutForFile(currentFileInfo);
-    }
-    setClickedDirectoryPath(directoryPath);
-    setClickedFilePath(filePath);
+    currentLineEdit->setText(currentFileInfo.absolutePath());
+    resetLabelGridLayout();
+    setClickedFolderPath("");
 }
 
 void TabModule::setCurrentFileInfo(QFileInfo currentFileInfo)
@@ -238,98 +175,113 @@ void TabModule::setCurrentFileInfo(QFileInfo currentFileInfo)
     this->currentFileInfo = currentFileInfo;
 }
 
-bool TabModule::isDot(QFileInfo& fileInfo)
+void TabModule::setClickedFolderPath(const QString& clickedFolderPath)
 {
-    return fileInfo.fileName() == ".";
+    this->clickedFolderPath = clickedFolderPath;
 }
 
-bool TabModule::isDotDot(QFileInfo& fileInfo)
+void TabModule::openDotDot()
 {
-    return fileInfo.fileName() == "..";
+    QDir clickedFolder = QDir(clickedFolderPath);
+    clickedFolder.cdUp();
+    openFolder(clickedFolder.absolutePath());
 }
 
-void TabModule::setLabelGridLayoutForDirectory(QFileInfo& fileInfo)
+void TabModule::openFolder(const QString& folderPath)
 {
-    setLastModeDateLabel(fileInfo);
-    setTypeLabelForDirectory();
-    setSizeLabelForDirectory(fileInfo);
+    currentTableView->setRootIndex(fileSystemModel->index(folderPath));
 }
 
-void TabModule::setLastModeDateLabel(QFileInfo& fileInfo)
+void TabModule::setCurrentLineEdit(QLineEdit* currentLineEdit)
 {
-    QString dateFormat = "dddd, d MMMM yy hh:mm:ss";
-    ui->lastModeDateLabel->setText(fileInfo.lastModified().toString(dateFormat));
+    this->currentLineEdit = currentLineEdit;
 }
 
-void TabModule::setTypeLabelForDirectory()
+void TabModule::resetLabelGridLayout()
 {
-    ui->typeLabel->setText("directory");
+    ui->typeLabel->clear();
+    ui->sizeLabel->clear();
+    ui->lastModeDateLabel->clear();
 }
 
-void TabModule::setSizeLabelForDirectory(QFileInfo& fileInfo)
+void TabModule::on_rightAboveButton_clicked()
 {
-    QDir directory = QDir(fileInfo.absoluteFilePath());
-    ui->sizeLabel->setText(QString("").append(QString::number(directory.count() - 2)).append(" items"));
-}
-
-void TabModule::setLabelGridLayoutForFile(QFileInfo& fileInfo)
-{
-    setLastModeDateLabel(fileInfo);
-    setTypeLabelForFile(fileInfo);
-    setSizeLabelForFile(fileInfo);
-}
-
-void TabModule::setTypeLabelForFile(QFileInfo& fileInfo)
-{
-    QString type = "";
-    if (fileInfo.isSymLink())
+    setTableViewsDirectories();
+    setCurrenTableView(ui->rightTableView);
+    setCurrentFileInfo(fileSystemModel->fileInfo(fileSystemModel->index(rightTableViewFolder.absolutePath())));
+    setClickedFolderPath(currentFileInfo.absoluteFilePath());
+    openDotDot();
+    if (currentTableView == ui->leftTableView)
     {
-	type.append("symbolic link");
+	setCurrentLineEdit(ui->leftLineEdit);
+    }
+    else if (currentTableView == ui->rightTableView)
+    {
+	setCurrentLineEdit(ui->rightLineEdit);
+    }
+    currentLineEdit->setText(currentFileInfo.absolutePath());
+    resetLabelGridLayout();
+    setClickedFolderPath("");
+}
+
+void TabModule::on_leftTableView_clicked(const QModelIndex& index)
+{
+    setCurrentFileInfo(fileSystemModel->fileInfo(index));
+    QString folderPath = "";
+    QString filePath = "";
+    setCurrenTableView((QTableView*)sender());
+    if (currentFileInfo.isDir())
+    {
+	folderPath = currentFileInfo.absoluteFilePath();
+	filePath = "";
+	setLabelGridLayoutForFolder();
     }
     else
     {
-	type.append("file");
-	if (!fileInfo.suffix().isEmpty())
-	{
-	    type.append(" .").append(fileInfo.suffix());
-	}
+	folderPath = "";
+	filePath = currentFileInfo.absoluteFilePath();
+	setLabelGridLayoutForFile();
     }
-    ui->typeLabel->setText(type);
+    setClickedFolderPath(folderPath);
+    setClickedFilePath(filePath);
 }
 
-void TabModule::setSizeLabelForFile(QFileInfo& fileInfo)
+void TabModule::setLabelGridLayoutForFolder()
 {
-    QString size = "";
-    if (fileInfo.size() < KB)
-    {
-	size.append(QString::number(fileInfo.size())).append(" B");
-    }
-    else if (fileInfo.size() >= KB && fileInfo.size() < MB)
-    {
-	double sizeInKB = fileInfo.size() / double(KB);
-	size.append(QString::number(sizeInKB)).append(" KB");
-    }
-    else if (fileInfo.size() >= MB && fileInfo.size() < GB)
-    {
-	double sizeInMB = fileInfo.size() / double(MB);
-	size.append(QString::number(sizeInMB)).append(" MB");
-    }
-    else if (fileInfo.size() >= GB && fileInfo.size() < TB)
-    {
-	double sizeInGB = fileInfo.size() / double(GB);
-	size.append(QString::number(sizeInGB)).append(" GB");
-    }
-    else if (fileInfo.size() >= TB)
-    {
-	double sizeInTB = fileInfo.size() / double(TB);
-	size.append(QString::number(sizeInTB)).append(" TB");
-    }
-    ui->sizeLabel->setText(size);
+    setTypeLabel();
+    setSizeLabelForFolder();
+    setLastModeDateLabel();
 }
 
-void TabModule::setClickedDirectoryPath(const QString& clickedDirectoryPath)
+void TabModule::setTypeLabel()
 {
-    this->clickedDirectoryPath = clickedDirectoryPath;
+    QModelIndex typeIndex = currentTableView->currentIndex().siblingAtColumn(2);
+    ui->typeLabel->setText(typeIndex.data().toString());
+}
+
+void TabModule::setSizeLabelForFolder()
+{
+    QDir folder = QDir(currentFileInfo.absoluteFilePath());
+    ui->sizeLabel->setText(QString("").append(QString::number(folder.count() - 2)).append(" items"));
+}
+
+void TabModule::setLastModeDateLabel()
+{
+    QModelIndex lastModeIndex = currentTableView->currentIndex().siblingAtColumn(3);
+    ui->lastModeDateLabel->setText(lastModeIndex.data().toString());
+}
+
+void TabModule::setLabelGridLayoutForFile()
+{
+    setTypeLabel();
+    setSizeLabelForFile();
+    setLastModeDateLabel();
+}
+
+void TabModule::setSizeLabelForFile()
+{
+    QModelIndex sizeIndex = currentTableView->currentIndex().siblingAtColumn(1);
+    ui->sizeLabel->setText(sizeIndex.data().toString());
 }
 
 void TabModule::setClickedFilePath(const QString& clickedFilePath)
@@ -342,21 +294,7 @@ void TabModule::on_leftTableView_doubleClicked(const QModelIndex& index)
     setCurrentFileInfo(fileSystemModel->fileInfo(index));
     if (currentFileInfo.isDir())
     {
-	if (isDot(currentFileInfo))
-	{
-	    openDot();
-	    setCurrentFileInfo(fileSystemModel->fileInfo(fileSystemModel->index(QDir::rootPath())));
-	}
-	else if (isDotDot(currentFileInfo))
-	{
-	    setClickedDirectoryPath(currentFileInfo.dir().absolutePath());
-	    openDotDot();
-	}
-	else
-	{
-	    openDirectory(clickedDirectoryPath);
-	}
-
+	openFolder(clickedFolderPath);
 	if (currentTableView == ui->leftTableView)
 	{
 	    setCurrentLineEdit(ui->leftLineEdit);
@@ -369,37 +307,10 @@ void TabModule::on_leftTableView_doubleClicked(const QModelIndex& index)
     }
     else
     {
-	openFile();
+	QDesktopServices::openUrl(QUrl::fromUserInput(clickedFilePath));
     }
     setClickedFilePath("");
-    setClickedDirectoryPath("");
-}
-
-void TabModule::openFile()
-{
-    QDesktopServices::openUrl(QUrl::fromUserInput(clickedFilePath));
-}
-
-void TabModule::openDot()
-{
-    openDirectory(QDir::rootPath());
-}
-
-void TabModule::openDirectory(const QString& directoryPath)
-{
-    currentTableView->setRootIndex(fileSystemModel->index(directoryPath));
-}
-
-void TabModule::openDotDot()
-{
-    QDir clickedDirectory = QDir(clickedDirectoryPath);
-    clickedDirectory.cdUp();
-    openDirectory(clickedDirectory.absolutePath());
-}
-
-void TabModule::setCurrentLineEdit(QLineEdit* currentLineEdit)
-{
-    this->currentLineEdit = currentLineEdit;
+    setClickedFolderPath("");
 }
 
 void TabModule::on_leftLineEdit_textEdited(const QString& arg1)
@@ -416,12 +327,20 @@ void TabModule::on_leftLineEdit_textEdited(const QString& arg1)
     setCurrentFileInfo(fileSystemModel->fileInfo(fileSystemModel->index(arg1)));
     if (currentFileInfo.isDir())
     {
-	selectDirectory(currentFileInfo);
+	selectFolder(currentFileInfo);
     }
     else if (currentFileInfo.isFile() || currentFileInfo.isSymLink())
     {
 	selectFile(currentFileInfo);
     }
+    setClickedFolderPath("");
+    setClickedFilePath("");
+}
+
+void TabModule::selectFolder(QFileInfo& fileInfo)
+{
+    currentTableView->setRootIndex(fileSystemModel->index(fileInfo.absoluteFilePath()));
+    setLabelGridLayoutForFolder();
 }
 
 void TabModule::selectFile(QFileInfo& fileInfo)
@@ -431,13 +350,7 @@ void TabModule::selectFile(QFileInfo& fileInfo)
     currentTableView->selectionModel()->clearSelection();
     currentTableView->selectionModel()->select(fileSystemModel->index(fileInfo.absoluteFilePath()),
 					       QItemSelectionModel::Select | QItemSelectionModel::Rows);
-    on_leftTableView_clicked(fileSystemModel->index(fileInfo.absoluteFilePath()));
-}
-
-void TabModule::selectDirectory(QFileInfo& fileInfo)
-{
-    currentTableView->setRootIndex(fileSystemModel->index(fileInfo.absoluteFilePath()));
-    setLabelGridLayoutForDirectory(fileInfo);
+    setLabelGridLayoutForFile();
 }
 
 void TabModule::on_searchingLineEdit_textEdited(const QString& arg1)
@@ -455,36 +368,38 @@ void TabModule::on_searchingButton_clicked()
     try
     {
 	setTableViewsDirectories();
-	checkCurrentDirectory();
+	checkCurrentFolder();
 	ui->searchingButton->setEnabled(false);
 	setSearchingModule();
-	searchingModule->search(searchingName, currentDirectory.absolutePath());
+	searchingModule->search(searchingName, currentFolder.absolutePath());
     }
     catch (ExceptionService exceptionService)
     {
 	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
+    setClickedFolderPath("");
+    setClickedFilePath("");
 }
 
-void TabModule::checkCurrentDirectory()
+void TabModule::checkCurrentFolder()
 {
     if (currentTableView == ui->leftTableView)
     {
-	setCurrentDirectory(leftTableViewDirectory);
+	setCurrentFolder(leftTableViewFolder);
     }
     if (currentTableView == ui->rightTableView)
     {
-	setCurrentDirectory(rightTableViewDirectory);
+	setCurrentFolder(rightTableViewFolder);
     }
-    if (!currentDirectory.absolutePath().contains(currentDirectory.homePath()))
+    if (!currentFolder.absolutePath().contains(currentFolder.homePath()))
     {
-	throw ExceptionService("There is no access to perform any operation in this directory!");
+	throw ExceptionService("There is no access to perform any operation in this folder!");
     }
 }
 
-void TabModule::setCurrentDirectory(QDir& currentDirectory)
+void TabModule::setCurrentFolder(QDir& currentFolder)
 {
-    this->currentDirectory = currentDirectory;
+    this->currentFolder = currentFolder;
 }
 
 void TabModule::setSearchingModule()
@@ -496,6 +411,7 @@ void TabModule::setSearchingModule()
 void TabModule::searchingCompleted()
 {
     ui->searchingButton->setEnabled(true);
+    ui->searchingLineEdit->setText("Enter searching name");
     searchingModule->exec();
     delete searchingModule;
 }
@@ -505,15 +421,15 @@ void TabModule::on_creatingButton_clicked()
     try
     {
 	setTableViewsDirectories();
-	checkCurrentDirectory();
-	CreatingModule creatingModule = CreatingModule(currentDirectory, this);
+	checkCurrentFolder();
+	CreatingModule creatingModule = CreatingModule(currentFolder, this);
 	creatingModule.exec();
     }
     catch (ExceptionService exceptionService)
     {
 	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
-    setClickedDirectoryPath("");
+    setClickedFolderPath("");
     setClickedFilePath("");
 }
 
@@ -521,21 +437,9 @@ void TabModule::on_removingButton_clicked()
 {
     try
     {
-	//currentTableView->selectionModel()->clearSelection();
 	setTableViewsDirectories();
-	checkCurrentDirectory();
-	if (!clickedDirectoryPath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedDirectoryPath);
-	}
-	else if (!clickedFilePath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedFilePath);
-	}
-	else
-	{
-	    throw ExceptionService("You was not choose a file or a directory!");
-	}
+	checkCurrentFolder();
+	checkClickedObjectsPathes();
 	QMessageBox::StandardButton answerButton
 	    = QMessageBox::question(this, "", "Do you want to perform removing?", QMessageBox::Cancel | QMessageBox::Ok);
 	if (answerButton == QMessageBox::Ok)
@@ -549,8 +453,24 @@ void TabModule::on_removingButton_clicked()
     {
 	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
-    setClickedDirectoryPath("");
+    setClickedFolderPath("");
     setClickedFilePath("");
+}
+
+void TabModule::checkClickedObjectsPathes()
+{
+    if (!clickedFolderPath.isEmpty())
+    {
+	setCurrentFileInfo(QFileInfo(clickedFolderPath));
+    }
+    else if (!clickedFilePath.isEmpty())
+    {
+	setCurrentFileInfo(QFileInfo(clickedFilePath));
+    }
+    else
+    {
+	throw ExceptionService("You was not choose a file or a folder!");
+    }
 }
 
 void TabModule::setRemovingModule()
@@ -577,32 +497,21 @@ void TabModule::on_copyingButton_clicked()
     try
     {
 	setTableViewsDirectories();
-	if (!leftTableViewDirectory.absolutePath().contains(leftTableViewDirectory.homePath())
-	    || !rightTableViewDirectory.absolutePath().contains(rightTableViewDirectory.homePath()))
+	if (!leftTableViewFolder.absolutePath().contains(leftTableViewFolder.homePath())
+	    || !rightTableViewFolder.absolutePath().contains(rightTableViewFolder.homePath()))
 	{
-	    throw ExceptionService("There is no access to perform any operation in this directory!");
+	    throw ExceptionService("There is no access to perform any operation in this folder!");
 	}
-	if (!clickedFilePath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedFilePath);
-	}
-	else if (!clickedDirectoryPath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedDirectoryPath);
-	}
-	else
-	{
-	    throw ExceptionService("You was not choose a file or a directory!");
-	}
+	checkClickedObjectsPathes();
 	ui->copyingButton->setEnabled(false);
 	setCopyingModule();
-	copyingModule->copy(currentFileInfo.absoluteFilePath(), rightTableViewDirectory.absolutePath());
+	copyingModule->copy(currentFileInfo.absoluteFilePath(), rightTableViewFolder.absolutePath());
     }
     catch (ExceptionService exceptionService)
     {
 	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
-    setClickedDirectoryPath("");
+    setClickedFolderPath("");
     setClickedFilePath("");
 }
 
@@ -630,32 +539,21 @@ void TabModule::on_replacingButton_clicked()
     try
     {
 	setTableViewsDirectories();
-	if (!leftTableViewDirectory.absolutePath().contains(leftTableViewDirectory.homePath())
-	    || !rightTableViewDirectory.absolutePath().contains(rightTableViewDirectory.homePath()))
+	if (!leftTableViewFolder.absolutePath().contains(leftTableViewFolder.homePath())
+	    || !rightTableViewFolder.absolutePath().contains(rightTableViewFolder.homePath()))
 	{
-	    throw ExceptionService("There is no access to perform any operation in this directory!");
+	    throw ExceptionService("There is no access to perform any operation in this folder!");
 	}
-	if (!clickedFilePath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedFilePath);
-	}
-	else if (!clickedDirectoryPath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedDirectoryPath);
-	}
-	else
-	{
-	    throw ExceptionService("You was not choose a file or a directory!");
-	}
+	checkClickedObjectsPathes();
 	ui->replacingButton->setEnabled(false);
 	setReplacingModule();
-	replacingModule->replace(currentFileInfo.absoluteFilePath(), rightTableViewDirectory.absolutePath());
+	replacingModule->replace(currentFileInfo.absoluteFilePath(), rightTableViewFolder.absolutePath());
     }
     catch (ExceptionService exceptionService)
     {
 	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
-    setClickedDirectoryPath("");
+    setClickedFolderPath("");
     setClickedFilePath("");
 }
 
@@ -683,28 +581,17 @@ void TabModule::on_renamingButton_clicked()
     try
     {
 	setTableViewsDirectories();
-	checkCurrentDirectory();
-	if (!clickedDirectoryPath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedDirectoryPath);
-	}
-	else if (!clickedFilePath.isEmpty())
-	{
-	    currentFileInfo = QFileInfo(clickedFilePath);
-	}
-	else
-	{
-	    throw ExceptionService("You was not choose a file or a directory!");
-	}
+	checkCurrentFolder();
+	checkClickedObjectsPathes();
 	NamingModule namingModule;
-	namingModule.setCurrentDirectory(currentDirectory);
+	namingModule.setCurrentFolder(currentFolder);
 	namingModule.rename(currentFileInfo.absoluteFilePath());
     }
     catch (ExceptionService exceptionService)
     {
 	QMessageBox::warning(this, "", exceptionService.getInfo());
     }
-    setClickedDirectoryPath("");
+    setClickedFolderPath("");
     setClickedFilePath("");
 }
 
@@ -713,14 +600,14 @@ void TabModule::on_showHiddenButton_clicked()
     static bool showHidden = false;
     if (showHidden)
     {
-	fileSystemModel->setFilter(QDir::QDir::AllEntries);
-	ui->showHiddenButton->setToolTip("Show hidden files");
+	fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::NoDotAndDotDot);
+	ui->showHiddenButton->setToolTip("Show Hidden");
 	showHidden = false;
     }
     else
     {
-	fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::Hidden);
-	ui->showHiddenButton->setToolTip("Don't show hidden files");
+	fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::NoDotAndDotDot | QDir::QDir::Hidden);
+	ui->showHiddenButton->setToolTip("Don't Show Hidden");
 	showHidden = true;
     }
 }
@@ -752,16 +639,17 @@ void TabModule::on_sortingBox_currentIndexChanged(int index)
 	currentTableView->sortByColumn(1, Qt::AscendingOrder);
 	break;
     case 3:
-	currentHeaderView->setSortIndicator(1, Qt::DescendingOrder);
-	currentTableView->sortByColumn(1, Qt::DescendingOrder);
-	break;
-    case 4:
 	currentHeaderView->setSortIndicator(2, Qt::AscendingOrder);
 	currentTableView->sortByColumn(2, Qt::AscendingOrder);
 	break;
+    case 4:
+	currentHeaderView->setSortIndicator(3, Qt::AscendingOrder);
+	currentTableView->sortByColumn(3, Qt::AscendingOrder);
+	break;
     case 5:
-	currentHeaderView->setSortIndicator(2, Qt::DescendingOrder);
-	currentTableView->sortByColumn(2, Qt::DescendingOrder);
+	currentHeaderView->setSortIndicator(3, Qt::DescendingOrder);
+	currentTableView->sortByColumn(3, Qt::DescendingOrder);
 	break;
     }
 }
+

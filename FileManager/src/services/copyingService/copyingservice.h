@@ -19,10 +19,10 @@ private:
     void setSourceCopyingObjectPath(const QString&);
     void setDestinationCopyingObjectPath(const QString&);
     void copyIn(const QString&);
-    void copyDirectory(const QString&, const QString&);
-    QFileInfoList getCopyingDirectoryObjectsList(QDir&);
-    void createCopyingDirectoryInDestinationDirectory(const QString&, QDir&);
-    void copyDirectoryObjects(QFileInfoList&, const QString&);
+    void copyFolder(const QString&, const QString&);
+    QFileInfoList getCopyingFolderObjectsList(QDir&);
+    void createCopyingFolderInDestinationFolder(const QString&, QDir&);
+    void copyFolderObjects(QFileInfoList&, const QString&);
 
 private:
     QString sourceCopyingObjectPath = "";

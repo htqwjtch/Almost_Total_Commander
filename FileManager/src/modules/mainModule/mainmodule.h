@@ -40,6 +40,7 @@ private slots:
     void on_actionCopy_triggered();
     void on_actionReplace_triggered();
     void on_actionRename_triggered();
+    void on_actionShow_Hidden_triggered();
 
 private:
     Ui::MainModule* ui;

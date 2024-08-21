@@ -8,7 +8,7 @@ class CreatingService
 public:
     CreatingService(QDir&);
     void createFile();
-    void createDirectory();
+    void createFolder();
     void createSymbolLink();
 
 private:
@@ -16,7 +16,7 @@ private:
     void createNameAndPathesForSymbolLink();
 
 private:
-    QDir currentDirectory;
+    QDir currentFolder;
     NamingModule namingModule;
 };
 

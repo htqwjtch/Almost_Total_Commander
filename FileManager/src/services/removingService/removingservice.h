@@ -16,8 +16,8 @@ public slots:
     void startRemoving(const QString&);
 
 private:
-    void removeDirectory(const QString&);
-    void removeDirectoryObjectsFrom(QDir&);
+    void removeFolder(const QString&);
+    void removeFolderObjectsFrom(QDir&);
 
 signals:
     void removingCompletedSignal();
