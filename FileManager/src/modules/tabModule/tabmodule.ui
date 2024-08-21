@@ -180,7 +180,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="6">
+     <item row="0" column="7">
       <widget class="QPushButton" name="showHiddenButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -209,6 +209,40 @@
        </property>
       </widget>
      </item>
+     <item row="0" column="6">
+      <widget class="QComboBox" name="sortingBox">
+       <item>
+        <property name="text">
+         <string>A-Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Z-A</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Size</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>First Modified</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Last Modified</string>
+        </property>
+       </item>
+      </widget>
+     </item>
     </layout>
    </item>
    <item>
@@ -226,53 +260,130 @@
    </item>
    <item>
     <layout class="QGridLayout" name="navigationGridLayout">
+     <item row="0" column="3">
+      <widget class="QLineEdit" name="rightLineEdit"/>
+     </item>
      <item row="0" column="0">
-      <widget class="QLineEdit" name="leftLineEdit"/>
+      <widget class="QPushButton" name="leftAboveButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../resources/resources.qrc">
+         <normaloff>:/fileSystemIcons/fileSystemIcons/arrow.png</normaloff>:/fileSystemIcons/fileSystemIcons/arrow.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>38</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="rightLineEdit"/>
+      <widget class="QLineEdit" name="leftLineEdit">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="rightAboveButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>40</width>
+         <height>26</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../../resources/resources.qrc">
+         <normaloff>:/fileSystemIcons/fileSystemIcons/arrow.png</normaloff>:/fileSystemIcons/fileSystemIcons/arrow.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>38</width>
+         <height>24</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QGridLayout" name="viewGridLayout">
-     <item row="1" column="0">
-      <widget class="QListView" name="leftListView"/>
-     </item>
      <item row="1" column="1">
-      <widget class="QListView" name="rightListView"/>
+      <widget class="QTableView" name="rightTableView"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QTableView" name="leftTableView"/>
      </item>
     </layout>
    </item>
    <item>
     <layout class="QGridLayout" name="labelGridLayout">
-     <item row="0" column="1">
-      <widget class="QLabel" name="typeLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="lastModeDateLabel">
-       <property name="text">
-        <string/>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
+     <item row="0" column="3">
       <widget class="QLabel" name="sizeLabel">
        <property name="text">
         <string/>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QLabel" name="lastModeDateLabel">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="typeLabel">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
      </item>

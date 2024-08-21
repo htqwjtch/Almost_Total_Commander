@@ -36,10 +36,10 @@ ReplacingModule::~ReplacingModule()
     delete copyingModule;
 }
 
-void ReplacingModule::replace(const QString& replacingObjectPath, const QString& destinationDirectoryPath)
+void ReplacingModule::replace(const QString& replacingObjectPath, const QString& destinationFolderPath)
 {
     setReplacingObjectPath(replacingObjectPath);
-    copyingModule->copy(replacingObjectPath, destinationDirectoryPath);
+    copyingModule->copy(replacingObjectPath, destinationFolderPath);
 }
 
 void ReplacingModule::setReplacingObjectPath(const QString& replacingObjectPath)

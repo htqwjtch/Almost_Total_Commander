@@ -4,10 +4,10 @@
 
 #include <unistd.h>
 
-CreatingModule::CreatingModule(QDir& currentDirectory, QWidget* parent) : QDialog(parent), ui(new Ui::CreatingModule)
+CreatingModule::CreatingModule(QDir& currentFolder, QWidget* parent) : QDialog(parent), ui(new Ui::CreatingModule)
 {
     setUserInterface();
-    creatingService = new CreatingService(currentDirectory);
+    creatingService = new CreatingService(currentFolder);
 }
 
 void CreatingModule::setUserInterface()
@@ -25,12 +25,12 @@ void CreatingModule::setButtonsStyleSheets()
 					  "QPushButton:hover {"
 					  "    border: 1px ridge grey;"
 					  "}");
-    ui->directoryCreationButton->setStyleSheet("QPushButton {"
-					       "    border: none;"
-					       "}"
-					       "QPushButton:hover {"
-					       "    border: 1px ridge grey;"
-					       "}");
+    ui->folderCreationButton->setStyleSheet("QPushButton {"
+					    "    border: none;"
+					    "}"
+					    "QPushButton:hover {"
+					    "    border: 1px ridge grey;"
+					    "}");
     ui->symbolLinkCreationButton->setStyleSheet("QPushButton {"
 						"    border: none;"
 						"}"
@@ -58,11 +58,11 @@ void CreatingModule::on_fileCreationButton_clicked()
     accept();
 }
 
-void CreatingModule::on_directoryCreationButton_clicked()
+void CreatingModule::on_folderCreationButton_clicked()
 {
     try
     {
-	creatingService->createDirectory();
+	creatingService->createFolder();
     }
     catch (ExceptionService exceptionService)
     {
@@ -88,4 +88,3 @@ void CreatingModule::on_cancelButton_clicked()
 {
     accept();
 }
-

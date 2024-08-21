@@ -8,7 +8,7 @@ void RemovingService::startRemoving(const QString& removingObjectPath)
 
     if (removingObject.isDir())
     {
-	removeDirectory(removingObjectPath);
+	removeFolder(removingObjectPath);
     }
     else if (!QFile::remove(removingObjectPath))
     {
@@ -18,29 +18,29 @@ void RemovingService::startRemoving(const QString& removingObjectPath)
     emit removingCompletedSignal();
 }
 
-void RemovingService::removeDirectory(const QString& removingDirectoryPath)
+void RemovingService::removeFolder(const QString& removingFolderPath)
 {
-    QDir removingDirectory = QDir(removingDirectoryPath);
-    if (!removingDirectory.isEmpty())
+    QDir removingFolder = QDir(removingFolderPath);
+    if (!removingFolder.isEmpty())
     {
-	removeDirectoryObjectsFrom(removingDirectory);
+	removeFolderObjectsFrom(removingFolder);
     }
-    if (!removingDirectory.rmdir(removingDirectoryPath))
+    if (!removingFolder.rmdir(removingFolderPath))
     {
 	emit removingFailedSignal("Removing failed!");
     }
 }
 
-void RemovingService::removeDirectoryObjectsFrom(QDir& removingDirectory)
+void RemovingService::removeFolderObjectsFrom(QDir& removingFolder)
 {
-    foreach (QFileInfo entry, removingDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
+    foreach (QFileInfo entry, removingFolder.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name | QDir::DirsFirst))
     {
 	if (entry.isDir())
 	{
-	    removingDirectory.cd(entry.fileName());
-	    removeDirectoryObjectsFrom(removingDirectory);
-	    removingDirectory.cdUp();
-	    if (!removingDirectory.rmdir(entry.absoluteFilePath()))
+	    removingFolder.cd(entry.fileName());
+	    removeFolderObjectsFrom(removingFolder);
+	    removingFolder.cdUp();
+	    if (!removingFolder.rmdir(entry.absoluteFilePath()))
 	    {
 		emit removingFailedSignal("Removing failed!");
 		break;

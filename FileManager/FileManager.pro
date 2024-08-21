@@ -24,8 +24,7 @@ SOURCES += \
     src/services/creatingService/creatingservice.cpp \
     src/services/exceptionService/exceptionservice.cpp \
     src/services/removingService/removingservice.cpp \
-    src/services/searchingService/searchingservice.cpp \
-    src/services/tabService/tabservice.cpp
+    src/services/searchingService/searchingservice.cpp
 
 HEADERS += \
     src/modules/copyingModule/copyingmodule.h \
@@ -42,8 +41,7 @@ HEADERS += \
     src/services/creatingService/creatingservice.h \
     src/services/exceptionService/exceptionservice.h \
     src/services/removingService/removingservice.h \
-    src/services/searchingService/searchingservice.h \
-    src/services/tabService/tabservice.h
+    src/services/searchingService/searchingservice.h
 
 FORMS += \
     src/modules/creatingModule/creatingmodule.ui \

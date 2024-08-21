@@ -116,3 +116,8 @@ void MainModule::on_actionRename_triggered()
 {
     tabModule->execute("Rename");
 }
+
+void MainModule::on_actionShow_Hidden_triggered()
+{
+    tabModule->execute("Show Hidden");
+}

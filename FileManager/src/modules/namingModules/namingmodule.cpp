@@ -2,9 +2,9 @@
 
 #include <QDebug>
 
-void NamingModule::setCurrentDirectory(QDir& currentDirectory)
+void NamingModule::setCurrentFolder(QDir& currentFolder)
 {
-    this->currentDirectory = currentDirectory;
+    this->currentFolder = currentFolder;
 }
 
 void NamingModule::setNameAndPathForNotSymbolLink()
@@ -14,7 +14,7 @@ void NamingModule::setNameAndPathForNotSymbolLink()
 	namingNotSymbolLinkModule.exec();
 	checkName(namingNotSymbolLinkModule.getName());
 	name = namingNotSymbolLinkModule.getName();
-	path = currentDirectory.absolutePath() + QDir::separator() + namingNotSymbolLinkModule.getName();
+	path = currentFolder.absolutePath() + QDir::separator() + namingNotSymbolLinkModule.getName();
     }
     catch (ExceptionService exceptionService)
     {
@@ -24,11 +24,11 @@ void NamingModule::setNameAndPathForNotSymbolLink()
 
 void NamingModule::checkName(const QString& name)
 {
-    foreach (QFileInfo entry, currentDirectory.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    foreach (QFileInfo entry, currentFolder.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
     {
 	if (entry.fileName() == name)
 	{
-	    throw ExceptionService("This name already exists in the current directory!");
+	    throw ExceptionService("This name already exists in the current folder!");
 	}
     }
 }
@@ -40,7 +40,7 @@ void NamingModule::setNameAndPathesForSymbolLink()
 	namingSymbolLinkModule.exec();
 	checkName(namingSymbolLinkModule.getName());
 	name = namingSymbolLinkModule.getName();
-	path = currentDirectory.absolutePath() + QDir::separator() + namingSymbolLinkModule.getName();
+	path = currentFolder.absolutePath() + QDir::separator() + namingSymbolLinkModule.getName();
 	linkedPath = namingSymbolLinkModule.getLinkedPath();
     }
     catch (ExceptionService exceptionService)
@@ -74,7 +74,7 @@ void NamingModule::rename(const QString& renamingObjectPath)
 	{
 	    if (renamingFileInfo.isDir())
 	    {
-		if (!currentDirectory.rename(renamingObjectPath, path))
+		if (!currentFolder.rename(renamingObjectPath, path))
 		{
 		    throw ExceptionService("Renaming failed!");
 		}

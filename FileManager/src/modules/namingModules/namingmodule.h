@@ -12,7 +12,7 @@ class NamingModule
 {
 public:
     NamingModule() = default;
-    void setCurrentDirectory(QDir&);
+    void setCurrentFolder(QDir&);
     void setNameAndPathForNotSymbolLink();
     void setNameAndPathesForSymbolLink();
     QString getName();
@@ -26,7 +26,7 @@ private:
 private:
     NamingNotSymbolLinkModule namingNotSymbolLinkModule;
     NamingSymbolLinkModule namingSymbolLinkModule;
-    QDir currentDirectory;
+    QDir currentFolder;
     QString name = "";
     QString path = "";
     QString linkedPath = "";
