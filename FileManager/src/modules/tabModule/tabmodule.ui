@@ -180,7 +180,7 @@
        </property>
       </widget>
      </item>
-     <item row="0" column="6">
+     <item row="0" column="7">
       <widget class="QPushButton" name="showHiddenButton">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -207,6 +207,40 @@
          <height>36</height>
         </size>
        </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QComboBox" name="sortingBox">
+       <item>
+        <property name="text">
+         <string>A-Z</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Z-A</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>First Modified</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Last Modified</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Syze</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
@@ -237,10 +271,10 @@
    <item>
     <layout class="QGridLayout" name="viewGridLayout">
      <item row="1" column="0">
-      <widget class="QListView" name="leftListView"/>
+      <widget class="QTableView" name="leftTableView"/>
      </item>
      <item row="1" column="1">
-      <widget class="QListView" name="rightListView"/>
+      <widget class="QTableView" name="rightTableView"/>
      </item>
     </layout>
    </item>
