@@ -1,10 +1,15 @@
 #ifndef MAINMODULE_H
 #define MAINMODULE_H
 
-#include "../tabModule/tabmodule.h"
+#include "../infoBarModule/infobarmodule.h"
+#include "../navigationBarModule/navigationbarmodule.h"
+#include "../searchingBarModule/searchingbarmodule.h"
+#include "../toolBarModule/toolbarmodule.h"
+#include "../viewingBarModule/viewingbarmodule.h"
 
 #include <QMainWindow>
 #include <QToolButton>
+#include <QVBoxLayout>
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -45,7 +50,15 @@ private slots:
 private:
     Ui::MainModule* ui;
     QToolButton* addTabButton;
-    TabModule* tabModule;
+
+    ToolBarModule* toolBarModule;
+    NavigationBarModule* navigationBarModule;
+    ViewingBarModule* viewingBarModule;
+    InfoBarModule* infoBarModule;
+    SearchingBarModule* searchingBarModule;
+
+    QWidget* tabWidget;
+    QVBoxLayout* verticalLayout;
 };
 
 #endif // MAINMODULE_H

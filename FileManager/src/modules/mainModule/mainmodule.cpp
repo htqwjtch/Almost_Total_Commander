@@ -5,14 +5,20 @@
 #include <QTableWidget>
 
 MainModule::MainModule(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainModule)
-{
+{   
     setUserInterface();
 }
 
 MainModule::~MainModule()
 {
+    delete verticalLayout;
+    delete tabWidget;
+    delete searchingBarModule;
+    delete infoBarModule;
+    delete viewingBarModule;
+    delete navigationBarModule;
+    delete toolBarModule;
     delete addTabButton;
-    delete tabModule;
     delete ui;
 }
 
@@ -49,9 +55,25 @@ void MainModule::on_actionAdd_Tab_triggered()
 
 void MainModule::addTab()
 {
-    tabModule = new TabModule(this);
+    toolBarModule = new ToolBarModule(this);
+    navigationBarModule = new NavigationBarModule(this);
+    viewingBarModule = new ViewingBarModule(this);
+    infoBarModule = new InfoBarModule(this);
+    searchingBarModule = new SearchingBarModule(this);
+
+    tabWidget = new QWidget(this);
+    verticalLayout = new QVBoxLayout(tabWidget);
+
+    verticalLayout->addWidget(toolBarModule);
+    verticalLayout->addWidget(navigationBarModule);
+    verticalLayout->addWidget(viewingBarModule);
+    verticalLayout->addWidget(infoBarModule);
+    verticalLayout->addWidget(searchingBarModule);
+
+    tabWidget->setLayout(verticalLayout);
+
     QString tabName = "Tab " + QString::number(ui->tabWidget->count());
-    ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tabModule, tabName);
+    ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tabWidget, tabName);
     ui->tabWidget->setCurrentIndex(ui->tabWidget->count() - 2);
 }
 
@@ -89,35 +111,35 @@ void MainModule::on_actionExit_triggered()
 
 void MainModule::on_actionSearch_triggered()
 {
-    tabModule->execute("Search");
+    //tabModule->execute("Search");
 }
 
 void MainModule::on_actionCreate_triggered()
 {
-    tabModule->execute("Create");
+    //tabModule->execute("Create");
 }
 
 void MainModule::on_actionRemove_triggered()
 {
-    tabModule->execute("Remove");
+    //tabModule->execute("Remove");
 }
 
 void MainModule::on_actionCopy_triggered()
 {
-    tabModule->execute("Copy");
+    //tabModule->execute("Copy");
 }
 
 void MainModule::on_actionReplace_triggered()
 {
-    tabModule->execute("Replace");
+    //tabModule->execute("Replace");
 }
 
 void MainModule::on_actionRename_triggered()
 {
-    tabModule->execute("Rename");
+    //tabModule->execute("Rename");
 }
 
 void MainModule::on_actionShow_Hidden_triggered()
 {
-    tabModule->execute("Show Hidden");
+    //tabModule->execute("Show Hidden");
 }

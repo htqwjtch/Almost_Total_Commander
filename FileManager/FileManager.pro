@@ -12,14 +12,18 @@ SOURCES += \
     src/main.cpp \
     src/modules/copyingModule/copyingmodule.cpp \
     src/modules/creatingModule/creatingmodule.cpp \
+    src/modules/infoBarModule/infobarmodule.cpp \
     src/modules/mainModule/mainmodule.cpp \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.cpp \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.cpp \
     src/modules/namingModules/namingmodule.cpp \
+    src/modules/navigationBarModule/navigationbarmodule.cpp \
     src/modules/removingModule/removingmodule.cpp \
     src/modules/replacingModule/replacingmodule.cpp \
+    src/modules/searchingBarModule/searchingbarmodule.cpp \
     src/modules/searchingModule/searchingmodule.cpp \
-    src/modules/tabModule/tabmodule.cpp \
+    src/modules/toolBarModule/toolbarmodule.cpp \
+    src/modules/viewingBarModule/viewingbarmodule.cpp \
     src/services/copyingService/copyingservice.cpp \
     src/services/creatingService/creatingservice.cpp \
     src/services/exceptionService/exceptionservice.cpp \
@@ -29,14 +33,18 @@ SOURCES += \
 HEADERS += \
     src/modules/copyingModule/copyingmodule.h \
     src/modules/creatingModule/creatingmodule.h \
+    src/modules/infoBarModule/infobarmodule.h \
     src/modules/mainModule/mainmodule.h \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.h \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.h \
     src/modules/namingModules/namingmodule.h \
+    src/modules/navigationBarModule/navigationbarmodule.h \
     src/modules/removingModule/removingmodule.h \
     src/modules/replacingModule/replacingmodule.h \
+    src/modules/searchingBarModule/searchingbarmodule.h \
     src/modules/searchingModule/searchingmodule.h \
-    src/modules/tabModule/tabmodule.h \
+    src/modules/toolBarModule/toolbarmodule.h \
+    src/modules/viewingBarModule/viewingbarmodule.h \
     src/services/copyingService/copyingservice.h \
     src/services/creatingService/creatingservice.h \
     src/services/exceptionService/exceptionservice.h \
@@ -45,11 +53,15 @@ HEADERS += \
 
 FORMS += \
     src/modules/creatingModule/creatingmodule.ui \
+    src/modules/infoBarModule/infobarmodule.ui \
     src/modules/mainModule/mainmodule.ui \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.ui \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.ui \
+    src/modules/navigationBarModule/navigationbarmodule.ui \
+    src/modules/searchingBarModule/searchingbarmodule.ui \
     src/modules/searchingModule/searchingmodule.ui \
-    src/modules/tabModule/tabmodule.ui
+    src/modules/toolBarModule/toolbarmodule.ui \
+    src/modules/viewingBarModule/viewingbarmodule.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
