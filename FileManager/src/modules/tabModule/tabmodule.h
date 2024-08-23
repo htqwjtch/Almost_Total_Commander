@@ -35,12 +35,21 @@ public:
     void execute(const QString&);
 
 private:
-    void setTableViewsDirectories();
+    void setFileSystemModel();
+    void setUserInterFace();
+    void setTableViewModels();
+    void setTableViews();
+    void setTableViewFolders();
+    void setTableViewRootIndexes();
+    void setLineEditTexts();
+    void setToolTips();
+    void setButtonStyleSheets();
+    void connectSignalsWithSlots();
     void setCurrenTableView(QTableView*);
 
     void setCurrentFileInfo(QFileInfo);
     void setClickedFolderPath(const QString&);
-    void openDotDot();
+    void openParentFolder();
     void openFolder(const QString&);
     void setCurrentLineEdit(QLineEdit*);
     void resetLabelGridLayout();

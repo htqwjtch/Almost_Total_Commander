@@ -18,7 +18,7 @@ void NamingModule::setNameAndPathForNotSymbolLink()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning((QWidget*)this, "", exceptionService.getInfo());
+	QMessageBox::warning((QWidget*)this, " ", exceptionService.getInfo());
     }
 }
 
@@ -45,7 +45,7 @@ void NamingModule::setNameAndPathesForSymbolLink()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning((QWidget*)this, "", exceptionService.getInfo());
+	QMessageBox::warning((QWidget*)this, " ", exceptionService.getInfo());
     }
 }
 
@@ -91,6 +91,6 @@ void NamingModule::rename(const QString& renamingObjectPath)
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning((QWidget*)this, "", exceptionService.getInfo());
+	QMessageBox::warning((QWidget*)this, " ", exceptionService.getInfo());
     }
 }

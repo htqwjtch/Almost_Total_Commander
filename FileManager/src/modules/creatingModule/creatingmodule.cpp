@@ -53,7 +53,7 @@ void CreatingModule::on_fileCreationButton_clicked()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, "", exceptionService.getInfo());
+	QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
     accept();
 }
@@ -66,7 +66,7 @@ void CreatingModule::on_folderCreationButton_clicked()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, "", exceptionService.getInfo());
+	QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
     accept();
 }
@@ -79,7 +79,7 @@ void CreatingModule::on_symbolLinkCreationButton_clicked()
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, "", exceptionService.getInfo());
+	QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
     accept();
 }
