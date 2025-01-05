@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources.qrc</file>
+    </qresource>
+    <qresource prefix="/tabIcons">
+        <file>tabIcons/add-square-outlined-interface-button.png</file>
+        <file>tabIcons/back-left-arrow-square-button-outline.png</file>
+        <file>tabIcons/cross-square-button.png</file>
+        <file>tabIcons/logout.png</file>
+        <file>tabIcons/right-arrow-square-button-symbol.png</file>
+    </qresource>
+    <qresource prefix="/fileSystemIcons">
+        <file>fileSystemIcons/bin.png</file>
+        <file>fileSystemIcons/copy.png</file>
+        <file>fileSystemIcons/document.png</file>
+        <file>fileSystemIcons/file.png</file>
+        <file>fileSystemIcons/folder.png</file>
+        <file>fileSystemIcons/rename (1).png</file>
+        <file>fileSystemIcons/new-document.png</file>
+        <file>fileSystemIcons/import-export.png</file>
+        <file>fileSystemIcons/search.png</file>
+        <file>fileSystemIcons/hidden.png</file>
+        <file>fileSystemIcons/hide.png</file>
+        <file>fileSystemIcons/arrow.png</file>
+    </qresource>
+</RCC>
