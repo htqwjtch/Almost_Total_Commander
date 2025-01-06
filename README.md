@@ -29,16 +29,20 @@ Make sure that you have installed:
 - `make`
 - `g++` compiler (C++17 standard)
 - `qmake` and `Qt` (Qt version >= 4)
-
 Run to install all this on Ubuntu (or other Debian-based systems):
 ```
 apt install build-essential qt5-qmake qtbase5-dev qtbase5-dev-tools qtchooser
 ```
 
 ### 2. Build the project
-Navigate to the root folder of the project and run:
+Create the `build` folder in the root folder of the project and navigate there:
 ```
-qmake
+mkdir build
+cd build
+```
+Run there:
+```
+qmake ../Almost_Total_Commander.pro
 make
 ```
 
