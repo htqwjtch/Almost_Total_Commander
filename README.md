@@ -16,7 +16,7 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
 - [x] Show hidden files 
 - [x] Sort files
 - [x] Hotkeys for operations (view in "Help" drop-down menu)
-- [ ] Select multiple objects 
+- [x] Select multiple objects 
 - [ ] Drag&Drop
 - [ ] Create, view, edit an archive
 - [ ] Bookmarks for folders
