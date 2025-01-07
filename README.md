@@ -29,6 +29,7 @@ Make sure that you have installed:
 - `make`
 - `g++` compiler (C++17 standard)
 - `qmake` and `Qt` (Qt version >= 4)
+
 Run to install all this on Ubuntu (or other Debian-based systems):
 ```
 apt install build-essential qt5-qmake qtbase5-dev qtbase5-dev-tools qtchooser
