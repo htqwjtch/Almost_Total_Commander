@@ -4,7 +4,8 @@
 
 #include <unistd.h>
 
-CreatingModule::CreatingModule(QDir& currentFolder, QWidget* parent) : QDialog(parent), ui(new Ui::CreatingModule)
+CreatingModule::CreatingModule(QDir &currentFolder, QWidget *parent) :
+    QDialog(parent), ui(new Ui::CreatingModule)
 {
     setUserInterface();
     creatingService = new CreatingService(currentFolder);
@@ -20,23 +21,23 @@ void CreatingModule::setUserInterface()
 void CreatingModule::setButtonsStyleSheets()
 {
     ui->fileCreationButton->setStyleSheet("QPushButton {"
-					  "    border: none;"
-					  "}"
-					  "QPushButton:hover {"
-					  "    border: 1px ridge grey;"
-					  "}");
+                                          "    border: none;"
+                                          "}"
+                                          "QPushButton:hover {"
+                                          "    border: 1px ridge grey;"
+                                          "}");
     ui->folderCreationButton->setStyleSheet("QPushButton {"
-					    "    border: none;"
-					    "}"
-					    "QPushButton:hover {"
-					    "    border: 1px ridge grey;"
-					    "}");
+                                            "    border: none;"
+                                            "}"
+                                            "QPushButton:hover {"
+                                            "    border: 1px ridge grey;"
+                                            "}");
     ui->symbolLinkCreationButton->setStyleSheet("QPushButton {"
-						"    border: none;"
-						"}"
-						"QPushButton:hover {"
-						"    border: 1px ridge grey;"
-						"}");
+                                                "    border: none;"
+                                                "}"
+                                                "QPushButton:hover {"
+                                                "    border: 1px ridge grey;"
+                                                "}");
 }
 
 CreatingModule::~CreatingModule()
@@ -49,11 +50,11 @@ void CreatingModule::on_fileCreationButton_clicked()
 {
     try
     {
-	creatingService->createFile();
+        creatingService->createFile();
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
     accept();
 }
@@ -62,11 +63,11 @@ void CreatingModule::on_folderCreationButton_clicked()
 {
     try
     {
-	creatingService->createFolder();
+        creatingService->createFolder();
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
     accept();
 }
@@ -75,16 +76,13 @@ void CreatingModule::on_symbolLinkCreationButton_clicked()
 {
     try
     {
-	creatingService->createSymbolLink();
+        creatingService->createSymbolLink();
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
     accept();
 }
 
-void CreatingModule::on_cancelButton_clicked()
-{
-    accept();
-}
+void CreatingModule::on_cancelButton_clicked() { accept(); }

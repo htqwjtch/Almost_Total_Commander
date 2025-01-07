@@ -49,12 +49,12 @@
      <x>0</x>
      <y>0</y>
      <width>900</width>
-     <height>23</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
-     <string>Help</string>
+     <string>Actions</string>
     </property>
     <addaction name="actionAdd_Tab"/>
     <addaction name="actionClose_Tab"/>

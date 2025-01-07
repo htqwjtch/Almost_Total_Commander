@@ -12,27 +12,27 @@ class CopyingModule : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit CopyingModule(QObject* parent = nullptr);
+  public:
+    explicit CopyingModule(QObject *parent = nullptr);
     ~CopyingModule();
-    void copy(const QString&, const QString&);
+    void copy(const QStringList &, const QString &);
 
-private:
+  private:
     void allocateMemory();
     void connectSignalsWithSlots();
     void setThreadForCopying();
-    void checkName(const QString&, const QString&);
+    void checkName(const QString &, const QString &);
 
-private slots:
+  private slots:
     void copyingCompleted();
-    void copyingFailed(const QString&);
+    void copyingFailed(const QString &);
 
-private:
-    CopyingService* copyingService;
-    QThread* threadForCopying;
+  private:
+    CopyingService *copyingService;
+    QThread *threadForCopying;
 
-signals:
-    void startCopyingSignal(QString, QString);
+  signals:
+    void startCopyingSignal(QStringList, QString);
     void copyingCompletedSignal();
     void copyingFailedSignal(QString);
 };

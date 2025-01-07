@@ -9,26 +9,26 @@ class CopyingService : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit CopyingService(QObject* parent = nullptr);
+  public:
+    explicit CopyingService(QObject *parent = nullptr);
 
-public slots:
-    void startCopying(const QString&, const QString&);
+  public slots:
+    void startCopying(const QStringList &, const QString &);
 
-private:
-    void setSourceCopyingObjectPath(const QString&);
-    void setDestinationCopyingObjectPath(const QString&);
-    void copyIn(const QString&);
-    void copyFolder(const QString&, const QString&);
-    QFileInfoList getCopyingFolderObjectsList(QDir&);
-    void createCopyingFolderInDestinationFolder(const QString&, QDir&);
-    void copyFolderObjects(QFileInfoList&, const QString&);
+  private:
+    void setSourceCopyingObjectPath(const QString &);
+    void setDestinationCopyingObjectPath(const QString &);
+    void copyIn(const QString &);
+    void copyFolder(const QString &, const QString &);
+    QFileInfoList getCopyingFolderObjectsList(QDir &);
+    void createCopyingFolderInDestinationFolder(const QString &, QDir &);
+    void copyFolderObjects(QFileInfoList &, const QString &);
 
-private:
+  private:
     QString sourceCopyingObjectPath = "";
     QString destinationCopyingObjectPath = "";
 
-signals:
+  signals:
     void copyingCompletedSignal();
     void copyingFailedSignal(QString);
 };

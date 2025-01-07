@@ -10,26 +10,26 @@ class RemovingModule : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit RemovingModule(QObject* parent = nullptr);
+  public:
+    explicit RemovingModule(QObject *parent = nullptr);
     ~RemovingModule();
-    void remove(const QString&);
+    void remove(const QStringList &);
 
-private:
+  private:
     void allocateMemory();
     void connectSignalsWithSlots();
     void setThreadForRemoving();
 
-private slots:
+  private slots:
     void removingCompleted();
-    void removingFailed(const QString&);
+    void removingFailed(const QString &);
 
-private:
-    RemovingService* removingService;
-    QThread* threadForRemoving;
+  private:
+    RemovingService *removingService;
+    QThread *threadForRemoving;
 
-signals:
-    void startRemovingSignal(QString);
+  signals:
+    void startRemovingSignal(QStringList);
     void removingCompletedSignal();
     void removingFailedSignal(QString);
 };

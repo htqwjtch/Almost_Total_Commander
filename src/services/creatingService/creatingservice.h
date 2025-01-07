@@ -5,17 +5,17 @@
 
 class CreatingService
 {
-public:
-    CreatingService(QDir&);
+  public:
+    CreatingService(QDir &);
     void createFile();
     void createFolder();
     void createSymbolLink();
 
-private:
+  private:
     void createNameAndPathForNotSymbolLink();
     void createNameAndPathesForSymbolLink();
 
-private:
+  private:
     QDir currentFolder;
     NamingModule namingModule;
 };

@@ -1,6 +1,6 @@
 #include "copyingmodule.h"
 
-CopyingModule::CopyingModule(QObject* parent) : QObject{parent}
+CopyingModule::CopyingModule(QObject *parent) : QObject{parent}
 {
     allocateMemory();
     connectSignalsWithSlots();
@@ -16,9 +16,16 @@ void CopyingModule::allocateMemory()
 void CopyingModule::connectSignalsWithSlots()
 {
     QObject::connect(this, SIGNAL(destroyed()), threadForCopying, SLOT(quit()));
-    QObject::connect(this, SIGNAL(startCopyingSignal(QString, QString)), copyingService, SLOT(startCopying(const QString&, const QString&)));
-    QObject::connect(copyingService, SIGNAL(copyingFailedSignal(QString)), this, SLOT(copyingFailed(const QString&)));
-    QObject::connect(copyingService, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
+    QObject::connect(this,
+        SIGNAL(startCopyingSignal(QStringList, QString)),
+        copyingService,
+        SLOT(startCopying(const QStringList &, const QString &)));
+    QObject::connect(copyingService,
+        SIGNAL(copyingFailedSignal(QString)),
+        this,
+        SLOT(copyingFailed(const QString &)));
+    QObject::connect(
+        copyingService, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
 }
 
 void CopyingModule::setThreadForCopying()
@@ -35,37 +42,42 @@ CopyingModule::~CopyingModule()
     delete copyingService;
 }
 
-void CopyingModule::copy(const QString& copyingObjectPath, const QString& destinationFolderPath)
+void CopyingModule::copy(const QStringList &copyingObjectPathes,
+    const QString &destinationFolderPath)
 {
     try
     {
-	checkName(copyingObjectPath, destinationFolderPath);
-	emit startCopyingSignal(copyingObjectPath, destinationFolderPath);
+        foreach (QString copyingObjectPath, copyingObjectPathes)
+        {
+            checkName(copyingObjectPath, destinationFolderPath);
+        }
+        emit startCopyingSignal(copyingObjectPathes, destinationFolderPath);
     }
     catch (ExceptionService exceptionService)
     {
-	emit copyingFailedSignal(exceptionService.getInfo());
+        emit copyingFailedSignal(exceptionService.getInfo());
     }
 }
-void CopyingModule::checkName(const QString& copyingObjectPath, const QString& destinationFolderPath)
+
+void CopyingModule::checkName(const QString &copyingObjectPath,
+    const QString &destinationFolderPath)
 {
     QFileInfo copyingObjectInfo = QFileInfo(copyingObjectPath);
     QDir destinationFolder = QDir(destinationFolderPath);
-    foreach (QFileInfo entry, destinationFolder.entryInfoList(QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    foreach (QFileInfo entry,
+        destinationFolder.entryInfoList(
+            QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
     {
-	if (entry.fileName() == copyingObjectInfo.fileName())
-	{
-	    throw ExceptionService("This name already exists in the current folder!");
-	}
+        if (entry.fileName() == copyingObjectInfo.fileName())
+        {
+            throw ExceptionService("This name already exists in the current folder!");
+        }
     }
 }
 
-void CopyingModule::copyingCompleted()
-{
-    emit copyingCompletedSignal();
-}
+void CopyingModule::copyingCompleted() { emit copyingCompletedSignal(); }
 
-void CopyingModule::copyingFailed(const QString& exceptionInfo)
+void CopyingModule::copyingFailed(const QString &exceptionInfo)
 {
     emit copyingFailedSignal(exceptionInfo);
 }

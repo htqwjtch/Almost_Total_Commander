@@ -10,30 +10,30 @@
 class ReplacingModule : public QObject
 {
     Q_OBJECT
-public:
-    explicit ReplacingModule(QObject* parent = nullptr);
+  public:
+    explicit ReplacingModule(QObject *parent = nullptr);
     ~ReplacingModule();
-    void replace(const QString&, const QString&);
+    void replace(const QStringList &, const QString &);
 
-private:
+  private:
     void allocateMemory();
     void connectSignalsWithSlots();
     void connectSignalsWithSlotsForCopying();
     void connectSignalsWithSlotsForRemoving();
-    void setReplacingObjectPath(const QString&);
+    void setReplacingObjectPathes(const QStringList &);
 
-private slots:
+  private slots:
     void copyingCompleted();
-    void copyingFailed(const QString&);
+    void copyingFailed(const QString &);
     void removingCompleted();
-    void removingFailed(const QString&);
+    void removingFailed(const QString &);
 
-private:
-    QString replacingObjectPath = "";
-    CopyingModule* copyingModule;
-    RemovingModule* removingModule;
+  private:
+    QStringList replacingObjectPathes;
+    CopyingModule *copyingModule;
+    RemovingModule *removingModule;
 
-signals:
+  signals:
     void replacingCompletedSignal();
     void replacingFailedSignal(QString);
 };

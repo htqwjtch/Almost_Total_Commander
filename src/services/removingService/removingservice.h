@@ -9,17 +9,17 @@ class RemovingService : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit RemovingService(QObject* parent = nullptr);
+  public:
+    explicit RemovingService(QObject *parent = nullptr);
 
-public slots:
-    void startRemoving(const QString&);
+  public slots:
+    void startRemoving(const QStringList &);
 
-private:
-    void removeFolder(const QString&);
-    void removeFolderObjectsFrom(QDir&);
+  private:
+    void removeFolder(const QString &);
+    void removeFolderObjectsFrom(QDir &);
 
-signals:
+  signals:
     void removingCompletedSignal();
     void removingFailedSignal(QString);
 };

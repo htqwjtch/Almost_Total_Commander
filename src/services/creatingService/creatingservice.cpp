@@ -5,10 +5,7 @@
 #include <QFile>
 #include <unistd.h>
 
-CreatingService::CreatingService(QDir& currentFolder)
-{
-    this->currentFolder = currentFolder;
-}
+CreatingService::CreatingService(QDir &currentFolder) { this->currentFolder = currentFolder; }
 
 void CreatingService::createFile()
 {
@@ -17,7 +14,7 @@ void CreatingService::createFile()
     QFile file = QFile(namingModule.getPath());
     if (!file.open(QIODevice::ReadWrite))
     {
-	throw ExceptionService("Creating failed!");
+        throw ExceptionService("Creating failed!");
     }
 }
 
@@ -34,7 +31,7 @@ void CreatingService::createFolder()
     QDir folder = QDir();
     if (!folder.mkdir(namingModule.getPath()))
     {
-	throw ExceptionService("Creating failed!");
+        throw ExceptionService("Creating failed!");
     }
 }
 
@@ -42,9 +39,10 @@ void CreatingService::createSymbolLink()
 {
     createNameAndPathesForSymbolLink();
 
-    if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(), namingModule.getPath().toLocal8Bit().constData()))
+    if (symlink(namingModule.getLinkedPath().toLocal8Bit().constData(),
+            namingModule.getPath().toLocal8Bit().constData()))
     {
-	throw ExceptionService("Creating failed!");
+        throw ExceptionService("Creating failed!");
     }
 }
 

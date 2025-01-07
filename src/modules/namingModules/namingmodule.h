@@ -10,20 +10,20 @@
 
 class NamingModule
 {
-public:
+  public:
     NamingModule() = default;
-    void setCurrentFolder(QDir&);
+    void setCurrentFolder(QDir &);
     void setNameAndPathForNotSymbolLink();
     void setNameAndPathesForSymbolLink();
     QString getName();
     QString getPath();
     QString getLinkedPath();
-    void rename(const QString&);
+    void rename(const QString &);
 
-private:
-    void checkName(const QString&);
+  private:
+    void checkName(const QString &);
 
-private:
+  private:
     NamingNotSymbolLinkModule namingNotSymbolLinkModule;
     NamingSymbolLinkModule namingSymbolLinkModule;
     QDir currentFolder;

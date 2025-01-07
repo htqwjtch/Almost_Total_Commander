@@ -3,7 +3,7 @@
 
 #include <QDebug>
 
-TabModule::TabModule(QWidget* parent) : QDialog(parent), ui(new Ui::TabModule)
+TabModule::TabModule(QWidget *parent) : QDialog(parent), ui(new Ui::TabModule)
 {
     setFileSystemModel();
     setUserInterFace();
@@ -41,20 +41,31 @@ void TabModule::setTableViewModels()
 
 void TabModule::setTableViews()
 {
+    ui->leftTableView->setSelectionMode(QAbstractItemView::MultiSelection);
+    ui->rightTableView->setSelectionMode(QAbstractItemView::MultiSelection);
+
+    ui->leftTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
+    ui->rightTableView->setSelectionBehavior(QAbstractItemView::SelectItems);
+
     ui->leftTableView->setShowGrid(false);
     ui->rightTableView->setShowGrid(false);
+
     ui->leftTableView->horizontalHeader()->hide();
     ui->rightTableView->horizontalHeader()->hide();
+
     ui->leftTableView->verticalHeader()->hide();
     ui->rightTableView->verticalHeader()->hide();
+
     ui->leftTableView->setColumnHidden(1, true);
     ui->leftTableView->setColumnHidden(2, true);
     ui->leftTableView->setColumnHidden(3, true);
     ui->rightTableView->setColumnHidden(1, true);
     ui->rightTableView->setColumnHidden(2, true);
     ui->rightTableView->setColumnHidden(3, true);
+
     ui->leftTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
     ui->rightTableView->horizontalHeader()->setSectionResizeMode(0, QHeaderView::Stretch);
+
     ui->leftTableView->setSortingEnabled(true);
     ui->rightTableView->setSortingEnabled(true);
 }
@@ -94,54 +105,67 @@ void TabModule::setToolTips()
 void TabModule::setButtonStyleSheets()
 {
     ui->creatingButton->setStyleSheet("QPushButton {"
-				      "    border: none;"
-				      "}"
-				      "QPushButton:hover {"
-				      "    border: 1px ridge grey;"
-				      "}");
+                                      "    border: none;"
+                                      "}"
+                                      "QPushButton:hover {"
+                                      "    border: 1px ridge grey;"
+                                      "}");
     ui->removingButton->setStyleSheet("QPushButton {"
-				      "    border: none;"
-				      "}"
-				      "QPushButton:hover {"
-				      "    border: 1px ridge grey;"
-				      "}");
+                                      "    border: none;"
+                                      "}"
+                                      "QPushButton:hover {"
+                                      "    border: 1px ridge grey;"
+                                      "}");
     ui->copyingButton->setStyleSheet("QPushButton {"
-				     "    border: none;"
-				     "}"
-				     "QPushButton:hover {"
-				     "    border: 1px ridge grey;"
-				     "}");
+                                     "    border: none;"
+                                     "}"
+                                     "QPushButton:hover {"
+                                     "    border: 1px ridge grey;"
+                                     "}");
     ui->replacingButton->setStyleSheet("QPushButton {"
-				       "    border: none;"
-				       "}"
-				       "QPushButton:hover {"
-				       "    border: 1px ridge grey;"
-				       "}");
+                                       "    border: none;"
+                                       "}"
+                                       "QPushButton:hover {"
+                                       "    border: 1px ridge grey;"
+                                       "}");
     ui->renamingButton->setStyleSheet("QPushButton {"
-				      "    border: none;"
-				      "}"
-				      "QPushButton:hover {"
-				      "    border: 1px ridge grey;"
-				      "}");
+                                      "    border: none;"
+                                      "}"
+                                      "QPushButton:hover {"
+                                      "    border: 1px ridge grey;"
+                                      "}");
     ui->showHiddenButton->setStyleSheet("QPushButton {"
-					"    border: none;"
-					"}"
-					"QPushButton:hover {"
-					"    border: 1px ridge grey;"
-					"}");
+                                        "    border: none;"
+                                        "}"
+                                        "QPushButton:hover {"
+                                        "    border: 1px ridge grey;"
+                                        "}");
 }
 
 void TabModule::connectSignalsWithSlots()
 {
-    connect(ui->rightTableView, SIGNAL(clicked(QModelIndex)), this, SLOT(on_leftTableView_clicked(QModelIndex)));
-    connect(ui->rightTableView, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(on_leftTableView_doubleClicked(QModelIndex)));
+    connect(ui->rightTableView,
+        SIGNAL(clicked(QModelIndex)),
+        this,
+        SLOT(on_leftTableView_clicked(QModelIndex)));
 
-    connect(ui->rightLineEdit, SIGNAL(textEdited(QString)), this, SLOT(on_leftLineEdit_textEdited(QString)));
+    connect(ui->rightTableView,
+        SIGNAL(doubleClicked(QModelIndex)),
+        this,
+        SLOT(on_leftTableView_doubleClicked(QModelIndex)));
 
-    connect(ui->sortingBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &TabModule::on_sortingBox_currentIndexChanged);
+    connect(ui->rightLineEdit,
+        SIGNAL(textEdited(QString)),
+        this,
+        SLOT(on_leftLineEdit_textEdited(QString)));
+
+    connect(ui->sortingBox,
+        QOverload<int>::of(&QComboBox::currentIndexChanged),
+        this,
+        &TabModule::on_sortingBox_currentIndexChanged);
 }
 
-void TabModule::setCurrenTableView(QTableView* currentTableView)
+void TabModule::setCurrenTableView(QTableView *currentTableView)
 {
     this->currentTableView = currentTableView;
 }
@@ -152,52 +176,54 @@ TabModule::~TabModule()
     delete ui;
 }
 
-void TabModule::execute(const QString& operation)
+void TabModule::execute(const QString &operation)
 {
     if (operation == "Search")
     {
-	on_searchingButton_clicked();
+        on_searchingButton_clicked();
     }
     else if (operation == "Create")
     {
-	on_creatingButton_clicked();
+        on_creatingButton_clicked();
     }
     else if (operation == "Remove")
     {
-	on_removingButton_clicked();
+        on_removingButton_clicked();
     }
     else if (operation == "Copy")
     {
-	on_copyingButton_clicked();
+        on_copyingButton_clicked();
     }
     else if (operation == "Replace")
     {
-	on_replacingButton_clicked();
+        on_replacingButton_clicked();
     }
     else if (operation == "Rename")
     {
-	on_renamingButton_clicked();
+        on_renamingButton_clicked();
     }
     else if (operation == "Show Hidden")
     {
-	on_showHiddenButton_clicked();
+        on_showHiddenButton_clicked();
     }
 }
 
 void TabModule::on_leftAboveButton_clicked()
 {
+    ui->leftTableView->selectionModel()->clear();
     setTableViewFolders();
     setCurrenTableView(ui->leftTableView);
-    setCurrentFileInfo(fileSystemModel->fileInfo(fileSystemModel->index(leftTableViewFolder.absolutePath())));
+    setCurrentFileInfo(
+        fileSystemModel->fileInfo(fileSystemModel->index(leftTableViewFolder.absolutePath())));
     setClickedFolderPath(currentFileInfo.absoluteFilePath());
     openParentFolder();
     if (currentTableView == ui->leftTableView)
     {
-	setCurrentLineEdit(ui->leftLineEdit);
+        setCurrentLineEdit(ui->leftLineEdit);
     }
     else if (currentTableView == ui->rightTableView)
     {
-	setCurrentLineEdit(ui->rightLineEdit);
+        setCurrentLineEdit(ui->rightLineEdit);
     }
     currentLineEdit->setText(currentFileInfo.absolutePath());
     resetLabelGridLayout();
@@ -209,7 +235,7 @@ void TabModule::setCurrentFileInfo(QFileInfo currentFileInfo)
     this->currentFileInfo = currentFileInfo;
 }
 
-void TabModule::setClickedFolderPath(const QString& clickedFolderPath)
+void TabModule::setClickedFolderPath(const QString &clickedFolderPath)
 {
     this->clickedFolderPath = clickedFolderPath;
 }
@@ -221,12 +247,12 @@ void TabModule::openParentFolder()
     openFolder(clickedFolder.absolutePath());
 }
 
-void TabModule::openFolder(const QString& folderPath)
+void TabModule::openFolder(const QString &folderPath)
 {
     currentTableView->setRootIndex(fileSystemModel->index(folderPath));
 }
 
-void TabModule::setCurrentLineEdit(QLineEdit* currentLineEdit)
+void TabModule::setCurrentLineEdit(QLineEdit *currentLineEdit)
 {
     this->currentLineEdit = currentLineEdit;
 }
@@ -240,41 +266,43 @@ void TabModule::resetLabelGridLayout()
 
 void TabModule::on_rightAboveButton_clicked()
 {
+    ui->rightTableView->selectionModel()->clear();
     setTableViewFolders();
     setCurrenTableView(ui->rightTableView);
-    setCurrentFileInfo(fileSystemModel->fileInfo(fileSystemModel->index(rightTableViewFolder.absolutePath())));
+    setCurrentFileInfo(
+        fileSystemModel->fileInfo(fileSystemModel->index(rightTableViewFolder.absolutePath())));
     setClickedFolderPath(currentFileInfo.absoluteFilePath());
     openParentFolder();
     if (currentTableView == ui->leftTableView)
     {
-	setCurrentLineEdit(ui->leftLineEdit);
+        setCurrentLineEdit(ui->leftLineEdit);
     }
     else if (currentTableView == ui->rightTableView)
     {
-	setCurrentLineEdit(ui->rightLineEdit);
+        setCurrentLineEdit(ui->rightLineEdit);
     }
     currentLineEdit->setText(currentFileInfo.absolutePath());
     resetLabelGridLayout();
     setClickedFolderPath("");
 }
 
-void TabModule::on_leftTableView_clicked(const QModelIndex& index)
+void TabModule::on_leftTableView_clicked(const QModelIndex &index)
 {
     setCurrentFileInfo(fileSystemModel->fileInfo(index));
     QString folderPath = "";
     QString filePath = "";
-    setCurrenTableView((QTableView*)sender());
+    setCurrenTableView((QTableView *)sender());
     if (currentFileInfo.isDir())
     {
-	folderPath = currentFileInfo.absoluteFilePath();
-	filePath = "";
-	setLabelGridLayoutForFolder();
+        folderPath = currentFileInfo.absoluteFilePath();
+        filePath = "";
+        setLabelGridLayoutForFolder();
     }
     else
     {
-	folderPath = "";
-	filePath = currentFileInfo.absoluteFilePath();
-	setLabelGridLayoutForFile();
+        folderPath = "";
+        filePath = currentFileInfo.absoluteFilePath();
+        setLabelGridLayoutForFile();
     }
     setClickedFolderPath(folderPath);
     setClickedFilePath(filePath);
@@ -296,7 +324,8 @@ void TabModule::setTypeLabel()
 void TabModule::setSizeLabelForFolder()
 {
     QDir folder = QDir(currentFileInfo.absoluteFilePath());
-    ui->sizeLabel->setText(QString("").append(QString::number(folder.count() - 2)).append(" items"));
+    ui->sizeLabel->setText(
+        QString("").append(QString::number(folder.count() - 2)).append(" items"));
 }
 
 void TabModule::setLastModeDateLabel()
@@ -318,128 +347,131 @@ void TabModule::setSizeLabelForFile()
     ui->sizeLabel->setText(sizeIndex.data().toString());
 }
 
-void TabModule::setClickedFilePath(const QString& clickedFilePath)
+void TabModule::setClickedFilePath(const QString &clickedFilePath)
 {
     this->clickedFilePath = clickedFilePath;
 }
 
-void TabModule::on_leftTableView_doubleClicked(const QModelIndex& index)
+void TabModule::on_leftTableView_doubleClicked(const QModelIndex &index)
 {
+    clearSelectionModels();
     setCurrentFileInfo(fileSystemModel->fileInfo(index));
     if (currentFileInfo.isDir())
     {
-	openFolder(clickedFolderPath);
-	if (currentTableView == ui->leftTableView)
-	{
-	    setCurrentLineEdit(ui->leftLineEdit);
-	}
-	else if (currentTableView == ui->rightTableView)
-	{
-	    setCurrentLineEdit(ui->rightLineEdit);
-	}
-	currentLineEdit->setText(currentFileInfo.absoluteFilePath());
+        openFolder(clickedFolderPath);
+        if (currentTableView == ui->leftTableView)
+        {
+            setCurrentLineEdit(ui->leftLineEdit);
+        }
+        else if (currentTableView == ui->rightTableView)
+        {
+            setCurrentLineEdit(ui->rightLineEdit);
+        }
+        currentLineEdit->setText(currentFileInfo.absoluteFilePath());
     }
     else
     {
-	QDesktopServices::openUrl(QUrl::fromUserInput(clickedFilePath));
+        QDesktopServices::openUrl(QUrl::fromUserInput(clickedFilePath));
     }
+    resetClickedPathes();
+}
+
+void TabModule::clearSelectionModels()
+{
+    ui->leftTableView->selectionModel()->clear();
+    ui->rightTableView->selectionModel()->clear();
+}
+
+void TabModule::resetClickedPathes()
+{
     setClickedFilePath("");
     setClickedFolderPath("");
 }
 
-void TabModule::on_leftLineEdit_textEdited(const QString& arg1)
+void TabModule::on_leftLineEdit_textEdited(const QString &arg1)
 {
-    setCurrentLineEdit((QLineEdit*)sender());
+    setCurrentLineEdit((QLineEdit *)sender());
     if (currentLineEdit == ui->leftLineEdit)
     {
-	setCurrenTableView(ui->leftTableView);
+        setCurrenTableView(ui->leftTableView);
     }
     else if (currentLineEdit == ui->rightLineEdit)
     {
-	setCurrenTableView(ui->rightTableView);
+        setCurrenTableView(ui->rightTableView);
     }
     setCurrentFileInfo(fileSystemModel->fileInfo(fileSystemModel->index(arg1)));
     if (currentFileInfo.isDir())
     {
-	selectFolder(currentFileInfo);
+        selectFolder(currentFileInfo);
     }
     else if (currentFileInfo.isFile() || currentFileInfo.isSymLink())
     {
-	selectFile(currentFileInfo);
+        selectFile(currentFileInfo);
     }
-    setClickedFolderPath("");
-    setClickedFilePath("");
+    resetClickedPathes();
 }
 
-void TabModule::selectFolder(QFileInfo& fileInfo)
+void TabModule::selectFolder(QFileInfo &fileInfo)
 {
     currentTableView->setRootIndex(fileSystemModel->index(fileInfo.absoluteFilePath()));
     setLabelGridLayoutForFolder();
 }
 
-void TabModule::selectFile(QFileInfo& fileInfo)
+void TabModule::selectFile(QFileInfo &fileInfo)
 {
     currentTableView->setRootIndex(fileSystemModel->index(fileInfo.absolutePath()));
     currentTableView->setCurrentIndex(fileSystemModel->index(fileInfo.absoluteFilePath()));
     currentTableView->selectionModel()->clearSelection();
     currentTableView->selectionModel()->select(fileSystemModel->index(fileInfo.absoluteFilePath()),
-					       QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        QItemSelectionModel::Select | QItemSelectionModel::Rows);
     setLabelGridLayoutForFile();
 }
 
-void TabModule::on_searchingLineEdit_textEdited(const QString& arg1)
-{
-    searchingName = arg1;
-}
+void TabModule::on_searchingLineEdit_textEdited(const QString &arg1) { searchingName = arg1; }
 
-void TabModule::on_searchingLineEdit_returnPressed()
-{
-    on_searchingButton_clicked();
-}
+void TabModule::on_searchingLineEdit_returnPressed() { on_searchingButton_clicked(); }
 
 void TabModule::on_searchingButton_clicked()
 {
     try
     {
-	setTableViewFolders();
-	checkCurrentFolder();
-	ui->searchingButton->setEnabled(false);
-	setSearchingModule();
-	searchingModule->search(searchingName, currentFolder.absolutePath());
+        clearSelectionModels();
+        setTableViewFolders();
+        checkCurrentFolder();
+        ui->searchingButton->setEnabled(false);
+        setSearchingModule();
+        searchingModule->search(searchingName, currentFolder.absolutePath());
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    setClickedFolderPath("");
-    setClickedFilePath("");
+    resetClickedPathes();
 }
 
 void TabModule::checkCurrentFolder()
 {
     if (currentTableView == ui->leftTableView)
     {
-	setCurrentFolder(leftTableViewFolder);
+        setCurrentFolder(leftTableViewFolder);
     }
     if (currentTableView == ui->rightTableView)
     {
-	setCurrentFolder(rightTableViewFolder);
+        setCurrentFolder(rightTableViewFolder);
     }
     if (!currentFolder.absolutePath().contains(currentFolder.homePath()))
     {
-	throw ExceptionService("There is no access to perform any operation in this folder!");
+        throw ExceptionService("There is no access to perform any operation in this folder!");
     }
 }
 
-void TabModule::setCurrentFolder(QDir& currentFolder)
-{
-    this->currentFolder = currentFolder;
-}
+void TabModule::setCurrentFolder(QDir &currentFolder) { this->currentFolder = currentFolder; }
 
 void TabModule::setSearchingModule()
 {
     searchingModule = new SearchingModule(this);
-    QObject::connect(searchingModule, SIGNAL(searchingCompletedSignal()), this, SLOT(searchingCompleted()));
+    QObject::connect(
+        searchingModule, SIGNAL(searchingCompletedSignal()), this, SLOT(searchingCompleted()));
 }
 
 void TabModule::searchingCompleted()
@@ -454,67 +486,84 @@ void TabModule::on_creatingButton_clicked()
 {
     try
     {
-	setTableViewFolders();
-	checkCurrentFolder();
-	CreatingModule creatingModule = CreatingModule(currentFolder, this);
-	creatingModule.exec();
+        clearSelectionModels();
+        setTableViewFolders();
+        checkCurrentFolder();
+        CreatingModule creatingModule = CreatingModule(currentFolder, this);
+        creatingModule.exec();
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    setClickedFolderPath("");
-    setClickedFilePath("");
+    resetClickedPathes();
 }
 
 void TabModule::on_removingButton_clicked()
 {
     try
     {
-	setTableViewFolders();
-	checkCurrentFolder();
-	checkClickedObjectsPathes();
-	QMessageBox::StandardButton answerButton
-	    = QMessageBox::question(this, " ", "Do you want to perform removing?", QMessageBox::Cancel | QMessageBox::Ok);
-	if (answerButton == QMessageBox::Ok)
-	{
-	    ui->removingButton->setEnabled(false);
-	    setRemovingModule();
-	    removingModule->remove(currentFileInfo.absoluteFilePath());
-	}
+        setTableViewFolders();
+        checkCurrentFolder();
+        checkClickedObjectsPathes();
+        QMessageBox::StandardButton answerButton = QMessageBox::question(
+            this, " ", "Do you want to perform removing?", QMessageBox::Cancel | QMessageBox::Ok);
+        if (answerButton == QMessageBox::Ok)
+        {
+
+            QModelIndexList selectedIndexes = currentTableView->selectionModel()->selectedIndexes();
+            if (selectedIndexes.isEmpty())
+            {
+                throw ExceptionService("You was not choose a file or a folder!");
+            }
+
+            QStringList selectedObjectPathes = QStringList();
+            for (const QModelIndex &index : selectedIndexes)
+            {
+                selectedObjectPathes.append(fileSystemModel->filePath(index));
+            }
+
+            ui->removingButton->setEnabled(false);
+            setRemovingModule();
+            removingModule->remove(selectedObjectPathes);
+        }
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    setClickedFolderPath("");
-    setClickedFilePath("");
+    resetClickedPathes();
+    clearSelectionModels();
 }
 
 void TabModule::checkClickedObjectsPathes()
 {
     if (!clickedFolderPath.isEmpty())
     {
-	setCurrentFileInfo(QFileInfo(clickedFolderPath));
+        setCurrentFileInfo(QFileInfo(clickedFolderPath));
     }
     else if (!clickedFilePath.isEmpty())
     {
-	setCurrentFileInfo(QFileInfo(clickedFilePath));
+        setCurrentFileInfo(QFileInfo(clickedFilePath));
     }
     else
     {
-	throw ExceptionService("You was not choose a file or a folder!");
+        throw ExceptionService("You was not choose a file or a folder!");
     }
 }
 
 void TabModule::setRemovingModule()
 {
     removingModule = new RemovingModule(this);
-    QObject::connect(removingModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
-    QObject::connect(removingModule, SIGNAL(removingFailedSignal(QString)), this, SLOT(removingFailed(const QString&)));
+    QObject::connect(
+        removingModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
+    QObject::connect(removingModule,
+        SIGNAL(removingFailedSignal(QString)),
+        this,
+        SLOT(removingFailed(const QString &)));
 }
 
-void TabModule::removingFailed(const QString& exceptionInfo)
+void TabModule::removingFailed(const QString &exceptionInfo)
 {
     removingCompleted();
     QMessageBox::warning(this, "", exceptionInfo);
@@ -530,33 +579,50 @@ void TabModule::on_copyingButton_clicked()
 {
     try
     {
-	setTableViewFolders();
-	if (!leftTableViewFolder.absolutePath().contains(leftTableViewFolder.homePath())
-	    || !rightTableViewFolder.absolutePath().contains(rightTableViewFolder.homePath()))
-	{
-	    throw ExceptionService("There is no access to perform any operation in this folder!");
-	}
-	checkClickedObjectsPathes();
-	ui->copyingButton->setEnabled(false);
-	setCopyingModule();
-	copyingModule->copy(currentFileInfo.absoluteFilePath(), rightTableViewFolder.absolutePath());
+        setTableViewFolders();
+        if (!leftTableViewFolder.absolutePath().contains(leftTableViewFolder.homePath()) ||
+            !rightTableViewFolder.absolutePath().contains(rightTableViewFolder.homePath()))
+        {
+            throw ExceptionService("There is no access to perform any operation in this folder!");
+        }
+
+        QModelIndexList selectedIndexes = ui->leftTableView->selectionModel()->selectedIndexes();
+        if (selectedIndexes.isEmpty())
+        {
+            throw ExceptionService("You was not choose a file or a folder!");
+        }
+
+        QStringList selectedObjectPathes = QStringList();
+        for (const QModelIndex &index : selectedIndexes)
+        {
+            selectedObjectPathes.append(fileSystemModel->filePath(index));
+        }
+
+        checkClickedObjectsPathes();
+        ui->copyingButton->setEnabled(false);
+        setCopyingModule();
+        copyingModule->copy(selectedObjectPathes, rightTableViewFolder.absolutePath());
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    setClickedFolderPath("");
-    setClickedFilePath("");
+    resetClickedPathes();
+    clearSelectionModels();
 }
 
 void TabModule::setCopyingModule()
 {
     copyingModule = new CopyingModule(this);
-    QObject::connect(copyingModule, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
-    QObject::connect(copyingModule, SIGNAL(copyingFailedSignal(QString)), this, SLOT(copyingFailed(const QString&)));
+    QObject::connect(
+        copyingModule, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
+    QObject::connect(copyingModule,
+        SIGNAL(copyingFailedSignal(QString)),
+        this,
+        SLOT(copyingFailed(const QString &)));
 }
 
-void TabModule::copyingFailed(const QString& exceptionInfo)
+void TabModule::copyingFailed(const QString &exceptionInfo)
 {
     copyingCompleted();
     QMessageBox::warning(this, "", exceptionInfo);
@@ -572,33 +638,50 @@ void TabModule::on_replacingButton_clicked()
 {
     try
     {
-	setTableViewFolders();
-	if (!leftTableViewFolder.absolutePath().contains(leftTableViewFolder.homePath())
-	    || !rightTableViewFolder.absolutePath().contains(rightTableViewFolder.homePath()))
-	{
-	    throw ExceptionService("There is no access to perform any operation in this folder!");
-	}
-	checkClickedObjectsPathes();
-	ui->replacingButton->setEnabled(false);
-	setReplacingModule();
-	replacingModule->replace(currentFileInfo.absoluteFilePath(), rightTableViewFolder.absolutePath());
+        setTableViewFolders();
+        if (!leftTableViewFolder.absolutePath().contains(leftTableViewFolder.homePath()) ||
+            !rightTableViewFolder.absolutePath().contains(rightTableViewFolder.homePath()))
+        {
+            throw ExceptionService("There is no access to perform any operation in this folder!");
+        }
+
+        QModelIndexList selectedIndexes = ui->leftTableView->selectionModel()->selectedIndexes();
+        if (selectedIndexes.isEmpty())
+        {
+            throw ExceptionService("You was not choose a file or a folder!");
+        }
+
+        QStringList selectedObjectPathes = QStringList();
+        for (const QModelIndex &index : selectedIndexes)
+        {
+            selectedObjectPathes.append(fileSystemModel->filePath(index));
+        }
+
+        checkClickedObjectsPathes();
+        ui->replacingButton->setEnabled(false);
+        setReplacingModule();
+        replacingModule->replace(selectedObjectPathes, rightTableViewFolder.absolutePath());
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    setClickedFolderPath("");
-    setClickedFilePath("");
+    resetClickedPathes();
+    clearSelectionModels();
 }
 
 void TabModule::setReplacingModule()
 {
     replacingModule = new ReplacingModule(this);
-    QObject::connect(replacingModule, SIGNAL(replacingCompletedSignal()), this, SLOT(replacingCompleted()));
-    QObject::connect(replacingModule, SIGNAL(replacingFailedSignal(QString)), this, SLOT(replacingFailed(const QString&)));
+    QObject::connect(
+        replacingModule, SIGNAL(replacingCompletedSignal()), this, SLOT(replacingCompleted()));
+    QObject::connect(replacingModule,
+        SIGNAL(replacingFailedSignal(QString)),
+        this,
+        SLOT(replacingFailed(const QString &)));
 }
 
-void TabModule::replacingFailed(const QString& exceptionInfo)
+void TabModule::replacingFailed(const QString &exceptionInfo)
 {
     replacingCompleted();
     QMessageBox::warning(this, "", exceptionInfo);
@@ -614,19 +697,19 @@ void TabModule::on_renamingButton_clicked()
 {
     try
     {
-	setTableViewFolders();
-	checkCurrentFolder();
-	checkClickedObjectsPathes();
-	NamingModule namingModule;
-	namingModule.setCurrentFolder(currentFolder);
-	namingModule.rename(currentFileInfo.absoluteFilePath());
+        setTableViewFolders();
+        checkCurrentFolder();
+        checkClickedObjectsPathes();
+        NamingModule namingModule;
+        namingModule.setCurrentFolder(currentFolder);
+        namingModule.rename(currentFileInfo.absoluteFilePath());
     }
     catch (ExceptionService exceptionService)
     {
-	QMessageBox::warning(this, " ", exceptionService.getInfo());
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    setClickedFolderPath("");
-    setClickedFilePath("");
+    resetClickedPathes();
+    clearSelectionModels();
 }
 
 void TabModule::on_showHiddenButton_clicked()
@@ -634,55 +717,56 @@ void TabModule::on_showHiddenButton_clicked()
     static bool showHidden = false;
     if (showHidden)
     {
-	fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::NoDotAndDotDot);
-	ui->showHiddenButton->setToolTip("Show Hidden");
-	showHidden = false;
+        fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::NoDotAndDotDot);
+        ui->showHiddenButton->setToolTip("Show Hidden");
+        showHidden = false;
     }
     else
     {
-	fileSystemModel->setFilter(QDir::QDir::AllEntries | QDir::QDir::NoDotAndDotDot | QDir::QDir::Hidden);
-	ui->showHiddenButton->setToolTip("Don't Show Hidden");
-	showHidden = true;
+        fileSystemModel->setFilter(
+            QDir::QDir::AllEntries | QDir::QDir::NoDotAndDotDot | QDir::QDir::Hidden);
+        ui->showHiddenButton->setToolTip("Don't Show Hidden");
+        showHidden = true;
     }
 }
 
 void TabModule::on_sortingBox_currentIndexChanged(int index)
 {
-    QHeaderView* currentHeaderView;
+    QHeaderView *currentHeaderView;
     if (currentTableView == ui->leftTableView)
     {
-	currentHeaderView = ui->leftTableView->horizontalHeader();
+        currentHeaderView = ui->leftTableView->horizontalHeader();
     }
     else
     {
-	currentHeaderView = ui->rightTableView->horizontalHeader();
+        currentHeaderView = ui->rightTableView->horizontalHeader();
     }
 
     switch (index)
     {
     case 0:
-	currentHeaderView->setSortIndicator(0, Qt::AscendingOrder);
-	currentTableView->sortByColumn(0, Qt::AscendingOrder);
-	break;
+        currentHeaderView->setSortIndicator(0, Qt::AscendingOrder);
+        currentTableView->sortByColumn(0, Qt::AscendingOrder);
+        break;
     case 1:
-	currentHeaderView->setSortIndicator(0, Qt::DescendingOrder);
-	currentTableView->sortByColumn(0, Qt::DescendingOrder);
-	break;
+        currentHeaderView->setSortIndicator(0, Qt::DescendingOrder);
+        currentTableView->sortByColumn(0, Qt::DescendingOrder);
+        break;
     case 2:
-	currentHeaderView->setSortIndicator(1, Qt::AscendingOrder);
-	currentTableView->sortByColumn(1, Qt::AscendingOrder);
-	break;
+        currentHeaderView->setSortIndicator(1, Qt::AscendingOrder);
+        currentTableView->sortByColumn(1, Qt::AscendingOrder);
+        break;
     case 3:
-	currentHeaderView->setSortIndicator(2, Qt::AscendingOrder);
-	currentTableView->sortByColumn(2, Qt::AscendingOrder);
-	break;
+        currentHeaderView->setSortIndicator(2, Qt::AscendingOrder);
+        currentTableView->sortByColumn(2, Qt::AscendingOrder);
+        break;
     case 4:
-	currentHeaderView->setSortIndicator(3, Qt::AscendingOrder);
-	currentTableView->sortByColumn(3, Qt::AscendingOrder);
-	break;
+        currentHeaderView->setSortIndicator(3, Qt::AscendingOrder);
+        currentTableView->sortByColumn(3, Qt::AscendingOrder);
+        break;
     case 5:
-	currentHeaderView->setSortIndicator(3, Qt::DescendingOrder);
-	currentTableView->sortByColumn(3, Qt::DescendingOrder);
-	break;
+        currentHeaderView->setSortIndicator(3, Qt::DescendingOrder);
+        currentTableView->sortByColumn(3, Qt::DescendingOrder);
+        break;
     }
 }

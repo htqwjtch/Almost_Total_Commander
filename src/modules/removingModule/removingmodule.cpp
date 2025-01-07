@@ -1,6 +1,6 @@
 #include "removingmodule.h"
 
-RemovingModule::RemovingModule(QObject* parent) : QObject{parent}
+RemovingModule::RemovingModule(QObject *parent) : QObject{parent}
 {
     allocateMemory();
     connectSignalsWithSlots();
@@ -16,9 +16,16 @@ void RemovingModule::allocateMemory()
 void RemovingModule::connectSignalsWithSlots()
 {
     QObject::connect(this, SIGNAL(destroyed()), threadForRemoving, SLOT(quit()));
-    QObject::connect(this, SIGNAL(startRemovingSignal(QString)), removingService, SLOT(startRemoving(const QString&)));
-    QObject::connect(removingService, SIGNAL(removingFailedSignal(QString)), this, SLOT(removingFailed(const QString&)));
-    QObject::connect(removingService, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
+    QObject::connect(this,
+        SIGNAL(startRemovingSignal(QStringList)),
+        removingService,
+        SLOT(startRemoving(const QStringList &)));
+    QObject::connect(removingService,
+        SIGNAL(removingFailedSignal(QString)),
+        this,
+        SLOT(removingFailed(const QString &)));
+    QObject::connect(
+        removingService, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
 }
 
 void RemovingModule::setThreadForRemoving()
@@ -35,17 +42,14 @@ RemovingModule::~RemovingModule()
     delete removingService;
 }
 
-void RemovingModule::remove(const QString& removingObjectPath)
+void RemovingModule::remove(const QStringList &removingObjectPathes)
 {
-    emit startRemovingSignal(removingObjectPath);
+    emit startRemovingSignal(removingObjectPathes);
 }
 
-void RemovingModule::removingCompleted()
-{
-    emit removingCompletedSignal();
-}
+void RemovingModule::removingCompleted() { emit removingCompletedSignal(); }
 
-void RemovingModule::removingFailed(const QString& exceptionInfo)
+void RemovingModule::removingFailed(const QString &exceptionInfo)
 {
     emit removingFailedSignal(exceptionInfo);
 }

@@ -5,29 +5,29 @@
 
 namespace Ui
 {
-    class NamingNotSymbolLinkModule;
+class NamingNotSymbolLinkModule;
 }
 
 class NamingNotSymbolLinkModule : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit NamingNotSymbolLinkModule(QWidget* parent = nullptr);
+  public:
+    explicit NamingNotSymbolLinkModule(QWidget *parent = nullptr);
     ~NamingNotSymbolLinkModule();
     QString getName();
 
-private:
+  private:
     void setUserInterface();
 
-private slots:
-    void on_nameEdit_textEdited(const QString& arg1);
+  private slots:
+    void on_nameEdit_textEdited(const QString &arg1);
     void on_nameEdit_returnPressed();
     void on_okButton_clicked();
     void on_cancelButton_clicked();
 
-private:
-    Ui::NamingNotSymbolLinkModule* ui;
+  private:
+    Ui::NamingNotSymbolLinkModule *ui;
     QString name;
 };
 

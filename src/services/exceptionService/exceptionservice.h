@@ -5,11 +5,11 @@
 
 class ExceptionService
 {
-public:
+  public:
     ExceptionService(QString exceptionInfo);
     const QString getInfo() const noexcept;
 
-private:
+  private:
     QString exceptionInfo = "Something went wrong";
 };
 

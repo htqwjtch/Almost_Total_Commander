@@ -8,16 +8,16 @@ class SearchingService : public QObject
 {
     Q_OBJECT
 
-public:
-    explicit SearchingService(QObject* parent = nullptr);
+  public:
+    explicit SearchingService(QObject *parent = nullptr);
 
-public slots:
-    void startSearching(const QString&, const QString&);
+  public slots:
+    void startSearching(const QString &, const QString &);
 
-private:
-    QStringList search(const QString&, QDir&);
+  private:
+    QStringList search(const QString &, QDir &);
 
-signals:
+  signals:
     void searchingCompletedSignal(QStringList);
 };
 

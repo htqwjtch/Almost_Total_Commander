@@ -9,7 +9,7 @@
 QT_BEGIN_NAMESPACE
 namespace Ui
 {
-    class MainModule;
+class MainModule;
 }
 QT_END_NAMESPACE
 
@@ -17,16 +17,16 @@ class MainModule : public QMainWindow
 {
     Q_OBJECT
 
-public:
-    explicit MainModule(QWidget* parent = nullptr);
+  public:
+    explicit MainModule(QWidget *parent = nullptr);
     ~MainModule();
 
-private:
+  private:
     void setUserInterface();
     void setAddTabButton();
     void setAddTabButtonTab();
 
-private slots:
+  private slots:
     void on_actionAdd_Tab_triggered();
     void addTab();
     void on_actionClose_Tab_triggered();
@@ -42,10 +42,10 @@ private slots:
     void on_actionRename_triggered();
     void on_actionShow_Hidden_triggered();
 
-private:
-    Ui::MainModule* ui;
-    QToolButton* addTabButton;
-    TabModule* tabModule;
+  private:
+    Ui::MainModule *ui;
+    QToolButton *addTabButton;
+    TabModule *tabModule;
 };
 
 #endif // MAINMODULE_H

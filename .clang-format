@@ -1,0 +1,56 @@
+# .clang-format
+---
+Language: Cpp
+BasedOnStyle: LLVM
+
+# Main settings
+IndentWidth: 4                   # Indentation with 4 spaces (default in Rust)
+TabWidth: 4                      # Tab width (matches Rust)
+UseTab: Never                    # Use spaces instead of tabs
+
+# Bracket style — Allman
+BraceWrapping:
+  AfterClass: true               # Opening brace on a new line for classes
+  AfterFunction: true            # Opening brace on a new line for functions
+  AfterNamespace: true           # Opening brace on a new line for namespaces
+  BeforeElse: true               # "else" on a new line
+
+# Line and indentation settings
+ColumnLimit: 100                 # Line length limit (similar to 100 in Rust)
+AlignAfterOpenBracket: DontAlign # Do not align arguments with the opening bracket
+AlignOperands: false             # Do not align operands
+BinPackArguments: false          # Each argument on a new line
+BinPackParameters: false         # Each parameter on a new line
+
+# Long lines and arguments
+BreakBeforeBraces: Allman        # Brace style — Allman (as in Rust)
+BreakConstructorInitializers: AfterColon # Constructor initializers on a new line after ":"
+
+# Modifiers and indentation
+SpacesInAngles: false            # No spaces inside <>
+SpaceBeforeParens: ControlStatements # Space before parentheses in control statements
+SpaceBeforeRangeBasedForLoopColon: true # Space before the colon in range-based for loops
+Cpp11BracedListStyle: true       # Use {} for initializations
+
+# Other settings
+AllowAllParametersOfDeclarationOnNextLine: false # Do not move all parameters to the next line
+
+# For Ubuntu and Debian-based systems:
+#
+# Install clang-format:
+#
+# `apt-get install clang-format`
+#
+# Navigate to the project root folder 
+# Format all `.cpp` and `.h` files in the project:
+#
+# `find . -name "*.cpp" -o -name "*.h" | xargs clang-format -i`
+#
+# If you want to check changes before applying them, you can use the `-output-replacements-xml` flag:
+# 
+# `find . -name "*.cpp" -o -name "*.h" | xargs clang-format -output-replacements-xml`
+#
+# To output changes to a file instead of overwriting files, use:
+#
+# `clang-format -i -style=file -output-replacements-file=formatted_files.diff`
+

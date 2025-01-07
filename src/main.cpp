@@ -1,7 +1,8 @@
-#include "modules/mainModule/mainmodule.h"
 #include <QApplication>
 
-int main(int argc, char* argv[])
+#include "modules/mainModule/mainmodule.h"
+
+int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainModule mainModule;
