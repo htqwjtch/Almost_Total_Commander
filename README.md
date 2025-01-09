@@ -20,8 +20,10 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
 - [ ] Drag&Drop
 - [ ] Create, view, edit an archive
 - [ ] Bookmarks for folders
-- [ ] Light/Dark theme modes
+- [ ] Light/Dark theme mode
 - [ ] Color the file names by extensions
+- [ ] Recycle Bin
+- [ ] Revert changes
 
 ## How to start
 ### 1. Install the dependencies
@@ -36,12 +38,12 @@ apt install build-essential qt5-qmake qtbase5-dev qtbase5-dev-tools qtchooser
 ```
 
 ### 2. Build the project
-Create the `build` folder in the root folder of the project and navigate there:
+Create the `build` folder in the root folder of the project and navigate to it:
 ```
 mkdir build
 cd build
 ```
-Run there:
+Run the build:
 ```
 qmake ../Almost_Total_Commander.pro
 make
