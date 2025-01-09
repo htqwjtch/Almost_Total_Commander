@@ -1,0 +1,19 @@
+Trash (Recycle Bin)
+Path: ~/.local/share/Trash(expunged, files, info(about files))
+
+When run the app, check TrashPath (if does not exist - disable and notify user when it will be clicked)
+
+Trash in the Go_to drop menu
+
+Dialog Window with two buttons (Restore and Remove all) - TrashModule
+
+When user press RemovingButton, all files, if it is possible, move to Trash.
+If it impossible, notify user and ask if he wants to remove files permanently.
+
+WORKING WITH ALL FILES!!!
+if (!QFile::moveToTrash(removingObjectPath))
+{
+    emit removingFailedSignal("Removing failed!");
+}
+
+All removing through TrashModule (refactor tabModule)
