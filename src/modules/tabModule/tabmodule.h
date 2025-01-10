@@ -5,9 +5,9 @@
 #include "../copyingModule/copyingmodule.h"
 #include "../creatingModule/creatingmodule.h"
 #include "../namingModules/namingmodule.h"
-#include "../removingModule/removingmodule.h"
 #include "../replacingModule/replacingmodule.h"
 #include "../searchingModule/searchingmodule.h"
+#include "../trashModule/trashmodule.h"
 
 #include <QDateTime>
 #include <QDesktopServices>
@@ -46,6 +46,7 @@ class TabModule : public QDialog
     void setButtonStyleSheets();
     void connectSignalsWithSlots();
     void setCurrenTableView(QTableView *);
+    void setTrashModule();
 
     void setCurrentFileInfo(QFileInfo);
     void setClickedFolderPath(const QString &);
@@ -80,28 +81,39 @@ class TabModule : public QDialog
     void setReplacingModule();
 
   private slots:
+    void on_sortingBox_currentIndexChanged(int index);
+
     void on_leftAboveButton_clicked();
     void on_rightAboveButton_clicked();
+
     void on_leftTableView_clicked(const QModelIndex &index);
     void on_leftTableView_doubleClicked(const QModelIndex &index);
     void on_leftLineEdit_textEdited(const QString &arg1);
+
     void on_searchingLineEdit_textEdited(const QString &arg1);
     void on_searchingLineEdit_returnPressed();
     void on_searchingButton_clicked();
     void searchingCompleted();
+
     void on_creatingButton_clicked();
+
     void on_removingButton_clicked();
     void removingFailed(const QString &);
     void removingCompleted();
+
     void on_copyingButton_clicked();
     void copyingFailed(const QString &);
     void copyingCompleted();
+
     void on_replacingButton_clicked();
     void replacingFailed(const QString &);
     void replacingCompleted();
+
     void on_renamingButton_clicked();
+
     void on_showHiddenButton_clicked();
-    void on_sortingBox_currentIndexChanged(int index);
+
+    void on_trashButton_clicked();
 
   private:
     Ui::TabModule *ui;
@@ -118,8 +130,9 @@ class TabModule : public QDialog
     QTableView *currentTableView;
     QLineEdit *currentLineEdit;
 
+    TrashModule *trashModule;
+
     CopyingModule *copyingModule;
-    RemovingModule *removingModule;
     ReplacingModule *replacingModule;
     SearchingModule *searchingModule;
 

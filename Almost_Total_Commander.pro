@@ -20,6 +20,7 @@ SOURCES += \
     src/modules/replacingModule/replacingmodule.cpp \
     src/modules/searchingModule/searchingmodule.cpp \
     src/modules/tabModule/tabmodule.cpp \
+    src/modules/trashModule/trashmodule.cpp \
     src/services/copyingService/copyingservice.cpp \
     src/services/creatingService/creatingservice.cpp \
     src/services/exceptionService/exceptionservice.cpp \
@@ -37,6 +38,7 @@ HEADERS += \
     src/modules/replacingModule/replacingmodule.h \
     src/modules/searchingModule/searchingmodule.h \
     src/modules/tabModule/tabmodule.h \
+    src/modules/trashModule/trashmodule.h \
     src/services/copyingService/copyingservice.h \
     src/services/creatingService/creatingservice.h \
     src/services/exceptionService/exceptionservice.h \
@@ -49,7 +51,8 @@ FORMS += \
     src/modules/namingModules/namingNotSymbolLinkModule/namingnotsymbollinkmodule.ui \
     src/modules/namingModules/namingSymbolLinkModule/namingsymbollinkmodule.ui \
     src/modules/searchingModule/searchingmodule.ui \
-    src/modules/tabModule/tabmodule.ui
+    src/modules/tabModule/tabmodule.ui \
+    src/modules/trashModule/trashmodule.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

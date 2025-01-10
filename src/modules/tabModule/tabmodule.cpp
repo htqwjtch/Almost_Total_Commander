@@ -10,6 +10,7 @@ TabModule::TabModule(QWidget *parent) : QDialog(parent), ui(new Ui::TabModule)
     connectSignalsWithSlots();
     setCurrenTableView(ui->leftTableView);
     on_sortingBox_currentIndexChanged(0);
+    setTrashModule();
 }
 
 void TabModule::setFileSystemModel()
@@ -96,10 +97,11 @@ void TabModule::setToolTips()
     ui->copyingButton->setToolTip("Copy");
     ui->replacingButton->setToolTip("Replace");
     ui->renamingButton->setToolTip("Rename");
-    ui->showHiddenButton->setToolTip("Show Hidden");
     ui->leftAboveButton->setToolTip("Parent Folder");
     ui->rightAboveButton->setToolTip("Parent Folder");
     ui->sortingBox->setToolTip("Sort By");
+    ui->showHiddenButton->setToolTip("Show Hidden");
+    ui->trashButton->setToolTip("Trash");
 }
 
 void TabModule::setButtonStyleSheets()
@@ -140,6 +142,12 @@ void TabModule::setButtonStyleSheets()
                                         "QPushButton:hover {"
                                         "    border: 1px ridge grey;"
                                         "}");
+    ui->trashButton->setStyleSheet("QPushButton {"
+                                   "    border: none;"
+                                   "}"
+                                   "QPushButton:hover {"
+                                   "    border: 1px ridge grey;"
+                                   "}");
 }
 
 void TabModule::connectSignalsWithSlots()
@@ -170,8 +178,73 @@ void TabModule::setCurrenTableView(QTableView *currentTableView)
     this->currentTableView = currentTableView;
 }
 
+void TabModule::on_sortingBox_currentIndexChanged(int index)
+{
+    QHeaderView *currentHeaderView;
+    if (currentTableView == ui->leftTableView)
+    {
+        currentHeaderView = ui->leftTableView->horizontalHeader();
+    }
+    else
+    {
+        currentHeaderView = ui->rightTableView->horizontalHeader();
+    }
+
+    switch (index)
+    {
+    case 0:
+        currentHeaderView->setSortIndicator(0, Qt::AscendingOrder);
+        currentTableView->sortByColumn(0, Qt::AscendingOrder);
+        break;
+    case 1:
+        currentHeaderView->setSortIndicator(0, Qt::DescendingOrder);
+        currentTableView->sortByColumn(0, Qt::DescendingOrder);
+        break;
+    case 2:
+        currentHeaderView->setSortIndicator(1, Qt::AscendingOrder);
+        currentTableView->sortByColumn(1, Qt::AscendingOrder);
+        break;
+    case 3:
+        currentHeaderView->setSortIndicator(2, Qt::AscendingOrder);
+        currentTableView->sortByColumn(2, Qt::AscendingOrder);
+        break;
+    case 4:
+        currentHeaderView->setSortIndicator(3, Qt::AscendingOrder);
+        currentTableView->sortByColumn(3, Qt::AscendingOrder);
+        break;
+    case 5:
+        currentHeaderView->setSortIndicator(3, Qt::DescendingOrder);
+        currentTableView->sortByColumn(3, Qt::DescendingOrder);
+        break;
+    }
+}
+
+void TabModule::setTrashModule()
+{
+    trashModule = new TrashModule(this);
+    QObject::connect(
+        trashModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
+    QObject::connect(trashModule,
+        SIGNAL(removingFailedSignal(QString)),
+        this,
+        SLOT(removingFailed(const QString &)));
+}
+
+void TabModule::removingFailed(const QString &exceptionInfo)
+{
+    removingCompleted();
+    QMessageBox::warning(this, "", exceptionInfo);
+}
+
+void TabModule::removingCompleted()
+{
+    ui->removingButton->setEnabled(true);
+    ui->trashButton->setEnabled(true);
+}
+
 TabModule::~TabModule()
 {
+    delete trashModule;
     delete fileSystemModel;
     delete ui;
 }
@@ -505,27 +578,41 @@ void TabModule::on_removingButton_clicked()
     {
         setTableViewFolders();
         checkCurrentFolder();
-        checkClickedObjectsPathes();
-        QMessageBox::StandardButton answerButton = QMessageBox::question(
-            this, " ", "Do you want to perform removing?", QMessageBox::Cancel | QMessageBox::Ok);
-        if (answerButton == QMessageBox::Ok)
+
+        QModelIndexList selectedIndexes = currentTableView->selectionModel()->selectedIndexes();
+        if (selectedIndexes.isEmpty())
         {
+            throw ExceptionService("You was not choose a file or a folder!");
+        }
 
-            QModelIndexList selectedIndexes = currentTableView->selectionModel()->selectedIndexes();
-            if (selectedIndexes.isEmpty())
+        QStringList selectedObjectPathes = QStringList();
+        for (const QModelIndex &index : selectedIndexes)
+        {
+            selectedObjectPathes.append(fileSystemModel->filePath(index));
+        }
+
+        checkClickedObjectsPathes();
+        ui->removingButton->setEnabled(false);
+        ui->trashButton->setEnabled(false);
+        if (trashModule->checkTrash())
+        {
+            trashModule->moveToTrash(selectedObjectPathes);
+        }
+        else
+        {
+            QMessageBox::StandardButton answerButton = QMessageBox::question(this,
+                " ",
+                "Trash is unavailable! Do you want to perform removing permanently?",
+                QMessageBox::Cancel | QMessageBox::Ok);
+            if (answerButton == QMessageBox::Ok)
             {
-                throw ExceptionService("You was not choose a file or a folder!");
+                trashModule->removePermanently(selectedObjectPathes);
             }
-
-            QStringList selectedObjectPathes = QStringList();
-            for (const QModelIndex &index : selectedIndexes)
+            else
             {
-                selectedObjectPathes.append(fileSystemModel->filePath(index));
+                ui->removingButton->setEnabled(true);
+                ui->trashButton->setEnabled(true);
             }
-
-            ui->removingButton->setEnabled(false);
-            setRemovingModule();
-            removingModule->remove(selectedObjectPathes);
         }
     }
     catch (ExceptionService exceptionService)
@@ -550,29 +637,6 @@ void TabModule::checkClickedObjectsPathes()
     {
         throw ExceptionService("You was not choose a file or a folder!");
     }
-}
-
-void TabModule::setRemovingModule()
-{
-    removingModule = new RemovingModule(this);
-    QObject::connect(
-        removingModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
-    QObject::connect(removingModule,
-        SIGNAL(removingFailedSignal(QString)),
-        this,
-        SLOT(removingFailed(const QString &)));
-}
-
-void TabModule::removingFailed(const QString &exceptionInfo)
-{
-    removingCompleted();
-    QMessageBox::warning(this, "", exceptionInfo);
-}
-
-void TabModule::removingCompleted()
-{
-    ui->removingButton->setEnabled(true);
-    delete removingModule;
 }
 
 void TabModule::on_copyingButton_clicked()
@@ -730,43 +794,22 @@ void TabModule::on_showHiddenButton_clicked()
     }
 }
 
-void TabModule::on_sortingBox_currentIndexChanged(int index)
+void TabModule::on_trashButton_clicked()
 {
-    QHeaderView *currentHeaderView;
-    if (currentTableView == ui->leftTableView)
+    try
     {
-        currentHeaderView = ui->leftTableView->horizontalHeader();
+        if (trashModule->checkTrash())
+        {
+        }
+        else
+        {
+            throw ExceptionService("Trash is unavalable!");
+        }
     }
-    else
+    catch (ExceptionService exceptionService)
     {
-        currentHeaderView = ui->rightTableView->horizontalHeader();
+        QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-
-    switch (index)
-    {
-    case 0:
-        currentHeaderView->setSortIndicator(0, Qt::AscendingOrder);
-        currentTableView->sortByColumn(0, Qt::AscendingOrder);
-        break;
-    case 1:
-        currentHeaderView->setSortIndicator(0, Qt::DescendingOrder);
-        currentTableView->sortByColumn(0, Qt::DescendingOrder);
-        break;
-    case 2:
-        currentHeaderView->setSortIndicator(1, Qt::AscendingOrder);
-        currentTableView->sortByColumn(1, Qt::AscendingOrder);
-        break;
-    case 3:
-        currentHeaderView->setSortIndicator(2, Qt::AscendingOrder);
-        currentTableView->sortByColumn(2, Qt::AscendingOrder);
-        break;
-    case 4:
-        currentHeaderView->setSortIndicator(3, Qt::AscendingOrder);
-        currentTableView->sortByColumn(3, Qt::AscendingOrder);
-        break;
-    case 5:
-        currentHeaderView->setSortIndicator(3, Qt::DescendingOrder);
-        currentTableView->sortByColumn(3, Qt::DescendingOrder);
-        break;
-    }
+    resetClickedPathes();
+    clearSelectionModels();
 }
