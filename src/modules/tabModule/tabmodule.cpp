@@ -800,6 +800,7 @@ void TabModule::on_trashButton_clicked()
     {
         if (trashModule->checkTrash())
         {
+            trashModule->exec();
         }
         else
         {

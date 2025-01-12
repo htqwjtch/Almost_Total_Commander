@@ -1,9 +1,16 @@
 #ifndef TRASHMODULE_H
 #define TRASHMODULE_H
 
+#include "../../services/exceptionService/exceptionservice.h"
 #include "../removingModule/removingmodule.h"
 
+#include <QDebug>
+#include <QDesktopServices>
 #include <QDialog>
+#include <QFile>
+#include <QFileSystemModel>
+#include <QMessageBox>
+#include <QUrl>
 
 namespace Ui
 {
@@ -22,6 +29,22 @@ class TrashModule : public QDialog
     void removePermanently(const QStringList &);
 
   private:
+    void setFileSystemModel();
+    void setUserInterFace();
+    void setTableView();
+    void setToolTips();
+    void setButtonStyleSheets();
+
+    void setCurrentFileInfo(QFileInfo);
+    void setLabelGridLayoutForFolder();
+    void setTypeLabel();
+    void setSizeLabelForFolder();
+    void setLastModeDateLabel();
+    void setLabelGridLayoutForFile();
+    void setSizeLabelForFile();
+
+    void restore(const QStringList &);
+
     void setRemovingModule();
 
   private slots:
@@ -36,8 +59,16 @@ class TrashModule : public QDialog
     void removingFailed(const QString &);
     void removingCompleted();
 
+    void on_aboveButton_clicked();
+
   private:
     Ui::TrashModule *ui;
+
+    QFileSystemModel *fileSystemModel;
+
+    QString rootPath = QDir::homePath() + "/.local/share/Trash/files";
+
+    QFileInfo currentFileInfo;
 
     RemovingModule *removingModule;
 

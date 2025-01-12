@@ -22,7 +22,7 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
 - [ ] Bookmarks for folders
 - [ ] Light/Dark theme mode
 - [ ] Color the file names by extensions
-- [ ] Recycle Bin
+- [x] Recycle Bin
 - [ ] Revert changes
 
 ## How to start
