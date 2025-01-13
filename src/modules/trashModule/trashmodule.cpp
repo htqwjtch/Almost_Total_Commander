@@ -22,6 +22,7 @@ void TrashModule::setUserInterFace()
     setWindowTitle("Trash");
     setTableView();
     ui->tableView->setRootIndex(fileSystemModel->index(rootPath));
+    ui->tableView->setItemDelegate(new ColorDelegate(ui->tableView));
     setToolTips();
     // setButtonStyleSheets();
 }

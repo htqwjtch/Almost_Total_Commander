@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     src/main.cpp \
+    src/modules/colorDelegate/colordelegate.cpp \
     src/modules/copyingModule/copyingmodule.cpp \
     src/modules/creatingModule/creatingmodule.cpp \
     src/modules/mainModule/mainmodule.cpp \
@@ -28,6 +29,7 @@ SOURCES += \
     src/services/searchingService/searchingservice.cpp
 
 HEADERS += \
+    src/modules/colorDelegate/colordelegate.h \
     src/modules/copyingModule/copyingmodule.h \
     src/modules/creatingModule/creatingmodule.h \
     src/modules/mainModule/mainmodule.h \

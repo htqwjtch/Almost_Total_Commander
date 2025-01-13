@@ -21,7 +21,7 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
 - [ ] ~~Create, view, edit an archive~~
 - [ ] Bookmarks for folders
 - [ ] ~~Light/Dark theme mode~~
-- [ ] Color the file names by extensions
+- [x] Color the file names by file types
 - [x] Recycle Bin
 - [ ] Revert changes
 

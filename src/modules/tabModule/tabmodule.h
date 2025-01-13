@@ -2,6 +2,7 @@
 #define TABMODULE_H
 
 #include "../../services/exceptionService/exceptionservice.h"
+#include "../colorDelegate/colordelegate.h"
 #include "../copyingModule/copyingmodule.h"
 #include "../creatingModule/creatingmodule.h"
 #include "../namingModules/namingmodule.h"
@@ -41,6 +42,7 @@ class TabModule : public QDialog
     void setTableViews();
     void setTableViewFolders();
     void setTableViewRootIndexes();
+    void setTableViewDelegates();
     void setLineEditTexts();
     void setToolTips();
     void setButtonStyleSheets();

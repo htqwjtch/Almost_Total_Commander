@@ -29,6 +29,7 @@ void TabModule::setUserInterFace()
     leftTableViewFolder.cd(leftTableViewFolder.homePath());
     rightTableViewFolder.cd(rightTableViewFolder.homePath());
     setTableViewRootIndexes();
+    setTableViewDelegates();
     setLineEditTexts();
     setToolTips();
     setButtonStyleSheets();
@@ -81,6 +82,12 @@ void TabModule::setTableViewRootIndexes()
 {
     ui->leftTableView->setRootIndex(fileSystemModel->index(leftTableViewFolder.absolutePath()));
     ui->rightTableView->setRootIndex(fileSystemModel->index(rightTableViewFolder.absolutePath()));
+}
+
+void TabModule::setTableViewDelegates()
+{
+    ui->leftTableView->setItemDelegate(new ColorDelegate(ui->leftTableView));
+    ui->rightTableView->setItemDelegate(new ColorDelegate(ui->rightTableView));
 }
 
 void TabModule::setLineEditTexts()

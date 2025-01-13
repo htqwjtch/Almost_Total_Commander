@@ -2,6 +2,7 @@
 #define TRASHMODULE_H
 
 #include "../../services/exceptionService/exceptionservice.h"
+#include "../colorDelegate/colordelegate.h"
 #include "../removingModule/removingmodule.h"
 
 #include <QDebug>
