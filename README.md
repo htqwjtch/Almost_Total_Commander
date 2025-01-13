@@ -18,9 +18,9 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
 - [x] Hotkeys for operations (view in "Actions" drop-down menu)
 - [x] Select multiple objects 
 - [ ] Drag&Drop
-- [ ] Create, view, edit an archive
+- [ ] ~~Create, view, edit an archive~~
 - [ ] Bookmarks for folders
-- [ ] Light/Dark theme mode
+- [ ] ~~Light/Dark theme mode~~
 - [ ] Color the file names by extensions
 - [x] Recycle Bin
 - [ ] Revert changes
