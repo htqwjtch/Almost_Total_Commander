@@ -9,3 +9,5 @@ Refactoring
 2. Change all exception messages to "Failed to ..." as possible
 3. Move unused #includes from .h files to .cpp files
 4. Add empty strings to large methods (or add more submethods)
+5. Change all "symbol..." to "symbolic..." for links
+6. Change keyboard shortcuts
