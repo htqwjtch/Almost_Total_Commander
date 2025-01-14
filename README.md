@@ -16,14 +16,14 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
 - [x] Show hidden files 
 - [x] Sort files
 - [x] Hotkeys for operations (view in "Actions" drop-down menu)
-- [x] Select multiple objects 
+- [x] Select multiple objects
+- [x] Color the file names by file types
+- [x] Recycle Bin
+- [ ] Revert changes
 - [ ] Drag&Drop
 - [ ] ~~Create, view, edit an archive~~
 - [ ] ~~Bookmarks for folders~~
 - [ ] ~~Light/Dark theme mode~~
-- [x] Color the file names by file types
-- [x] Recycle Bin
-- [ ] Revert changes
 
 ## How to start
 ### 1. Install the dependencies
