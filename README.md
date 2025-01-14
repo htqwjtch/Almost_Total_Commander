@@ -15,7 +15,7 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
       (create, delete, copy, move, rename, search)
 - [x] Show hidden files 
 - [x] Sort files
-- [x] Hotkeys for operations (view in "Actions" drop-down menu)
+- [x] Keyboard shortcuts for operations (view in "Actions" drop-down menu)
 - [x] Select multiple objects
 - [x] Color the file names by file types
 - [x] Recycle Bin
