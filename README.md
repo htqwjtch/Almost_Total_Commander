@@ -19,7 +19,7 @@ A simple tabbed file manager, inspired by the functionality of Total Commander.
 - [x] Select multiple objects 
 - [ ] Drag&Drop
 - [ ] ~~Create, view, edit an archive~~
-- [ ] Bookmarks for folders
+- [ ] ~~Bookmarks for folders~~
 - [ ] ~~Light/Dark theme mode~~
 - [x] Color the file names by file types
 - [x] Recycle Bin
