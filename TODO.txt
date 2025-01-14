@@ -1,3 +1,8 @@
+Revert changes
+
+1. Temp file (QTemporaryFile) with diffs of files after and before(stack): create in app start and delete in app finish 
+2. Hotkey: Ctrl+Z
+
 Refactoring
 
 1. Remove clicked pathes in tabModule
