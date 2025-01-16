@@ -8,11 +8,12 @@
 #include <QDir>
 #include <QMessageBox>
 
-class NamingModule
+class NamingModule : public QObject
 {
+    Q_OBJECT
+
   public:
-    NamingModule() = default;
-    void setCurrentFolder(QDir &);
+    explicit NamingModule(QDir &, QObject *parent = nullptr);
     void setNameAndPathForNotSymbolLink();
     void setNameAndPathesForSymbolLink();
     QString getName();
@@ -30,6 +31,9 @@ class NamingModule
     QString name = "";
     QString path = "";
     QString linkedPath = "";
+
+  signals:
+    void namingCompletedSignal(QString, QString, QString);
 };
 
 #endif // NAMINGMODULE_H

@@ -10,6 +10,7 @@
 #include <QDialog>
 #include <QFile>
 #include <QFileSystemModel>
+#include <QMap>
 #include <QMessageBox>
 #include <QUrl>
 
@@ -28,6 +29,7 @@ class TrashModule : public QDialog
     bool checkTrash();
     void moveToTrash(const QStringList &);
     void removePermanently(const QStringList &);
+    void restore(const QStringList &);
 
   private:
     void setFileSystemModel();
@@ -44,8 +46,6 @@ class TrashModule : public QDialog
     void setLabelGridLayoutForFile();
     void setSizeLabelForFile();
 
-    void restore(const QStringList &);
-
     void setRemovingModule();
 
   private slots:
@@ -57,7 +57,7 @@ class TrashModule : public QDialog
 
     void on_tableView_doubleClicked(const QModelIndex &index);
 
-    void removingFailed(const QString &);
+    void removingFailed();
     void removingCompleted();
 
     void on_aboveButton_clicked();
@@ -75,7 +75,9 @@ class TrashModule : public QDialog
 
   signals:
     void removingCompletedSignal();
-    void removingFailedSignal(QString);
+    void removingFailedSignal();
+    void movingToTrashCompletedSignal(QStringList);
+    void movingToTrashFailedSignal(QStringList);
 };
 
 #endif // TRASHMODULE_H

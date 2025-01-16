@@ -1,14 +1,15 @@
 #include "creatingmodule.h"
-#include "../../services/exceptionService/exceptionservice.h"
 #include "ui_creatingmodule.h"
-
-#include <unistd.h>
 
 CreatingModule::CreatingModule(QDir &currentFolder, QWidget *parent) :
     QDialog(parent), ui(new Ui::CreatingModule)
 {
     setUserInterface();
     creatingService = new CreatingService(currentFolder);
+    QObject::connect(creatingService,
+        SIGNAL(creatingFinishedSignal(QString)),
+        this,
+        SLOT(creatingFinished(const QString &)));
 }
 
 void CreatingModule::setUserInterface()
@@ -56,7 +57,6 @@ void CreatingModule::on_fileCreationButton_clicked()
     {
         QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    accept();
 }
 
 void CreatingModule::on_folderCreationButton_clicked()
@@ -69,7 +69,6 @@ void CreatingModule::on_folderCreationButton_clicked()
     {
         QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    accept();
 }
 
 void CreatingModule::on_symbolLinkCreationButton_clicked()
@@ -82,7 +81,11 @@ void CreatingModule::on_symbolLinkCreationButton_clicked()
     {
         QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
-    accept();
 }
 
 void CreatingModule::on_cancelButton_clicked() { accept(); }
+
+void CreatingModule::creatingFinished(const QString &createdObjectPath)
+{
+    emit creatingCompletedSignal(createdObjectPath);
+}

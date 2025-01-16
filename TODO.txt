@@ -1,13 +1,6 @@
-Revert changes
-
-1. Temp file (QTemporaryFile) with diffs of files after and before(stack): create in app start and delete in app finish 
-2. Hotkey: Ctrl+Z
-
-Refactoring
-
-1. Remove clicked pathes in tabModule
-2. Change all exception messages to "Failed to ..." as possible
-3. Move unused #includes from .h files to .cpp files
-4. Add empty strings to large methods (or add more submethods)
-5. Change all "symbol..." to "symbolic..." for links
-6. Change keyboard shortcuts
+1. transfer "Move to Trash" and "Restore" to separate threads
+2. ensure atomicity of movement
+3. remove the clicked paths in the tabModule
+4. replace all "symbol..." with "symbolic..." for links
+5. move unused #includes from .h files in .cpp files
+6. add several Nemo keyboard shortcuts

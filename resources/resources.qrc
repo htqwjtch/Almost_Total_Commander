@@ -6,8 +6,8 @@
         <file>tabIcons/add-square-outlined-interface-button.png</file>
         <file>tabIcons/back-left-arrow-square-button-outline.png</file>
         <file>tabIcons/cross-square-button.png</file>
-        <file>tabIcons/logout.png</file>
         <file>tabIcons/right-arrow-square-button-symbol.png</file>
+        <file>tabIcons/remove.png</file>
     </qresource>
     <qresource prefix="/fileSystemIcons">
         <file>fileSystemIcons/bin.png</file>
@@ -22,5 +22,6 @@
         <file>fileSystemIcons/hidden.png</file>
         <file>fileSystemIcons/arrow.png</file>
         <file>fileSystemIcons/photo_2025-01-10_22-16-26_processed.jpg</file>
+        <file>fileSystemIcons/undo.png</file>
     </qresource>
 </RCC>

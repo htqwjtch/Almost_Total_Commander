@@ -1,8 +1,9 @@
 #include "namingmodule.h"
 
-#include <QDebug>
-
-void NamingModule::setCurrentFolder(QDir &currentFolder) { this->currentFolder = currentFolder; }
+NamingModule::NamingModule(QDir &currentFolder, QObject *parent) : QObject{parent}
+{
+    this->currentFolder = currentFolder;
+}
 
 void NamingModule::setNameAndPathForNotSymbolLink()
 {
@@ -60,6 +61,7 @@ void NamingModule::rename(const QString &renamingObjectPath)
     {
         setNameAndPathForNotSymbolLink();
         QFileInfo renamingFileInfo = QFileInfo(renamingObjectPath);
+        QString renamingObjectName = renamingFileInfo.fileName();
         if (!name.isEmpty())
         {
             if (renamingFileInfo.isDir())
@@ -78,6 +80,7 @@ void NamingModule::rename(const QString &renamingObjectPath)
         {
             throw ExceptionService("Name is empty!");
         }
+        emit namingCompletedSignal(renamingObjectName, name, currentFolder.absolutePath());
     }
     catch (ExceptionService exceptionService)
     {

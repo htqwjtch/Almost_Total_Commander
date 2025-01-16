@@ -2,11 +2,20 @@
 #define CREATINGSERVICE_H
 
 #include "../../modules/namingModules/namingmodule.h"
+#include "../exceptionService/exceptionservice.h"
 
-class CreatingService
+#include <QDir>
+#include <QFile>
+#include <QObject>
+#include <unistd.h>
+
+class CreatingService : public QObject
 {
+    Q_OBJECT
+
   public:
-    CreatingService(QDir &);
+    explicit CreatingService(QDir &, QObject *parent = nullptr);
+    ~CreatingService();
     void createFile();
     void createFolder();
     void createSymbolLink();
@@ -17,7 +26,10 @@ class CreatingService
 
   private:
     QDir currentFolder;
-    NamingModule namingModule;
+    NamingModule *namingModule;
+
+  signals:
+    void creatingFinishedSignal(QString);
 };
 
 #endif // CREATINGSERVICE_H

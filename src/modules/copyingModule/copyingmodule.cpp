@@ -21,11 +21,9 @@ void CopyingModule::connectSignalsWithSlots()
         copyingService,
         SLOT(startCopying(const QStringList &, const QString &)));
     QObject::connect(copyingService,
-        SIGNAL(copyingFailedSignal(QString)),
+        SIGNAL(copyingFinishedSignal(QStringList)),
         this,
-        SLOT(copyingFailed(const QString &)));
-    QObject::connect(
-        copyingService, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
+        SLOT(copyingFinished(const QStringList &)));
 }
 
 void CopyingModule::setThreadForCopying()
@@ -45,39 +43,18 @@ CopyingModule::~CopyingModule()
 void CopyingModule::copy(const QStringList &copyingObjectPathes,
     const QString &destinationFolderPath)
 {
-    try
-    {
-        foreach (QString copyingObjectPath, copyingObjectPathes)
-        {
-            checkName(copyingObjectPath, destinationFolderPath);
-        }
-        emit startCopyingSignal(copyingObjectPathes, destinationFolderPath);
-    }
-    catch (ExceptionService exceptionService)
-    {
-        emit copyingFailedSignal(exceptionService.getInfo());
-    }
+    this->copyingObjectPathes = copyingObjectPathes;
+    emit startCopyingSignal(copyingObjectPathes, destinationFolderPath);
 }
 
-void CopyingModule::checkName(const QString &copyingObjectPath,
-    const QString &destinationFolderPath)
+void CopyingModule::copyingFinished(const QStringList &copiedObjectPathes)
 {
-    QFileInfo copyingObjectInfo = QFileInfo(copyingObjectPath);
-    QDir destinationFolder = QDir(destinationFolderPath);
-    foreach (QFileInfo entry,
-        destinationFolder.entryInfoList(
-            QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    if (copyingObjectPathes.length() == copiedObjectPathes.length())
     {
-        if (entry.fileName() == copyingObjectInfo.fileName())
-        {
-            throw ExceptionService("This name already exists in the current folder!");
-        }
+        emit copyingCompletedSignal(copiedObjectPathes);
     }
-}
-
-void CopyingModule::copyingCompleted() { emit copyingCompletedSignal(); }
-
-void CopyingModule::copyingFailed(const QString &exceptionInfo)
-{
-    emit copyingFailedSignal(exceptionInfo);
+    else
+    {
+        emit copyingFailedSignal(copiedObjectPathes);
+    }
 }

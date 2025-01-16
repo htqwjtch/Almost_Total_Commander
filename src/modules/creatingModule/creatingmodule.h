@@ -2,9 +2,12 @@
 #define CREATINGMODULE_H
 
 #include "../../services/creatingService/creatingservice.h"
+#include "../../services/exceptionService/exceptionservice.h"
 
 #include <QDialog>
 #include <QMessageBox>
+
+#include <unistd.h>
 
 namespace Ui
 {
@@ -28,10 +31,14 @@ class CreatingModule : public QDialog
     void on_folderCreationButton_clicked();
     void on_symbolLinkCreationButton_clicked();
     void on_cancelButton_clicked();
+    void creatingFinished(const QString &);
 
   private:
     Ui::CreatingModule *ui;
     CreatingService *creatingService;
+
+  signals:
+    void creatingCompletedSignal(QString);
 };
 
 #endif // CREATINGMODULE_H

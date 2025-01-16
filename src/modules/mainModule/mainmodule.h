@@ -4,6 +4,8 @@
 #include "../tabModule/tabmodule.h"
 
 #include <QMainWindow>
+#include <QMessageBox>
+#include <QTableWidget>
 #include <QToolButton>
 
 QT_BEGIN_NAMESPACE
@@ -41,6 +43,8 @@ class MainModule : public QMainWindow
     void on_actionReplace_triggered();
     void on_actionRename_triggered();
     void on_actionShow_Hidden_triggered();
+
+    void on_actionRevert_triggered();
 
   private:
     Ui::MainModule *ui;

@@ -5,16 +5,36 @@ CopyingService::CopyingService(QObject *parent) : QObject{parent} {}
 void CopyingService::startCopying(const QStringList &sourceCopyingObjectPathes,
     const QString &destinationFolderPath)
 {
+    copiedObjectPathes = QStringList();
     foreach (QString sourceCopyingObjectPath, sourceCopyingObjectPathes)
     {
-        setSourceCopyingObjectPath(sourceCopyingObjectPath);
-        QFileInfo copyingObjectInfo = QFileInfo(sourceCopyingObjectPath);
-        setDestinationCopyingObjectPath(
-            destinationFolderPath + QDir::separator() + copyingObjectInfo.fileName());
-        copyIn(destinationFolderPath);
+        if (checkName(sourceCopyingObjectPath, destinationFolderPath))
+        {
+            setSourceCopyingObjectPath(sourceCopyingObjectPath);
+            QFileInfo copyingObjectInfo = QFileInfo(sourceCopyingObjectPath);
+            setDestinationCopyingObjectPath(
+                destinationFolderPath + QDir::separator() + copyingObjectInfo.fileName());
+            copyIn(destinationFolderPath);
+        }
     }
+    emit copyingFinishedSignal(copiedObjectPathes);
+}
 
-    emit copyingCompletedSignal();
+bool CopyingService::checkName(const QString &copyingObjectPath,
+    const QString &destinationFolderPath)
+{
+    QFileInfo copyingObjectInfo = QFileInfo(copyingObjectPath);
+    QDir destinationFolder = QDir(destinationFolderPath);
+    foreach (QFileInfo entry,
+        destinationFolder.entryInfoList(
+            QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name))
+    {
+        if (entry.fileName() == copyingObjectInfo.fileName())
+        {
+            return false;
+        }
+    }
+    return true;
 }
 
 void CopyingService::setSourceCopyingObjectPath(const QString &sourceCopyingObjectPath)
@@ -30,14 +50,13 @@ void CopyingService::setDestinationCopyingObjectPath(const QString &destinationC
 void CopyingService::copyIn(const QString &destinationFolderPath)
 {
     QFileInfo copyingObject = QFileInfo(sourceCopyingObjectPath);
-
     if (copyingObject.isDir())
     {
         copyFolder(sourceCopyingObjectPath, destinationFolderPath);
     }
-    else if (!QFile::copy(sourceCopyingObjectPath, destinationCopyingObjectPath))
+    else if (QFile::copy(sourceCopyingObjectPath, destinationCopyingObjectPath))
     {
-        emit copyingFailedSignal("Copying failed!");
+        copiedObjectPathes.append(destinationCopyingObjectPath);
     }
 }
 
@@ -74,9 +93,10 @@ void CopyingService::createCopyingFolderInDestinationFolder(
     const QString &destinationCopyingFolderPath,
     QDir &destinationFolder)
 {
-    if (!destinationFolder.mkdir(destinationCopyingFolderPath))
+    if (destinationFolder.mkdir(destinationCopyingFolderPath) &&
+        destinationCopyingFolderPath == destinationCopyingObjectPath)
     {
-        emit copyingFailedSignal("Copying failed!");
+        copiedObjectPathes.append(destinationCopyingFolderPath);
     }
 }
 
@@ -91,12 +111,8 @@ void CopyingService::copyFolderObjects(QFileInfoList &copyingFolderObjects,
         }
         else if (entry.isFile() || entry.isSymLink())
         {
-            if (!QFile::copy(entry.absoluteFilePath(),
-                    QString(destinationCopyingFolderPath + QDir::separator() + entry.fileName())))
-            {
-                emit copyingFailedSignal("Copying failed!");
-                break;
-            }
+            QFile::copy(entry.absoluteFilePath(),
+                QString(destinationCopyingFolderPath + QDir::separator() + entry.fileName()));
         }
     }
 }

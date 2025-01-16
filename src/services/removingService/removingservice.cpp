@@ -4,34 +4,35 @@ RemovingService::RemovingService(QObject *parent) : QObject{parent} {}
 
 void RemovingService::startRemoving(const QStringList &removingObjectPathes)
 {
-
+    removedObjectNames = QStringList();
     foreach (QString removingObjectPath, removingObjectPathes)
     {
         QFileInfo removingObject = QFileInfo(removingObjectPath);
-
+        QString removingObjectName = removingObject.fileName();
         if (removingObject.isDir())
         {
             removeFolder(removingObjectPath);
         }
-        else if (!QFile::remove(removingObjectPath))
+        else if (QFile::remove(removingObjectPath))
         {
-            emit removingFailedSignal("Removing failed!");
+            removedObjectNames.append(removingObjectName);
         }
     }
 
-    emit removingCompletedSignal();
+    emit removingFinishedSignal(removedObjectNames);
 }
 
 void RemovingService::removeFolder(const QString &removingFolderPath)
 {
     QDir removingFolder = QDir(removingFolderPath);
+    QString removingFolderName = removingFolder.dirName();
     if (!removingFolder.isEmpty())
     {
         removeFolderObjectsFrom(removingFolder);
     }
-    if (!removingFolder.rmdir(removingFolderPath))
+    if (removingFolder.rmdir(removingFolderPath))
     {
-        emit removingFailedSignal("Removing failed!");
+        removedObjectNames.append(removingFolderName);
     }
 }
 
@@ -48,7 +49,6 @@ void RemovingService::removeFolderObjectsFrom(QDir &removingFolder)
             removingFolder.cdUp();
             if (!removingFolder.rmdir(entry.absoluteFilePath()))
             {
-                emit removingFailedSignal("Removing failed!");
                 break;
             }
         }
@@ -56,7 +56,6 @@ void RemovingService::removeFolderObjectsFrom(QDir &removingFolder)
         {
             if (!QFile::remove(entry.absoluteFilePath()))
             {
-                emit removingFailedSignal("Removing failed!");
                 break;
             }
         }

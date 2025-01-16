@@ -67,6 +67,7 @@
     <addaction name="actionRename"/>
     <addaction name="actionShow_Hidden"/>
     <addaction name="actionSearch"/>
+    <addaction name="actionRevert"/>
     <addaction name="actionExit"/>
    </widget>
    <addaction name="menuHelp"/>
@@ -123,7 +124,7 @@
   <action name="actionExit">
    <property name="icon">
     <iconset resource="../../../resources/resources.qrc">
-     <normaloff>:/tabIcons/tabIcons/logout.png</normaloff>:/tabIcons/tabIcons/logout.png</iconset>
+     <normaloff>:/tabIcons/tabIcons/remove.png</normaloff>:/tabIcons/tabIcons/remove.png</iconset>
    </property>
    <property name="text">
     <string>Exit</string>
@@ -214,6 +215,18 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+H</string>
+   </property>
+  </action>
+  <action name="actionRevert">
+   <property name="icon">
+    <iconset resource="../../../resources/resources.qrc">
+     <normaloff>:/fileSystemIcons/fileSystemIcons/undo.png</normaloff>:/fileSystemIcons/fileSystemIcons/undo.png</iconset>
+   </property>
+   <property name="text">
+    <string>Revert</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
    </property>
   </action>
  </widget>

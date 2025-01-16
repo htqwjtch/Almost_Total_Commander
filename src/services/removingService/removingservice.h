@@ -19,9 +19,11 @@ class RemovingService : public QObject
     void removeFolder(const QString &);
     void removeFolderObjectsFrom(QDir &);
 
+  private:
+    QStringList removedObjectNames;
+
   signals:
-    void removingCompletedSignal();
-    void removingFailedSignal(QString);
+    void removingFinishedSignal(QStringList);
 };
 
 #endif // REMOVINGSERVICE_H

@@ -1,9 +1,4 @@
 #include "mainmodule.h"
-
-#include <QDebug>
-#include <QMessageBox>
-#include <QTableWidget>
-
 #include "ui_mainmodule.h"
 
 MainModule::MainModule(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainModule)
@@ -96,3 +91,5 @@ void MainModule::on_actionReplace_triggered() { tabModule->execute("Replace"); }
 void MainModule::on_actionRename_triggered() { tabModule->execute("Rename"); }
 
 void MainModule::on_actionShow_Hidden_triggered() { tabModule->execute("Show Hidden"); }
+
+void MainModule::on_actionRevert_triggered() { tabModule->execute("Revert"); }

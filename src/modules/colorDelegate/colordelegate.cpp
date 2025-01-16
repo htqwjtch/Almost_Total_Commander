@@ -1,7 +1,5 @@
 #include "colordelegate.h"
 
-#include <QDebug>
-
 ColorDelegate::ColorDelegate(QObject *parent) : QStyledItemDelegate(parent) {}
 
 void ColorDelegate::paint(QPainter *painter,

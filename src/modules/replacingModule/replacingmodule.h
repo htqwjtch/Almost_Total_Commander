@@ -10,6 +10,7 @@
 class ReplacingModule : public QObject
 {
     Q_OBJECT
+
   public:
     explicit ReplacingModule(QObject *parent = nullptr);
     ~ReplacingModule();
@@ -20,22 +21,23 @@ class ReplacingModule : public QObject
     void connectSignalsWithSlots();
     void connectSignalsWithSlotsForCopying();
     void connectSignalsWithSlotsForRemoving();
-    void setReplacingObjectPathes(const QStringList &);
 
   private slots:
-    void copyingCompleted();
-    void copyingFailed(const QString &);
+    void copyingCompleted(const QStringList &);
+    void copyingFailed(const QStringList &);
     void removingCompleted();
-    void removingFailed(const QString &);
+    void removingFailed();
 
   private:
+    QString sourceFolderPath;
     QStringList replacingObjectPathes;
+    QStringList replacedObjectPathes;
     CopyingModule *copyingModule;
     RemovingModule *removingModule;
 
   signals:
-    void replacingCompletedSignal();
-    void replacingFailedSignal(QString);
+    void replacingCompletedSignal(QStringList, QString);
+    void replacingFailedSignal(QStringList, QString);
 };
 
 #endif // REPLACINGMODULE_H

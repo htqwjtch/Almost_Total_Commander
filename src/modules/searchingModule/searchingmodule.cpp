@@ -79,7 +79,7 @@ void SearchingModule::on_searchingResultWidget_itemClicked(QListWidgetItem *item
 void SearchingModule::on_okButton_clicked()
 {
     clearSearchingResultWidget();
-    accept();
+    // accept();
 }
 
 void SearchingModule::clearSearchingResultWidget() { ui->searchingResultWidget->clear(); }

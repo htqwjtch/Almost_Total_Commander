@@ -15,7 +15,9 @@
 #include <QDialog>
 #include <QFileSystemModel>
 #include <QMessageBox>
+#include <QPair>
 #include <QSortFilterProxyModel>
+#include <QStack>
 #include <QString>
 #include <QTableView>
 #include <QUrl>
@@ -49,6 +51,9 @@ class TabModule : public QDialog
     void connectSignalsWithSlots();
     void setCurrenTableView(QTableView *);
     void setTrashModule();
+    void setChangeStack();
+
+    void revertChanges();
 
     void setCurrentFileInfo(QFileInfo);
     void setClickedFolderPath(const QString &);
@@ -75,12 +80,16 @@ class TabModule : public QDialog
     void setCurrentFolder(QDir &);
     void setSearchingModule();
 
+    void setCreatingModule();
+
     void checkClickedObjectsPathes();
     void setRemovingModule();
 
     void setCopyingModule();
 
     void setReplacingModule();
+
+    void setNamingModule();
 
   private slots:
     void on_sortingBox_currentIndexChanged(int index);
@@ -98,20 +107,24 @@ class TabModule : public QDialog
     void searchingCompleted();
 
     void on_creatingButton_clicked();
+    void creatingCompleted(const QString &);
 
     void on_removingButton_clicked();
-    void removingFailed(const QString &);
+    void removingFailed();
     void removingCompleted();
+    void movingToTrashFailed(const QStringList &);
+    void movingToTrashCompleted(const QStringList &);
 
     void on_copyingButton_clicked();
-    void copyingFailed(const QString &);
-    void copyingCompleted();
+    void copyingFailed(const QStringList &);
+    void copyingCompleted(const QStringList &);
 
     void on_replacingButton_clicked();
-    void replacingFailed(const QString &);
-    void replacingCompleted();
+    void replacingFailed(const QStringList &, const QString &);
+    void replacingCompleted(const QStringList &, const QString &);
 
     void on_renamingButton_clicked();
+    void namingCompleted(const QString &, const QString &, const QString &);
 
     void on_showHiddenButton_clicked();
 
@@ -132,11 +145,18 @@ class TabModule : public QDialog
     QTableView *currentTableView;
     QLineEdit *currentLineEdit;
 
+    QStack<QPair<QStringList, QStringList>> *changeStack;
+    bool isRevertion = false;
+
     TrashModule *trashModule;
+
+    CreatingModule *creatingModule;
 
     CopyingModule *copyingModule;
     ReplacingModule *replacingModule;
     SearchingModule *searchingModule;
+
+    NamingModule *namingModule;
 
     QString clickedFilePath = "";
     QString clickedFolderPath = "";

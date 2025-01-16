@@ -14,29 +14,27 @@ void ReplacingModule::allocateMemory()
 
 void ReplacingModule::connectSignalsWithSlots()
 {
-    replacingObjectPathes = QStringList();
     connectSignalsWithSlotsForCopying();
     connectSignalsWithSlotsForRemoving();
 }
 
 void ReplacingModule::connectSignalsWithSlotsForCopying()
 {
-    QObject::connect(
-        copyingModule, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
     QObject::connect(copyingModule,
-        SIGNAL(copyingFailedSignal(QString)),
+        SIGNAL(copyingCompletedSignal(QStringList)),
         this,
-        SLOT(copyingFailed(const QString &)));
+        SLOT(copyingCompleted(const QStringList &)));
+    QObject::connect(copyingModule,
+        SIGNAL(copyingFailedSignal(QStringList)),
+        this,
+        SLOT(copyingFailed(const QStringList &)));
 }
 
 void ReplacingModule::connectSignalsWithSlotsForRemoving()
 {
     QObject::connect(
         removingModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
-    QObject::connect(removingModule,
-        SIGNAL(removingFailedSignal(QString)),
-        this,
-        SLOT(removingFailed(const QString &)));
+    QObject::connect(removingModule, SIGNAL(removingFailedSignal()), this, SLOT(removingFailed()));
 }
 
 ReplacingModule::~ReplacingModule()
@@ -48,26 +46,30 @@ ReplacingModule::~ReplacingModule()
 void ReplacingModule::replace(const QStringList &replacingObjectPathes,
     const QString &destinationFolderPath)
 {
-
-    setReplacingObjectPathes(replacingObjectPathes);
+    this->replacingObjectPathes = replacingObjectPathes;
+    QFileInfo fileInfo = QFileInfo(replacingObjectPathes[0]);
+    sourceFolderPath = fileInfo.absolutePath();
     copyingModule->copy(replacingObjectPathes, destinationFolderPath);
 }
 
-void ReplacingModule::setReplacingObjectPathes(const QStringList &replacingObjectPathes)
+void ReplacingModule::copyingCompleted(const QStringList &copiedObjectPathes)
 {
-    this->replacingObjectPathes = replacingObjectPathes;
+    replacedObjectPathes = copiedObjectPathes;
+    removingModule->remove(replacingObjectPathes);
 }
 
-void ReplacingModule::copyingCompleted() { removingModule->remove(replacingObjectPathes); }
-
-void ReplacingModule::copyingFailed(const QString &exceptionInfo)
+void ReplacingModule::copyingFailed(const QStringList &copiedObjectPathes)
 {
-    emit replacingFailedSignal(exceptionInfo);
+    replacedObjectPathes = copiedObjectPathes;
+    removingModule->remove(replacingObjectPathes);
 }
 
-void ReplacingModule::removingCompleted() { emit replacingCompletedSignal(); }
-
-void ReplacingModule::removingFailed(const QString &exceptionInfo)
+void ReplacingModule::removingCompleted()
 {
-    emit replacingFailedSignal(exceptionInfo);
+    emit replacingCompletedSignal(replacedObjectPathes, sourceFolderPath);
+}
+
+void ReplacingModule::removingFailed()
+{
+    emit replacingFailedSignal(replacedObjectPathes, sourceFolderPath);
 }

@@ -21,20 +21,20 @@ class CopyingModule : public QObject
     void allocateMemory();
     void connectSignalsWithSlots();
     void setThreadForCopying();
-    void checkName(const QString &, const QString &);
 
   private slots:
-    void copyingCompleted();
-    void copyingFailed(const QString &);
+    void copyingFinished(const QStringList &);
 
   private:
     CopyingService *copyingService;
     QThread *threadForCopying;
 
+    QStringList copyingObjectPathes;
+
   signals:
     void startCopyingSignal(QStringList, QString);
-    void copyingCompletedSignal();
-    void copyingFailedSignal(QString);
+    void copyingCompletedSignal(QStringList);
+    void copyingFailedSignal(QStringList);
 };
 
 #endif // COPYINGMODULE_H

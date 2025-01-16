@@ -21,17 +21,18 @@ class RemovingModule : public QObject
     void setThreadForRemoving();
 
   private slots:
-    void removingCompleted();
-    void removingFailed(const QString &);
+    void removingFinished(const QStringList &);
 
   private:
     RemovingService *removingService;
     QThread *threadForRemoving;
 
+    QStringList removingObjectPathes;
+
   signals:
     void startRemovingSignal(QStringList);
     void removingCompletedSignal();
-    void removingFailedSignal(QString);
+    void removingFailedSignal();
 };
 
 #endif // REMOVINGMODULE_H

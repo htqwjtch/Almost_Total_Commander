@@ -1,8 +1,6 @@
 #include "trashmodule.h"
 #include "ui_trashmodule.h"
 
-#include <QMap>
-
 TrashModule::TrashModule(QWidget *parent) : QDialog(parent), ui(new Ui::TrashModule)
 {
     setFileSystemModel();
@@ -74,14 +72,24 @@ bool TrashModule::checkTrash() { return QDir(rootPath).exists(); }
 
 void TrashModule::moveToTrash(const QStringList &removingObjectPathes)
 {
+    QStringList removedObjectNames = QStringList();
     foreach (QString removingObjectPath, removingObjectPathes)
     {
-        if (!QFile::moveToTrash(removingObjectPath))
+        QFileInfo removingFileInfo = QFileInfo(removingObjectPath);
+        QString removingObjectName = removingFileInfo.fileName();
+        if (QFile::moveToTrash(removingObjectPath))
         {
-            emit removingFailedSignal("Removing failed!");
+            removedObjectNames.append(removingObjectName);
         }
     }
-    emit removingCompletedSignal();
+    if (removingObjectPathes.length() == removedObjectNames.length())
+    {
+        emit movingToTrashCompletedSignal(removedObjectNames);
+    }
+    else
+    {
+        emit movingToTrashFailedSignal(removedObjectNames);
+    }
 }
 
 void TrashModule::removePermanently(const QStringList &removingObjectPathes)
@@ -95,17 +103,14 @@ void TrashModule::setRemovingModule()
     removingModule = new RemovingModule(this);
     QObject::connect(
         removingModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
-    QObject::connect(removingModule,
-        SIGNAL(removingFailedSignal(QString)),
-        this,
-        SLOT(removingFailed(const QString &)));
+    QObject::connect(removingModule, SIGNAL(removingFailedSignal()), this, SLOT(removingFailed()));
 }
 
-void TrashModule::removingFailed(const QString &exceptionInfo)
+void TrashModule::removingFailed()
 {
     ui->removingButton->setEnabled(true);
     delete removingModule;
-    emit removingFailedSignal(exceptionInfo);
+    emit removingFailedSignal();
 }
 
 void TrashModule::removingCompleted()

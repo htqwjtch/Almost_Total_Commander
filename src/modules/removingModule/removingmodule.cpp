@@ -21,11 +21,9 @@ void RemovingModule::connectSignalsWithSlots()
         removingService,
         SLOT(startRemoving(const QStringList &)));
     QObject::connect(removingService,
-        SIGNAL(removingFailedSignal(QString)),
+        SIGNAL(removingFinishedSignal(QStringList)),
         this,
-        SLOT(removingFailed(const QString &)));
-    QObject::connect(
-        removingService, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
+        SLOT(removingFinished(const QStringList &)));
 }
 
 void RemovingModule::setThreadForRemoving()
@@ -44,12 +42,18 @@ RemovingModule::~RemovingModule()
 
 void RemovingModule::remove(const QStringList &removingObjectPathes)
 {
+    this->removingObjectPathes = removingObjectPathes;
     emit startRemovingSignal(removingObjectPathes);
 }
 
-void RemovingModule::removingCompleted() { emit removingCompletedSignal(); }
-
-void RemovingModule::removingFailed(const QString &exceptionInfo)
+void RemovingModule::removingFinished(const QStringList &removedObjectNames)
 {
-    emit removingFailedSignal(exceptionInfo);
+    if (removingObjectPathes.length() == removedObjectNames.length())
+    {
+        emit removingCompletedSignal();
+    }
+    else
+    {
+        emit removingFailedSignal();
+    }
 }

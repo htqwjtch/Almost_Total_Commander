@@ -16,6 +16,7 @@ class CopyingService : public QObject
     void startCopying(const QStringList &, const QString &);
 
   private:
+    bool checkName(const QString &, const QString &);
     void setSourceCopyingObjectPath(const QString &);
     void setDestinationCopyingObjectPath(const QString &);
     void copyIn(const QString &);
@@ -27,10 +28,10 @@ class CopyingService : public QObject
   private:
     QString sourceCopyingObjectPath = "";
     QString destinationCopyingObjectPath = "";
+    QStringList copiedObjectPathes;
 
   signals:
-    void copyingCompletedSignal();
-    void copyingFailedSignal(QString);
+    void copyingFinishedSignal(QStringList);
 };
 
 #endif // COPYINGSERVICE_H

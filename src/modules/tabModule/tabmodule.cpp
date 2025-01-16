@@ -1,8 +1,6 @@
 #include "tabmodule.h"
 #include "ui_tabmodule.h"
 
-#include <QDebug>
-
 TabModule::TabModule(QWidget *parent) : QDialog(parent), ui(new Ui::TabModule)
 {
     setFileSystemModel();
@@ -11,6 +9,7 @@ TabModule::TabModule(QWidget *parent) : QDialog(parent), ui(new Ui::TabModule)
     setCurrenTableView(ui->leftTableView);
     on_sortingBox_currentIndexChanged(0);
     setTrashModule();
+    setChangeStack();
 }
 
 void TabModule::setFileSystemModel()
@@ -231,61 +230,155 @@ void TabModule::setTrashModule()
     trashModule = new TrashModule(this);
     QObject::connect(
         trashModule, SIGNAL(removingCompletedSignal()), this, SLOT(removingCompleted()));
+    QObject::connect(trashModule, SIGNAL(removingFailedSignal()), this, SLOT(removingFailed()));
     QObject::connect(trashModule,
-        SIGNAL(removingFailedSignal(QString)),
+        SIGNAL(movingToTrashCompletedSignal(QStringList)),
         this,
-        SLOT(removingFailed(const QString &)));
+        SLOT(movingToTrashCompleted(const QStringList &)));
+    QObject::connect(trashModule,
+        SIGNAL(movingToTrashFailedSignal(QStringList)),
+        this,
+        SLOT(movingToTrashFailed(const QStringList &)));
 }
 
-void TabModule::removingFailed(const QString &exceptionInfo)
+void TabModule::removingFailed()
 {
     removingCompleted();
-    QMessageBox::warning(this, "", exceptionInfo);
+    QMessageBox::warning(this, "", "Removing failed!");
 }
 
 void TabModule::removingCompleted()
 {
     ui->removingButton->setEnabled(true);
     ui->trashButton->setEnabled(true);
+    if (isRevertion)
+    {
+        isRevertion = false;
+    }
 }
+
+void TabModule::movingToTrashFailed(const QStringList &movedToTrashObjectNames)
+{
+    movingToTrashCompleted(movedToTrashObjectNames);
+    QMessageBox::warning(this, "", "Moving to Trash failed!");
+}
+
+void TabModule::movingToTrashCompleted(const QStringList &movedToTrashObjectNames)
+{
+    ui->removingButton->setEnabled(true);
+    ui->trashButton->setEnabled(true);
+    if (!isRevertion)
+    {
+        QStringList secondList = QStringList();
+        secondList.append("-");
+        changeStack->push(qMakePair(movedToTrashObjectNames, secondList));
+    }
+    else
+    {
+        isRevertion = false;
+    }
+}
+
+void TabModule::setChangeStack() { changeStack = new QStack<QPair<QStringList, QStringList>>(); }
 
 TabModule::~TabModule()
 {
+    delete changeStack;
     delete trashModule;
     delete fileSystemModel;
     delete ui;
 }
 
-void TabModule::execute(const QString &operation)
+void TabModule::execute(const QString &action)
 {
-    if (operation == "Search")
+    if (action == "Revert")
+    {
+        revertChanges();
+    }
+    else if (action == "Search")
     {
         on_searchingButton_clicked();
     }
-    else if (operation == "Create")
+    else if (action == "Create")
     {
         on_creatingButton_clicked();
     }
-    else if (operation == "Remove")
+    else if (action == "Remove")
     {
         on_removingButton_clicked();
     }
-    else if (operation == "Copy")
+    else if (action == "Copy")
     {
         on_copyingButton_clicked();
     }
-    else if (operation == "Replace")
+    else if (action == "Replace")
     {
         on_replacingButton_clicked();
     }
-    else if (operation == "Rename")
+    else if (action == "Rename")
     {
         on_renamingButton_clicked();
     }
-    else if (operation == "Show Hidden")
+    else if (action == "Show Hidden")
     {
         on_showHiddenButton_clicked();
     }
+}
+
+void TabModule::revertChanges()
+{
+    isRevertion = true;
+    if (!changeStack->isEmpty())
+    {
+        QPair<QStringList, QStringList> lastChange = changeStack->pop();
+        if (lastChange.second[0] == "+")
+        {
+            ui->removingButton->setEnabled(false);
+            ui->trashButton->setEnabled(false);
+            trashModule->removePermanently(lastChange.first);
+        }
+        else if (lastChange.second[0] == "-")
+        {
+            try
+            {
+                trashModule->restore(lastChange.first);
+            }
+            catch (ExceptionService exceptionService)
+            {
+                QMessageBox::warning(this, " ", exceptionService.getInfo());
+            }
+        }
+        else if (lastChange.second[0] == "+-")
+        {
+            ui->replacingButton->setEnabled(false);
+            setReplacingModule();
+            replacingModule->replace(lastChange.first, lastChange.second[1]);
+        }
+        else if (lastChange.second[0] == "_")
+        {
+            QString oldObjectPath = lastChange.second[2] + QDir::separator() + lastChange.first[0];
+            QString newObjectPath = lastChange.second[2] + QDir::separator() + lastChange.second[1];
+            QDir currentFolder = QDir(lastChange.second[2]);
+            QFileInfo renamingFileInfo = QFileInfo(newObjectPath);
+            if (!lastChange.first[0].isEmpty() && !lastChange.second[1].isEmpty())
+            {
+                if (renamingFileInfo.isDir())
+                {
+                    if (!currentFolder.rename(newObjectPath, oldObjectPath))
+                    {
+                        QMessageBox::warning(this, " ", "Renaming failed!");
+                    }
+                }
+                else if (!QFile::rename(newObjectPath, oldObjectPath))
+                {
+                    QMessageBox::warning(this, " ", "Renaming failed!");
+                }
+            }
+            isRevertion = false;
+        }
+    }
+    resetClickedPathes();
+    clearSelectionModels();
 }
 
 void TabModule::on_leftAboveButton_clicked()
@@ -569,14 +662,40 @@ void TabModule::on_creatingButton_clicked()
         clearSelectionModels();
         setTableViewFolders();
         checkCurrentFolder();
-        CreatingModule creatingModule = CreatingModule(currentFolder, this);
-        creatingModule.exec();
+        setCreatingModule();
+        creatingModule->exec();
     }
     catch (ExceptionService exceptionService)
     {
         QMessageBox::warning(this, " ", exceptionService.getInfo());
     }
     resetClickedPathes();
+}
+
+void TabModule::setCreatingModule()
+{
+    creatingModule = new CreatingModule(currentFolder, this);
+    QObject::connect(creatingModule,
+        SIGNAL(creatingCompletedSignal(QString)),
+        this,
+        SLOT(creatingCompleted(const QString &)));
+}
+
+void TabModule::creatingCompleted(const QString &createdObjectPath)
+{
+    if (!isRevertion)
+    {
+        QStringList firstList = QStringList();
+        firstList.append(createdObjectPath);
+        QStringList secondList = QStringList();
+        secondList.append("+");
+        changeStack->push(qMakePair(firstList, secondList));
+    }
+    else
+    {
+        isRevertion = false;
+    }
+    delete creatingModule;
 }
 
 void TabModule::on_removingButton_clicked()
@@ -609,7 +728,7 @@ void TabModule::on_removingButton_clicked()
         {
             QMessageBox::StandardButton answerButton = QMessageBox::question(this,
                 " ",
-                "Trash is unavailable! Do you want to perform removing permanently?",
+                "Do you want to perform removing permanently?",
                 QMessageBox::Cancel | QMessageBox::Ok);
             if (answerButton == QMessageBox::Ok)
             {
@@ -685,23 +804,35 @@ void TabModule::on_copyingButton_clicked()
 void TabModule::setCopyingModule()
 {
     copyingModule = new CopyingModule(this);
-    QObject::connect(
-        copyingModule, SIGNAL(copyingCompletedSignal()), this, SLOT(copyingCompleted()));
     QObject::connect(copyingModule,
-        SIGNAL(copyingFailedSignal(QString)),
+        SIGNAL(copyingCompletedSignal(QStringList)),
         this,
-        SLOT(copyingFailed(const QString &)));
+        SLOT(copyingCompleted(const QStringList &)));
+    QObject::connect(copyingModule,
+        SIGNAL(copyingFailedSignal(QStringList)),
+        this,
+        SLOT(copyingFailed(const QStringList &)));
 }
 
-void TabModule::copyingFailed(const QString &exceptionInfo)
+void TabModule::copyingFailed(const QStringList &copiedObjectPathes)
 {
-    copyingCompleted();
-    QMessageBox::warning(this, "", exceptionInfo);
+    copyingCompleted(copiedObjectPathes);
+    QMessageBox::warning(this, "", "Copying failed!");
 }
 
-void TabModule::copyingCompleted()
+void TabModule::copyingCompleted(const QStringList &copiedObjectPathes)
 {
     ui->copyingButton->setEnabled(true);
+    if (!isRevertion)
+    {
+        QStringList secondList = QStringList();
+        secondList.append("+");
+        changeStack->push(qMakePair(copiedObjectPathes, secondList));
+    }
+    else
+    {
+        isRevertion = false;
+    }
     delete copyingModule;
 }
 
@@ -744,23 +875,38 @@ void TabModule::on_replacingButton_clicked()
 void TabModule::setReplacingModule()
 {
     replacingModule = new ReplacingModule(this);
-    QObject::connect(
-        replacingModule, SIGNAL(replacingCompletedSignal()), this, SLOT(replacingCompleted()));
     QObject::connect(replacingModule,
-        SIGNAL(replacingFailedSignal(QString)),
+        SIGNAL(replacingCompletedSignal(QStringList, QString)),
         this,
-        SLOT(replacingFailed(const QString &)));
+        SLOT(replacingCompleted(const QStringList &, const QString &)));
+    QObject::connect(replacingModule,
+        SIGNAL(replacingFailedSignal(QStringList, QString)),
+        this,
+        SLOT(replacingFailed(const QStringList &, const QString &)));
 }
 
-void TabModule::replacingFailed(const QString &exceptionInfo)
+void TabModule::replacingFailed(const QStringList &replacedObjectPathes,
+    const QString &sourceFolderPath)
 {
-    replacingCompleted();
-    QMessageBox::warning(this, "", exceptionInfo);
+    replacingCompleted(replacedObjectPathes, sourceFolderPath);
+    QMessageBox::warning(this, "", "Replacing failed!");
 }
 
-void TabModule::replacingCompleted()
+void TabModule::replacingCompleted(const QStringList &replacedObjectPathes,
+    const QString &sourceFolderPath)
 {
     ui->replacingButton->setEnabled(true);
+    if (!isRevertion)
+    {
+        QStringList secondList = QStringList();
+        secondList.append("+-");
+        secondList.append(sourceFolderPath);
+        changeStack->push(qMakePair(replacedObjectPathes, secondList));
+    }
+    else
+    {
+        isRevertion = false;
+    }
     delete replacingModule;
 }
 
@@ -771,9 +917,8 @@ void TabModule::on_renamingButton_clicked()
         setTableViewFolders();
         checkCurrentFolder();
         checkClickedObjectsPathes();
-        NamingModule namingModule;
-        namingModule.setCurrentFolder(currentFolder);
-        namingModule.rename(currentFileInfo.absoluteFilePath());
+        setNamingModule();
+        namingModule->rename(currentFileInfo.absoluteFilePath());
     }
     catch (ExceptionService exceptionService)
     {
@@ -781,6 +926,36 @@ void TabModule::on_renamingButton_clicked()
     }
     resetClickedPathes();
     clearSelectionModels();
+}
+
+void TabModule::setNamingModule()
+{
+    namingModule = new NamingModule(currentFolder, this);
+    QObject::connect(namingModule,
+        SIGNAL(namingCompletedSignal(QString, QString, QString)),
+        this,
+        SLOT(namingCompleted(const QString &, const QString &, const QString &)));
+}
+
+void TabModule::namingCompleted(const QString &oldName,
+    const QString &newName,
+    const QString &sourceFolderPath)
+{
+    if (!isRevertion)
+    {
+        QStringList firstList = QStringList();
+        firstList.append(oldName);
+        QStringList secondList = QStringList();
+        secondList.append("_");
+        secondList.append(newName);
+        secondList.append(sourceFolderPath);
+        changeStack->push(qMakePair(firstList, secondList));
+    }
+    else
+    {
+        isRevertion = false;
+    }
+    delete namingModule;
 }
 
 void TabModule::on_showHiddenButton_clicked()
