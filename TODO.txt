@@ -1,7 +1,0 @@
-1. transfer "Move to Trash" and "Restore" to separate threads
-2. ensure atomicity of movement
-3. remove the clicked paths in the tabModule
-4. replace all "symbol..." with "symbolic..." for links
-5. move unused #includes from .h files in .cpp files
-6. add several Nemo keyboard shortcuts
-7. replace tab numbers with folder names
